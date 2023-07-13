@@ -9,6 +9,9 @@ import { DiyWorkshopModule } from './diy_workshop/diy_workshop.module';
 import { SimpleUserModule } from './simple_user/simple_user.module';
 import { TransporterModule } from './transporter/transporter.module';
 import { OfferModule } from './offer/offer.module';
+import { AuthModule } from './auth/auth.module';
+
+
 
 
 @Module({
@@ -20,9 +23,7 @@ import { OfferModule } from './offer/offer.module';
     MongooseModule.forRoot(process.env.DB_URI),
     RecyclingCentreModule,
     DiyWorkshopModule,
-    SimpleUserModule,
-    TransporterModule,
-    OfferModule
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
