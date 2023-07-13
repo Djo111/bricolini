@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { LogInDto } from './dto/login.dto';
@@ -23,4 +23,26 @@ export class AuthController {
         return this.authService.login(loginDto);
     }
 
+
+    @Get()
+    findAll() {
+    return this.authService.findAll();
+    }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.authService.findOne(id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateSimpleUserDto: SignUpDto) {
+    return this.authService.update(id, updateSimpleUserDto);
+  }
+  
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.authService.remove(id);
+  }
+
+  
 }

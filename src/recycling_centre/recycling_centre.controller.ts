@@ -3,6 +3,7 @@ import { RecyclingCentreService } from './recycling_centre.service';
 import { Recycling_centre } from './schemas/recycling_centre.schema';
 import { CreatRecylingcenterDto } from './dto/create-recyclingcenter.dto';
 import { UpdateRecylingcenterDto } from './dto/update-recyclingcenter.dto';
+import { Offer } from 'src/offer/schemas/offer.schema';
 
 @Controller('recycling-centre')
 export class RecyclingCentreController {
@@ -11,6 +12,10 @@ export class RecyclingCentreController {
     @Get()
      async getAllRecyclingCenters(): Promise<Recycling_centre[]>{
         return this.recyclingCenterservice.findAll()
+    }
+    @Get("/offers")
+    async getAllOffers(): Promise<Offer[]>{
+        return this.recyclingCenterservice.getallOffers()
     }
 
     @Post()  
