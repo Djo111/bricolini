@@ -5,6 +5,9 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RecyclingCentreModule } from './recycling_centre/recycling_centre.module';
 import { DiyWorkshopModule } from './diy_workshop/diy_workshop.module';
+import { AuthModule } from './auth/auth.module';
+
+
 
 
 @Module({
@@ -15,7 +18,8 @@ import { DiyWorkshopModule } from './diy_workshop/diy_workshop.module';
     }),
     MongooseModule.forRoot(process.env.DB_URI),
     RecyclingCentreModule,
-    DiyWorkshopModule
+    DiyWorkshopModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
