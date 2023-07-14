@@ -292,24 +292,40 @@ class _SignupPageState extends State<SignupPage> {
     'Recycling center',
     'Transporter',
   ];
-  void createSimpleUser(
+  Future<void> createSimpleUser(
       String s1, String s2, String s3, String s4, String s5) async {
-    await http.post(
-      Uri.parse('http://localhost:3000/auth/signup'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        "email": s1,
-        "username": s2,
-        "password": s3,
-        "phoneNumber": s4,
-        "category": s5,
-      }),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:3000/auth/signup'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          "email": s1,
+          "username": s2,
+          "password": s3,
+          "phoneNumber": s4,
+          "category": s5,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        if (kDebugMode) {
+          print('User created: ${response.body}');
+        }
+      } else {
+        if (kDebugMode) {
+          print('Failed to create user: ${response.statusCode}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Exception occurred: $e');
+      }
+    }
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     final String email = _emailController.text;
     final String fullName = _fullNameController.text;
     final String password = _passwordController.text;
@@ -330,7 +346,8 @@ class _SignupPageState extends State<SignupPage> {
         context,
         MaterialPageRoute(builder: (context) => const Simple_User_HomeScreen()),
       );
-      createSimpleUser(email, fullName, password, phoneNumber, category);
+
+      await createSimpleUser(email, fullName, password, phoneNumber, category);
     } else if (category == 'DIY workshop') {
       Navigator.push(
         context,
