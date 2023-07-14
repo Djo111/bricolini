@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UseGuards, UploadedFile } from '@nestjs/common';
 import { OfferService } from './offer.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
@@ -25,6 +25,8 @@ export const storage = {
   })
 
 }
+
+
 @Controller('offer')
 export class OfferController {
   constructor(private readonly offerService: OfferService) {}
@@ -45,12 +47,12 @@ export class OfferController {
   
   create(@Body() createOfferDto: CreateOfferDto) {
     
-    return this.offerService.create(createOfferDto);
+    return this.offerService.createNewOffer(createOfferDto);
   }
 
   @Get()
   findAll() {
-    return this.offerService.findAll();
+    return this.offerService.findAllOffers();
   }
 
   @Get(':id')
@@ -76,4 +78,17 @@ export class OfferController {
   remove(@Param('id') id: string) {
     return this.offerService.remove(id);
   }
+
+
+  /*@UseGuards(JwtAuthGuard)
+  @Post()
+  @UseInterceptors(FileInterceptor('file', storage))
+  uploadFile(@UploadedFile() file) : Observable<Object>{
+    //const user: User =req.user.user;
+    //console.log(user)
+    console.log(file);
+    return of({imagePath : file.filename});
+  }*/
 }
+
+

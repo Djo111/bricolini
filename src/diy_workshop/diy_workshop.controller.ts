@@ -23,6 +23,7 @@ export class DiyWorkshopController {
         return this.diyworkshopService.create(diyworkshop);
     }
     
+    
     @Get(':id')
     async getlDiyWorkshops(
         @Param('id')

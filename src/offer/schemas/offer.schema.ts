@@ -11,10 +11,12 @@ export class Offer {
     @Prop()
     img:string;
     @Prop()
-    location:string
+    location: string;
     @Prop()
-    paid:boolean
+    price: number;
     @Prop()
-    price:number
+    estimateddistance:number;
+
+    
 }
 export const OfferSchema=SchemaFactory.createForClass(Offer)    

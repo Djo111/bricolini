@@ -23,7 +23,10 @@ import { AuthModule } from './auth/auth.module';
     MongooseModule.forRoot(process.env.DB_URI),
     RecyclingCentreModule,
     DiyWorkshopModule,
-    AuthModule
+    AuthModule,
+    SimpleUserModule,
+    TransporterModule,
+    OfferModule
   ],
   controllers: [AppController],
   providers: [AppService],
