@@ -27,6 +27,8 @@ export const storage = {
   })
 
 }
+
+
 @Controller('offer')
 export class OfferController {
   constructor(private readonly offerService: OfferService) {}
@@ -45,14 +47,11 @@ export class OfferController {
     return "success";
   }*/
   
-  create(@Body() createOfferDto: CreateOfferDto) {
-    
-    return  this.offerService.create(createOfferDto);
-  }
+
 
   @Get()
   findAll() {
-    return this.offerService.findAll();
+    return this.offerService.findAllOffers();
   }
 
   @Get(':id')
@@ -79,4 +78,17 @@ export class OfferController {
   remove(@Param('id') id: string) {
     return this.offerService.remove(id);
   }
+
+
+  /*@UseGuards(JwtAuthGuard)
+  @Post()
+  @UseInterceptors(FileInterceptor('file', storage))
+  uploadFile(@UploadedFile() file) : Observable<Object>{
+    //const user: User =req.user.user;
+    //console.log(user)
+    console.log(file);
+    return of({imagePath : file.filename});
+  }*/
 }
+
+

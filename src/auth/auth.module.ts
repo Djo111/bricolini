@@ -25,6 +25,7 @@ import { JwtStrategy } from './guards/jwt-strategy';
     MongooseModule.forFeature([{name:"User", schema:UserSchema }])
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy]
+  providers: [AuthService, JwtStrategy],
+  exports:[AuthService]
 })
 export class AuthModule {}

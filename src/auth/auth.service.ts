@@ -16,19 +16,27 @@ export class AuthService {
      ) {}
 
     
-    async signUp(signupDto: SignUpDto): Promise<{token: string}> {
-        const { username, email, password } = signupDto
+    async signUp(signupDto: SignUpDto): Promise<string> {
+        const { username, email, password, category, phoneNumber, address, diy_waste_type, region,
+            number_of_small_trucks, number_of_medium_trucks, number_of_big_trucks } = signupDto
+        
         const hashedPassword = await bcrypt.hash(password, 10)
 
         const user = await this.userModel.create({
             username,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            category,
+            phoneNumber,
+            address,
+            diy_waste_type,
+            region,
+            number_of_small_trucks,
+            number_of_medium_trucks,
+            number_of_big_trucks
         })
 
-        const token = this.jwtService.sign({ id: user._id })
-        
-        return { token };
+      return "SignUp done."
     }
 
     async login(logindto: LogInDto): Promise<{ token: string }>{
@@ -43,7 +51,7 @@ export class AuthService {
             throw new UnauthorizedException("Invalid email or password!")
          }
         
-        const token = this.jwtService.sign({ id: user._id })
+        const token = this.jwtService.sign({ id: user._id , category: user.category })
         
         return { token };
     }
@@ -51,4 +59,25 @@ export class AuthService {
         return{'User':payload.user};
     }
 
+
+   
+ 
+  
+  async findAll(): Promise<User[]> {
+    return this.userModel.find().exec();
+  }
+
+  async findOne(id: string): Promise<User> {
+    return this.userModel.findById(id).exec();
+  }
+
+  async update(id: string, updateUserDto: SignUpDto): Promise<User> {
+    return this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.userModel.findByIdAndRemove(id).exec();
+  }
+ 
+    
 }

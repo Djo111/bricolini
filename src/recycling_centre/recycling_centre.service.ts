@@ -2,14 +2,20 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel, MongooseModule } from '@nestjs/mongoose';
 import { Recycling_centre } from './schemas/recycling_centre.schema';
 import * as mongoose from 'mongoose';
+import { Offer } from 'src/offer/schemas/offer.schema';
+import { OfferService } from 'src/offer/offer.service';
 
 @Injectable()
 export class RecyclingCentreService {
     constructor(
         @InjectModel(Recycling_centre.name)
-        private recyclingcentreModel : mongoose.Model<Recycling_centre>
+        private recyclingcentreModel: mongoose.Model<Recycling_centre>,
+        private offerservice: OfferService
     ) { }
     
+    async getallOffers(): Promise<Offer[]>{
+        return this.offerservice.findAllOffers()
+    }
     async findAll(): Promise<Recycling_centre[]> {
         const recyclingCenters = await this.recyclingcentreModel.find()
         return recyclingCenters

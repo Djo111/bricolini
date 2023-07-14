@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { v4 as uuidv4 } from 'uuid';
+import { category } from "../dto/create-diyworshop.dto";
+
 
 export enum waste_type{
     IRON_WASTE = 'iron waste',
@@ -13,8 +14,7 @@ export enum waste_type{
 })
 export class DIY_workshop {
 
-    @Prop({ default: uuidv4 })
-    _id: string;
+    
 
     @Prop({required: true})
     email: string;
@@ -32,7 +32,10 @@ export class DIY_workshop {
     address: string;
 
     @Prop({ required: true })
-    diy_waste_type: waste_type
+    diy_waste_type: waste_type;
+
+    @Prop({ required: true })
+    categ: category
 }
 
 export const DiyworshopSchema= SchemaFactory.createForClass(DIY_workshop)

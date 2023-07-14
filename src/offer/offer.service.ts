@@ -10,27 +10,27 @@ import { Offer } from './schemas/offer.schema';
 export class OfferService {
   constructor(
     @InjectModel(Offer.name)
-    private readonly offerModel: Model<Offer>,
+    private readonly offerrModel: Model<Offer>,
   ) {}
 
-  async create(createOfferDto: CreateOfferDto): Promise<Offer> {
-    const createdOffer = new this.offerModel(createOfferDto);
-    return createdOffer.save();
+  async createNewOffer(offerdto: CreateOfferDto): Promise<Offer> {
+    const createdoffer= new this.offerrModel(offerdto);
+    return createdoffer.save();
   }
 
-  async findAll(): Promise<Offer[]> {
-    return this.offerModel.find().exec();
+  async findAllOffers(): Promise<Offer[]> {
+    return this.offerrModel.find().exec();
   }
 
   async findOne(id: string): Promise<Offer> {
-    return this.offerModel.findById(id).exec();
+    return this.offerrModel.findById(id).exec();
   }
 
-  async update(id: string, updateOfferrDto: UpdateOfferDto): Promise<Offer> {
-    return this.offerModel.findByIdAndUpdate(id, updateOfferrDto, { new: true }).exec();
+  async update(id: string, offerDto: UpdateOfferDto): Promise<Offer> {
+    return this.offerrModel.findByIdAndUpdate(id, offerDto, { new: true }).exec();
   }
 
   async remove(id: string): Promise<void> {
-    await this.offerModel.findByIdAndRemove(id).exec();
+    await this.offerrModel.findByIdAndRemove(id).exec();
   }
 }
