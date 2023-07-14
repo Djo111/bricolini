@@ -47,5 +47,8 @@ export class AuthService {
         
         return { token };
     }
+    async validate(payload:any) {
+        return{'User':payload.user};
+    }
 
 }
