@@ -1,5 +1,7 @@
 // ignore_for_file: camel_case_types, unnecessary_import, non_constant_identifier_names
 
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/material.dart';
@@ -283,13 +285,29 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
-  String _selectedCategory = 'Simple_user';
+  String _selectedCategory = 'Simple user';
   final List<String> _categories = [
-    'Simple_user',
-    'DIY_Workshop',
-    'Recycling_Company',
+    'Simple user',
+    'DIY workshop',
+    'Recycling center',
     'Transporter',
   ];
+  void createSimpleUser(
+      String s1, String s2, String s3, String s4, String s5) async {
+    await http.post(
+      Uri.parse('http://localhost:3000/auth/signup'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "email": s1,
+        "username": s2,
+        "password": s3,
+        "phoneNumber": s4,
+        "category": s5,
+      }),
+    );
+  }
 
   void _submitForm() {
     final String email = _emailController.text;
@@ -307,12 +325,13 @@ class _SignupPageState extends State<SignupPage> {
     _phoneNumberController.clear();
 
     // Navigate to the corresponding page based on the selected category
-    if (category == 'Simple_user') {
+    if (category == 'Simple user') {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Simple_User_HomeScreen()),
       );
-    } else if (category == 'DIY_Workshop') {
+      createSimpleUser(email, fullName, password, phoneNumber, category);
+    } else if (category == 'DIY workshop') {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -324,7 +343,7 @@ class _SignupPageState extends State<SignupPage> {
           ),
         ),
       );
-    } else if (category == 'Recycling_Company') {
+    } else if (category == 'Recycling center') {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -1426,14 +1445,14 @@ class FindTrans extends StatefulWidget {
 class _FindTransState extends State<FindTrans> {
   List<Transporter> historyList = [
     Transporter(
-      photo: "lib/images/construct.jpg",
+      photo: "lib/images/Logo_Arcturus.png",
       tName: "Ahmed",
       location: "Casablanca",
       pricePerKm: 100,
       vehicule: "camion blabla",
     ),
     Transporter(
-      photo: "lib/images/construct.jpg",
+      photo: "lib/images/Logo_Arcturus.png",
       tName: "Hamiiid",
       location: "Tunis, Tunisie",
       pricePerKm: 100,
@@ -1451,7 +1470,7 @@ class _FindTransState extends State<FindTrans> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Find a transporter',
           style: TextStyle(color: Colors.lightGreen, fontSize: 20),
         ),
@@ -1463,7 +1482,7 @@ class _FindTransState extends State<FindTrans> {
           final offer = historyList[index];
 
           return Container(
-            margin: const EdgeInsets.all(10.0),
+            margin: EdgeInsets.all(10.0),
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.grey,
@@ -1474,8 +1493,8 @@ class _FindTransState extends State<FindTrans> {
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.network(
+                  padding: EdgeInsets.all(8.0),
+                  child: Image.asset(
                     offer.photo,
                     width: 50,
                     height: 50,
@@ -1487,7 +1506,7 @@ class _FindTransState extends State<FindTrans> {
                     children: [
                       Text(
                         offer.tName,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -1505,12 +1524,12 @@ class _FindTransState extends State<FindTrans> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.all(8.0),
+                  margin: EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
                       // TODO: Implement button functionality
                     },
-                    child: const Text('Button'),
+                    child: Text('Button'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
