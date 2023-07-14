@@ -10,14 +10,14 @@ class FindTrans extends StatefulWidget {
 class _FindTransState extends State<FindTrans> {
   List<Transporter> historyList = [
     Transporter(
-      photo: "../../assets/Logo_Arcturus.png",
+      photo: "lib/images/Logo_Arcturus.png",
       tName: "Ahmed",
       location: "Casablanca",
       pricePerKm: 100,
       vehicule: "camion blabla",
     ),
     Transporter(
-      photo: "../../assets/Logo_Arcturus.png",
+      photo: "lib/images/Logo_Arcturus.png",
       tName: "Hamiiid",
       location: "Tunis, Tunisie",
       pricePerKm: 100,
@@ -59,7 +59,7 @@ class _FindTransState extends State<FindTrans> {
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Image.network(
+                  child: Image.asset(
                     offer.photo,
                     width: 50,
                     height: 50,
