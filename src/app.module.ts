@@ -24,11 +24,8 @@ import { AuthModule } from './auth/auth.module';
     RecyclingCentreModule,
     DiyWorkshopModule,
     AuthModule,
-<<<<<<< HEAD
-=======
     SimpleUserModule,
     TransporterModule,
->>>>>>> bf57acce61374a4dc8919768f20b1e29a0b5e1d3
     OfferModule
   ],
   controllers: [AppController],
