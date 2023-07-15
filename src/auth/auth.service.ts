@@ -37,7 +37,7 @@ export class AuthService {
         })
 
         const token = this.jwtService.sign({ id: user._id })
-        
+        console.log("signup done")
         return {token};
     }
 
