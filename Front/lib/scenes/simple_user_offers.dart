@@ -12,6 +12,7 @@ class _SimpleUserOffersState extends State<SimpleUserOffers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF171918),
       body: Center(
         child: FloatingActionButton(
           child: const Icon(Icons.add),

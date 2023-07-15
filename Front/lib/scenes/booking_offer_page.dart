@@ -16,8 +16,10 @@ class _BookingOfferPageState extends State<BookingOfferPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF171918),
       appBar: AppBar(
         title: const Text('Booking Offer'),
+        backgroundColor: const Color(0xFF171918),
       ),
       body: Center(
         child: Column(

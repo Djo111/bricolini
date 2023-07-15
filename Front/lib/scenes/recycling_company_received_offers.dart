@@ -54,6 +54,7 @@ class _RecyclingCompanyReceivedOffersState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF171918),
       body: ListView.builder(
         itemCount: receivedOffers.length,
         itemBuilder: (context, index) {

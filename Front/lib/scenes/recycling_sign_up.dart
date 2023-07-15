@@ -28,8 +28,10 @@ class _Recycling_Sign_UpState extends State<Recycling_Sign_Up> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF171918),
       appBar: AppBar(
         title: const Text('Recycling_Company'),
+        backgroundColor: const Color(0xFF171918),
       ),
       body: Container(
         padding: const EdgeInsets.all(16),

@@ -4,14 +4,17 @@ import 'package:bricoloni_v2/scenes/recycling_company_received_offers.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class Recycling_Company_HomeScreen extends StatefulWidget {
   const Recycling_Company_HomeScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _Recycling_Company_HomeScreenState createState() =>
       _Recycling_Company_HomeScreenState();
 }
 
+// ignore: camel_case_types
 class _Recycling_Company_HomeScreenState
     extends State<Recycling_Company_HomeScreen> {
   int _selectedIndex = 0;
@@ -37,6 +40,13 @@ class _Recycling_Company_HomeScreenState
     const RecyclingCompanyReceivedOffers(),
   ];
 
+  final List<IconData> _iconList = [
+    Icons.home,
+    Icons.shopping_cart,
+    Icons.stacked_line_chart,
+    Icons.call_received,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -45,57 +55,39 @@ class _Recycling_Company_HomeScreenState
         return false;
       },
       child: Scaffold(
+        backgroundColor: const Color(0xFF171918),
         appBar: AppBar(
           title: const Text('Recycling Company HomeScreen'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.account_circle),
-              onPressed: () {
-                /*Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Profile_Page()),
-                );*/
-              },
-            ),
-          ],
         ),
         body: Row(
           children: [
             if (_navigationRailVisible)
-              NavigationRail(
-                selectedIndex: _selectedIndex,
-                onDestinationSelected: _onItemTapped,
-                labelType: NavigationRailLabelType.all,
-                destinations: const [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.home),
-                    label: Text('Home'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.shopping_cart),
-                    label: Text('Marketplace'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.stacked_line_chart),
-                    label: Text('Stats'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.call_received),
-                    label: Text('Offers'),
-                  ),
-                ],
+              Container(
+                width: 92,
+                height: double.infinity,
+                color: const Color(0xFF171918),
+                child: ListView.builder(
+                  itemCount: _iconList.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => _onItemTapped(index),
+                      child: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Icon(
+                          _iconList[index],
+                          color: Colors.white,
+                          size: 30.0,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             const VerticalDivider(thickness: 1, width: 1),
             Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      child: _pages[_selectedIndex],
-                    ),
-                  ),
-                ],
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                child: _pages[_selectedIndex],
               ),
             ),
           ],

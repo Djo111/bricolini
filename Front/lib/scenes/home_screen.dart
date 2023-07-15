@@ -9,6 +9,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -34,6 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
     const HistoryPage(),
     const MarketplacePage(),
     const StatsPage(),
+    const SignInPage(),
+  ];
+
+  final List<IconData> _iconList = [
+    Icons.home,
+    Icons.history,
+    Icons.shopping_cart,
+    Icons.stacked_line_chart,
+    Icons.person,
   ];
 
   @override
@@ -44,57 +54,40 @@ class _HomeScreenState extends State<HomeScreen> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: const Color(0xFF171918), // Add this line
         appBar: AppBar(
           title: const Text('Bricolini'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.account_circle),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignInPage()),
-                );
-              },
-            ),
-          ],
+          backgroundColor: const Color(0xFF171918),
         ),
         body: Row(
           children: [
             if (_isRailVisible)
-              NavigationRail(
-                selectedIndex: _selectedIndex,
-                onDestinationSelected: _onItemTapped,
-                labelType: NavigationRailLabelType.all,
-                destinations: const [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.home),
-                    label: Text('Home'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.history),
-                    label: Text('History'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.shopping_cart),
-                    label: Text('Marketplace'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.stacked_line_chart),
-                    label: Text('Stats'),
-                  ),
-                ],
+              Container(
+                width: 92,
+                height: double.infinity,
+                color: const Color(0xFF171918),
+                child: ListView.builder(
+                  itemCount: _iconList.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => _onItemTapped(index),
+                      child: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Icon(
+                          _iconList[index],
+                          color: Colors.white,
+                          size: 30.0,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             const VerticalDivider(thickness: 1, width: 1),
             Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      child: _pages[_selectedIndex],
-                    ),
-                  ),
-                ],
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                child: _pages[_selectedIndex],
               ),
             ),
           ],
