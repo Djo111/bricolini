@@ -15,6 +15,8 @@ dependencies:
   latlong2: ^0.9.0
   geocoding: ^2.1.0
   http: ^0.13.3
+  google_maps_flutter: ^2.2.3
+
   
 
 dev_dependencies:

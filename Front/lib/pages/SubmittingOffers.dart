@@ -3,7 +3,6 @@ import 'package:bricoloni_v2/pages/SimpleUserHistory.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -254,7 +253,7 @@ class _UploadImageState extends State<UploadImage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FindTrans()),
+                  MaterialPageRoute(builder: (context) => SimpleUhistory()),
                 );
               },
               child: const Text(
