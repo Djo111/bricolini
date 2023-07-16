@@ -13,21 +13,13 @@ class Transporter_HomeScreen extends StatefulWidget {
   Transporter_HomeScreenState createState() => Transporter_HomeScreenState();
 }
 
-// ignore: camel_case_types
 class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
   int _selectedIndex = 0;
   bool _navigationRailVisible = true;
 
-  void _onItemTapped(int index) {
+  void _toggleNavigationBar() {
     setState(() {
-      _selectedIndex = index;
-      _navigationRailVisible = false;
-    });
-  }
-
-  void _onBackPressed() {
-    setState(() {
-      _navigationRailVisible = true;
+      _navigationRailVisible = !_navigationRailVisible;
     });
   }
 
@@ -49,12 +41,19 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _onBackPressed();
-        return false;
+        if (!_navigationRailVisible) {
+          _toggleNavigationBar();
+          return false;
+        }
+        return true;
       },
       child: Scaffold(
         backgroundColor: const Color(0xFF171918),
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(_navigationRailVisible ? Icons.menu_open : Icons.menu),
+            onPressed: _toggleNavigationBar,
+          ),
           title: const Text('Transporter Home Screen'),
         ),
         body: Row(
@@ -68,7 +67,11 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
                   itemCount: _iconList.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => _onItemTapped(index),
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      },
                       child: Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Icon(

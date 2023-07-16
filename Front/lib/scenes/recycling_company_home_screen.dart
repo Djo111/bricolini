@@ -9,27 +9,18 @@ class Recycling_Company_HomeScreen extends StatefulWidget {
   const Recycling_Company_HomeScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _Recycling_Company_HomeScreenState createState() =>
       _Recycling_Company_HomeScreenState();
 }
 
-// ignore: camel_case_types
 class _Recycling_Company_HomeScreenState
     extends State<Recycling_Company_HomeScreen> {
   int _selectedIndex = 0;
   bool _navigationRailVisible = true;
 
-  void _onItemTapped(int index) {
+  void _toggleNavigationBar() {
     setState(() {
-      _selectedIndex = index;
-      _navigationRailVisible = false;
-    });
-  }
-
-  void _onBackPressed() {
-    setState(() {
-      _navigationRailVisible = true;
+      _navigationRailVisible = !_navigationRailVisible;
     });
   }
 
@@ -51,12 +42,19 @@ class _Recycling_Company_HomeScreenState
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _onBackPressed();
-        return false;
+        if (!_navigationRailVisible) {
+          _toggleNavigationBar();
+          return false;
+        }
+        return true;
       },
       child: Scaffold(
         backgroundColor: const Color(0xFF171918),
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(_navigationRailVisible ? Icons.menu_open : Icons.menu),
+            onPressed: _toggleNavigationBar,
+          ),
           title: const Text('Recycling Company HomeScreen'),
         ),
         body: Row(
@@ -70,7 +68,11 @@ class _Recycling_Company_HomeScreenState
                   itemCount: _iconList.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => _onItemTapped(index),
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      },
                       child: Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Icon(

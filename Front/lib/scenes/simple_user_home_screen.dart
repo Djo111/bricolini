@@ -9,25 +9,16 @@ class Simple_User_HomeScreen extends StatefulWidget {
   const Simple_User_HomeScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _Simple_User_HomeScreenState createState() => _Simple_User_HomeScreenState();
 }
 
-// ignore: camel_case_types
 class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
   int _selectedIndex = 0;
   bool _navigationRailVisible = true;
 
-  void _onItemTapped(int index) {
+  void _toggleNavigationBar() {
     setState(() {
-      _selectedIndex = index;
-      _navigationRailVisible = false;
-    });
-  }
-
-  void _onBackPressed() {
-    setState(() {
-      _navigationRailVisible = true;
+      _navigationRailVisible = !_navigationRailVisible;
     });
   }
 
@@ -49,12 +40,19 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        _onBackPressed();
-        return false;
+        if (!_navigationRailVisible) {
+          _toggleNavigationBar();
+          return false;
+        }
+        return true;
       },
       child: Scaffold(
         backgroundColor: const Color(0xFF171918),
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(_navigationRailVisible ? Icons.menu_open : Icons.menu),
+            onPressed: _toggleNavigationBar,
+          ),
           title: const Text('Simple User HomeScreen'),
         ),
         body: Row(
@@ -68,7 +66,11 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
                   itemCount: _iconList.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => _onItemTapped(index),
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      },
                       child: Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Icon(
