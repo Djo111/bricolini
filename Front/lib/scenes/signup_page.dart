@@ -80,6 +80,8 @@ class _SignupPageState extends State<SignupPage> {
 
     // Navigate to the corresponding page based on the selected category
     if (category == 'Simple user') {
+      await createSimpleUser(email, fullName, password, phoneNumber, category);
+      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Simple_User_HomeScreen()),
@@ -126,7 +128,9 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF171918),
       appBar: AppBar(
+        backgroundColor: const Color(0xFF171918),
         title: const Text('Sign Up'),
       ),
       body: SingleChildScrollView(

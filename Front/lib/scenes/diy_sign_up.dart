@@ -27,8 +27,10 @@ class _DIY_Sign_UpState extends State<DIY_Sign_Up> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF171918),
       appBar: AppBar(
         title: const Text('DIY_Workshop'),
+        backgroundColor: const Color(0xFF171918),
       ),
       body: Container(
         padding: const EdgeInsets.all(16),

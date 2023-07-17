@@ -5,6 +5,7 @@ import 'package:bricoloni_v2/scenes/transporter_profile_page.dart';
 import 'package:bricoloni_v2/scenes/transporter_received_offers.dart';
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class Transporter_HomeScreen extends StatefulWidget {
   const Transporter_HomeScreen({super.key});
 
@@ -16,9 +17,8 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
   int _selectedIndex = 0;
   bool _navigationRailVisible = true;
 
-  void _onItemTapped(int index) {
+  void _toggleNavigationBar() {
     setState(() {
-      _selectedIndex = index;
       _navigationRailVisible = !_navigationRailVisible;
     });
   }
@@ -30,64 +30,69 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
     const TransporterReceivedOffers(),
   ];
 
+  final List<IconData> _iconList = [
+    Icons.home,
+    Icons.shopping_cart,
+    Icons.stacked_line_chart,
+    Icons.add_task,
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Transporter Home Screen'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.account_circle),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const TransporterProfilePage()),
-              );
-            },
+    return WillPopScope(
+      onWillPop: () async {
+        if (!_navigationRailVisible) {
+          _toggleNavigationBar();
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFF171918),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(_navigationRailVisible ? Icons.menu_open : Icons.menu),
+            onPressed: _toggleNavigationBar,
           ),
-        ],
-      ),
-      body: Row(
-        children: [
-          if (_navigationRailVisible)
-            NavigationRail(
-              selectedIndex: _selectedIndex,
-              onDestinationSelected: _onItemTapped,
-              labelType: NavigationRailLabelType.all,
-              destinations: const [
-                NavigationRailDestination(
-                  icon: Icon(Icons.home),
-                  label: Text('Home'),
+          title: const Text('Transporter Home Screen'),
+        ),
+        body: Row(
+          children: [
+            if (_navigationRailVisible)
+              Container(
+                width: 92,
+                height: double.infinity,
+                color: const Color(0xFF171918),
+                child: ListView.builder(
+                  itemCount: _iconList.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Icon(
+                          _iconList[index],
+                          color: Colors.white,
+                          size: 30.0,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.shopping_cart),
-                  label: Text('Marketplace'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.stacked_line_chart),
-                  label: Text('Stats'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.add_task),
-                  label: Text('Offers'),
-                ),
-              ],
+              ),
+            const VerticalDivider(thickness: 1, width: 1),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                child: _pages[_selectedIndex],
+              ),
             ),
-          const VerticalDivider(thickness: 1, width: 1),
-          Expanded(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    child: _pages[_selectedIndex],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -34,12 +34,13 @@ class _FindTransState extends State<FindTrans> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF171918),
       appBar: AppBar(
+        backgroundColor: const Color(0xFF171918),
         title: Text(
           'Find a transporter',
           style: TextStyle(color: Colors.lightGreen, fontSize: 20),
         ),
-        backgroundColor: Colors.black,
       ),
       body: ListView.builder(
         itemCount: historyList.length,
