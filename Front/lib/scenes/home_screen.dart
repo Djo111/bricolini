@@ -64,14 +64,17 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: const Color(0xFF171918), // Add this line
         appBar: AppBar(
-          title: const Text('Bricolini', style: TextStyle(color: Colors.lightGreen),),
+          title: const Text(
+            'Bricolini',
+            style: TextStyle(color: Colors.lightGreen),
+          ),
           backgroundColor: const Color(0xFF171918),
           actions: [
             GestureDetector(
               onTap: _goToAboutUsPage,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Image.asset('../../Logo_Arcturus.png',
+                child: Image.asset('lib/images/Logo_Arcturus.png',
                     width: 40, height: 40),
               ),
             ),

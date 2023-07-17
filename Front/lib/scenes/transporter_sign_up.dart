@@ -61,10 +61,6 @@ class _Transporter_Sign_UpState extends State<Transporter_Sign_Up> {
             SizedBox(height: 40),
             TextField(
               controller: _regionController,
-<<<<<<< HEAD
-=======
-              obscureText: false,
->>>>>>> 67de6d83059475f25037122936999c45b1392391
               decoration: const InputDecoration(
                 labelText: 'Address',
                 border: OutlineInputBorder(
@@ -116,7 +112,6 @@ class _Transporter_Sign_UpState extends State<Transporter_Sign_Up> {
                     hintStyle: TextStyle(color: Colors.white),
                   ),
                 ),
-
               ],
             ),
             const SizedBox(height: 16),
@@ -221,7 +216,10 @@ class _Transporter_Sign_UpState extends State<Transporter_Sign_Up> {
                     numMedianTrucks.toString(),
                     numBigTrucks.toString());
               },
-              child: const Text('Sign Up',style: TextStyle(color: Colors.black, fontSize: 16),),
+              child: const Text(
+                'Sign Up',
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.lightGreen,
                 foregroundColor: Colors.black,

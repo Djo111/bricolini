@@ -33,12 +33,11 @@ class _SignInPageState extends State<SignInPage> {
       backgroundColor: const Color(0xFF171918),
       appBar: AppBar(
         backgroundColor: const Color(0xFF171918),
-        title: const Text('Sign In / Sign Up',style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white
-        ),),
-
+        title: const Text(
+          'Sign In / Sign Up',
+          style: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -49,14 +48,12 @@ class _SignInPageState extends State<SignInPage> {
             const Text(
               'Welcome to Brocolini',
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.lightGreen
-              ),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.lightGreen),
             ),
             const SizedBox(height: 32),
             TextField(
-<<<<<<< HEAD
               controller: _emailController, // Use the email controller
               style: const TextStyle(
                 color: Colors.white,
@@ -75,23 +72,8 @@ class _SignInPageState extends State<SignInPage> {
                   borderSide: BorderSide(
                       color: Colors
                           .green), // Set the color of the border when the field is not focused
-=======
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                labelStyle: TextStyle(color: Colors.white),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
->>>>>>> 67de6d83059475f25037122936999c45b1392391
                 ),
               ),
-              style: const TextStyle(color: Colors.white),
             ),
             const SizedBox(height: 16),
             TextField(
@@ -130,12 +112,12 @@ class _SignInPageState extends State<SignInPage> {
               onPressed: () {
                 _navigateToSignupPage();
               },
-              child: const Text('Don\'t have an account? Sign Up',
+              child: const Text(
+                'Don\'t have an account? Sign Up',
                 style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.normal,
-                    color: Colors.white
-                ),
+                    color: Colors.white),
               ),
             ),
           ],
