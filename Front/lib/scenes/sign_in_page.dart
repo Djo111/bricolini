@@ -33,7 +33,12 @@ class _SignInPageState extends State<SignInPage> {
       backgroundColor: const Color(0xFF171918),
       appBar: AppBar(
         backgroundColor: const Color(0xFF171918),
-        title: const Text('Sign In / Sign Up'),
+        title: const Text('Sign In / Sign Up',style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+        ),),
+
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -46,15 +51,26 @@ class _SignInPageState extends State<SignInPage> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
+                color: Colors.lightGreen
               ),
             ),
             const SizedBox(height: 32),
             TextField(
-              controller: _emailController, // Use the email controller
+              controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                labelStyle: TextStyle(color: Colors.white),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
               ),
+              style: const TextStyle(color: Colors.white),
             ),
             const SizedBox(height: 16),
             TextField(
@@ -62,8 +78,18 @@ class _SignInPageState extends State<SignInPage> {
               obscureText: true,
               decoration: const InputDecoration(
                 labelText: 'Password',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                labelStyle: TextStyle(color: Colors.white),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
               ),
+              style: const TextStyle(color: Colors.white),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -73,13 +99,23 @@ class _SignInPageState extends State<SignInPage> {
                 // Use the email and password for backend processing
               },
               child: const Text('Sign In'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightGreen,
+                foregroundColor: Colors.black,
+              ),
             ),
             const SizedBox(height: 8),
             TextButton(
               onPressed: () {
                 _navigateToSignupPage();
               },
-              child: const Text('Don\'t have an account? Sign Up'),
+              child: const Text('Don\'t have an account? Sign Up',
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white
+                ),
+              ),
             ),
           ],
         ),
