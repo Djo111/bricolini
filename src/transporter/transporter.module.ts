@@ -4,11 +4,12 @@ import { TransporterService } from './transporter.service';
 import { TransporterController } from './transporter.controller';
 import { Mongoose } from 'mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Transporter, TransporterSchema } from './schemas/transporter.schema';
+
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Transporter.name, schema: TransporterSchema }])],
+  imports: [],
   controllers: [TransporterController],
-  providers: [TransporterService]
+  providers: [TransporterService],
+  exports:[TransporterService]
 })
 export class TransporterModule {}

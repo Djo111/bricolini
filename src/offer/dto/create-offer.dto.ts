@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 export class CreateOfferDto {
-    readonly user_id:number
+    readonly user_id:string
     readonly img:string
     readonly location:string
     readonly paid:boolean
