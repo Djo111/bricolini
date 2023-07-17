@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { LogInDto } from './dto/login.dto';
+import { categ } from './schemas/user.schema';
 
 @Controller('auth')
 export class AuthController {
@@ -28,6 +29,13 @@ export class AuthController {
     findAll() {
     return this.authService.findAll();
     }
+  @Get('category/:catg')
+  findCateg( @Param("catg")
+    catg: categ) {
+   
+    return this.authService.findByCategory(catg)
+    }
+   
 
   @Get(':id')
   findOne(@Param('id') id: string) {
