@@ -1,9 +1,10 @@
 import 'package:bricoloni_v2/scenes/booking_offer_page.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class RecyclingCompanyReceivedOffers extends StatefulWidget {
   const RecyclingCompanyReceivedOffers({Key? key}) : super(key: key);
-
   @override
   State<RecyclingCompanyReceivedOffers> createState() =>
       _RecyclingCompanyReceivedOffersState();
@@ -23,33 +24,54 @@ class Offer {
     required this.estimatedDistance,
     required this.price,
   });
+  factory Offer.fromJson(Map<String, dynamic> json) {
+    return Offer(
+      photo: json['img'],
+      price: json['price'],
+      address: json['location'],
+      estimatedDistance: 0,
+      type: '',
+    );
+  }
 }
 
 class _RecyclingCompanyReceivedOffersState
     extends State<RecyclingCompanyReceivedOffers> {
-  final List<Offer> receivedOffers = [
+  Future<List<Offer>> fetchAllOffers() async {
+    final response = await http
+        .get(Uri.parse('http://localhost:3000/recycling-centre/offers'));
+
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      List<dynamic> jsonList = jsonDecode(response.body);
+      List<Offer> offers =
+          jsonList.map((json) => Offer.fromJson(json)).toList();
+      return offers;
+    } else {
+      // If the server did not return a 200 OK response, throw an exception.
+      throw Exception('Failed to load users');
+    }
+  }
+
+  List<Offer> receivedOffers = [
     Offer(
       photo: 'lib/images/construct.jpg',
       address: '123 Main St',
       type: 'construct',
       estimatedDistance: 2.5,
       price: 200,
-    ),
-    Offer(
-      photo: 'lib/images/metal.jpeg',
-      address: '456 Elm St',
-      type: 'metal',
-      estimatedDistance: 1.8,
-      price: 200,
-    ),
-    Offer(
-      photo: 'lib/images/wood.jpeg',
-      address: '789 Oak St',
-      type: 'wood',
-      estimatedDistance: 3.2,
-      price: 200,
-    ),
+    )
   ];
+  @override
+  void initState() {
+    super.initState();
+    fetchAllOffers().then((offers) {
+      setState(() {
+        receivedOffers.addAll(offers);
+      });
+      print(receivedOffers.length);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
