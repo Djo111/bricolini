@@ -3,6 +3,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { LogInDto } from './dto/login.dto';
+import { User } from './schemas/user.schema';
 
 @Controller('auth')
 export class AuthController {
@@ -29,7 +30,25 @@ export class AuthController {
     findAll() {
     return this.authService.findAll();
     }
-
+    @Get('users/diy')
+    async findAllDIYUsers(): Promise<User[]> {
+      return this.authService.findAllDIY();
+    }
+  
+    @Get('users/rc')
+    async findAllRCUsers(): Promise<User[]> {
+      return this.authService.findAllRC();
+    }
+  
+    @Get('users/user')
+    async findAllSimpleUsers(): Promise<User[]> {
+      return this.authService.findAllU();
+    }
+  
+    @Get('users/transporter')
+    async findAllTUsers(): Promise<User[]> {
+      return this.authService.findAllT();
+    }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.authService.findOne(id);
@@ -43,7 +62,5 @@ export class AuthController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.authService.remove(id);
-  }
-
-  
+  }  
 }

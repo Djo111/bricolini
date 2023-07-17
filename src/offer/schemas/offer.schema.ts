@@ -16,7 +16,7 @@ export class Offer {
     price: number;
     @Prop()
     estimateddistance:number;
-
-    
+    @Prop()
+    status:number
 }
 export const OfferSchema=SchemaFactory.createForClass(Offer)    

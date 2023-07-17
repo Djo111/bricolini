@@ -46,14 +46,14 @@ export class OfferController {
     
     return "success";
   }*/
-  
-
-
   @Get()
-  findAll() {
-    return this.offerService.findAllOffers();
+  findAllV() {
+    return this.offerService.findAllVerifiedOffers();
   }
-
+  @Get()
+  findAllNV() {
+    return this.offerService.findAllNotVerifiedOffers();
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.offerService.findOne(id);
@@ -62,7 +62,7 @@ export class OfferController {
   @UseGuards(AuthGuard('JWT'))
   @Post()
   @UseInterceptors(FileInterceptor('file', storage))
-  uploadFile(@UploadedFile() file, @Request() req) : Observable<Object>{
+  uploadFile(@UploadedFile() file, @Request() req) : Observable<object>{
     const user: User =req.user.user;
     console.log(req.user)
     console.log(file);

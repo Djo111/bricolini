@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { User } from 'src/auth/schemas/user.schema';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
@@ -19,16 +21,30 @@ export class AdminController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.adminService.findOne(+id);
+    return this.adminService.findById(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
-    return this.adminService.update(+id, updateAdminDto);
+    return this.adminService.update(id, updateAdminDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.adminService.remove(+id);
+    return this.adminService.delete(id);
+  }
+  @Post('offers/:offerId/accept')
+  async acceptOffer(@Param('offerId') offerId: string): Promise<void> {
+    return this.adminService.acceptOffer(offerId);
+  }
+
+  @Delete('offers/:offerId')
+  async deleteOffer(@Param('offerId') offerId: string): Promise<void> {
+    return this.adminService.deleteOffer(offerId);
+  }
+
+  @Get('users/:category')
+  async getAllUsersByCategory(@Param('category') category: string): Promise<User[]> {
+    return this.adminService.getAllUsersByCategory(category);
   }
 }

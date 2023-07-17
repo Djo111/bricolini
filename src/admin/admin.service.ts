@@ -1,26 +1,73 @@
-import { Injectable } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable prettier/prettier */
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { AuthService } from 'src/auth/auth.service';
+import { User } from 'src/auth/schemas/user.schema';
+import { OfferService } from 'src/offer/offer.service';
+import { Offer } from 'src/offer/schemas/offer.schema';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
+import { Admin } from './schemas/admin.schema';
 
 @Injectable()
 export class AdminService {
-  create(createAdminDto: CreateAdminDto) {
-    return 'This action adds a new admin';
+  constructor(
+    @InjectModel(Admin.name) private readonly adminModel: Model<Admin>,
+    @InjectModel(Offer.name) private readonly offerModel: Model<Offer>,
+    private readonly userService:AuthService
+  ) {}
+
+  async create(createAdminDto: CreateAdminDto): Promise<Admin> {
+    const createdAdmin = new this.adminModel(createAdminDto);
+    return createdAdmin.save();
   }
 
-  findAll() {
-    return `This action returns all admin`;
+  async findAll(): Promise<Admin[]> {
+    return this.adminModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} admin`;
+  async findById(id: string): Promise<Admin> {
+    return this.adminModel.findById(id).exec();
   }
 
-  update(id: number, updateAdminDto: UpdateAdminDto) {
-    return `This action updates a #${id} admin`;
+  async update(id: string, updateAdminDto: UpdateAdminDto): Promise<Admin> {
+    return this.adminModel.findByIdAndUpdate(id, updateAdminDto, { new: true }).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} admin`;
+  async delete(id: string): Promise<void> {
+    await this.adminModel.findByIdAndDelete(id).exec();
+  }
+
+  async acceptOffer(offerId: string): Promise<void> {
+    const offer = await this.offerModel.findById(offerId).exec();
+    if (!offer) {
+      throw new NotFoundException('Offer not found');
+    }
+    offer.status = 1;
+    await offer.save();
+  }
+
+  async deleteOffer(offerId: string): Promise<void> {
+    const offer = await this.offerModel.findById(offerId).exec();
+    if (!offer) {
+      throw new NotFoundException('Offer not found');
+    }
+    await this.offerModel.findByIdAndDelete(offerId).exec();
+  }
+  async getAllUsersByCategory(category: string): Promise<User[]> {
+    switch (category) {
+      case 'DIY workshop':
+        return this.userService.findAllDIY();
+      case 'Recycling center':
+        return this.userService.findAllRC();
+      case 'Simple user':
+        return this.userService.findAllU();
+      case 'Transporter':
+        return this.userService.findAllT();
+      default:
+        return [];
+    }
   }
 }
