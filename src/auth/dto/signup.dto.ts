@@ -1,5 +1,5 @@
 import { Prop } from "@nestjs/mongoose";
-import { IsEmail, IsNotEmpty, IsString, MinLength} from "class-validator";
+import { IsOptional,IsEmail, IsNotEmpty, IsString, MinLength} from "class-validator";
 import { categ, waste_type } from "../schemas/user.schema";
 
 export class SignUpDto{
@@ -25,15 +25,16 @@ export class SignUpDto{
 
     @Prop()
     @IsString()
+    @IsOptional()
     address: string;
-
+    @IsOptional()
     @Prop()
     diy_waste_type: waste_type;
-
+    @IsOptional()
     @Prop()
-    
+    @IsOptional()
     region: string;
-
+    @IsOptional()
     @Prop()
     number_of_small_trucks: number;
     @Prop()

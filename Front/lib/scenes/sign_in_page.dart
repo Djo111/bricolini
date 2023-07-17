@@ -51,9 +51,24 @@ class _SignInPageState extends State<SignInPage> {
             const SizedBox(height: 32),
             TextField(
               controller: _emailController, // Use the email controller
+              style: const TextStyle(
+                color: Colors.white,
+              ),
               decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
+                hintText: "Enter Your Mail",
+                hintStyle: TextStyle(color: Colors.white70),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors
+                          .green), // Set the color of the border when the field is focused
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors
+                          .green), // Set the color of the border when the field is not focused
+                ),
               ),
             ),
             const SizedBox(height: 16),

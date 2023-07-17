@@ -1,5 +1,6 @@
 import 'package:bricoloni_v2/scenes/recycling_company_home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Recycling_Sign_Up extends StatefulWidget {
   final String email;
@@ -19,11 +20,24 @@ class Recycling_Sign_Up extends StatefulWidget {
   _Recycling_Sign_UpState createState() => _Recycling_Sign_UpState();
 }
 
+// ignore: camel_case_types
 class _Recycling_Sign_UpState extends State<Recycling_Sign_Up> {
   final TextEditingController _addressController = TextEditingController();
   int? _selectedItemIndex; // Track the index of the selected item
   // ignore: non_constant_identifier_names
   String Type_Waste = "";
+  Future<void> createRecyclingCenter(String s1, String s2, String s3, String s4,
+      String s5, String s6, String s7) async {
+    await http.post(Uri.parse("http://localhost:3000/auth/signup"), body: {
+      "email": s1,
+      "username": s2,
+      "password": s3,
+      "phoneNumber": s4,
+      "category": s5,
+      "address": s6,
+      "diy_waste_type": s7,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +54,6 @@ class _Recycling_Sign_UpState extends State<Recycling_Sign_Up> {
           children: [
             TextField(
               controller: _addressController,
-              obscureText: true,
               decoration: const InputDecoration(
                 labelText: 'Address',
                 border: OutlineInputBorder(),
@@ -57,36 +70,41 @@ class _Recycling_Sign_UpState extends State<Recycling_Sign_Up> {
             buildCheckboxListTile(3, 'Other'),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 String address = _addressController.text;
                 List<bool> checklist = List<bool>.filled(4, false);
                 if (_selectedItemIndex != null) {
                   checklist[_selectedItemIndex!] = true;
                 }
-                // TODO: Perform signup action with the entered data
-                int trueIndex =
-                    checklist.indexWhere((element) => element == true);
-                switch (trueIndex) {
+
+                switch (_selectedItemIndex) {
                   case 0:
-                    Type_Waste = "WoodWaste";
+                    Type_Waste = "wood waste";
                     break;
                   case 1:
-                    Type_Waste = "MetalWaste";
+                    Type_Waste = "iron waste";
                     break;
                   case 2:
-                    Type_Waste = "ConstructionWaste";
+                    Type_Waste = "construction waste";
                     break;
                   case 3:
-                    Type_Waste = "Other";
+                    Type_Waste = "others";
                     break;
                 }
-
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
                           const Recycling_Company_HomeScreen()),
                 );
+                await createRecyclingCenter(
+                    widget.email,
+                    widget.fullName,
+                    widget.password,
+                    widget.phoneNumber,
+                    "Recycling center",
+                    address,
+                    Type_Waste);
               },
               child: const Text('Sign Up'),
             ),
