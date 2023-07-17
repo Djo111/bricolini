@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.black45,
         title: Text(widget.title),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -122,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
+      backgroundColor: Colors.black,
     );
   }
 }
@@ -154,7 +155,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
           height: 200,
           width: 200,
           decoration: BoxDecoration(
-            color: Colors.black54,
+            color: Colors.lightGreen,
             borderRadius: BorderRadius.circular(10),
           ),
           child: _image != null
@@ -167,7 +168,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                   child: Icon(
                     Icons.image,
                     size: 50,
-                    color: Colors.lightGreen,
+                    color: Colors.black,
                   ),
                 ),
         ),
@@ -180,7 +181,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                backgroundColor: Colors.lightGreen, // Set the background color
+                backgroundColor: Colors.grey, // Set the background color
                 padding: const EdgeInsets.symmetric(
                     horizontal: 40.0, vertical: 15.0), // Set the padding
               ),
@@ -195,7 +196,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                backgroundColor: Colors.lightGreen, // Set the background color
+                backgroundColor: Colors.grey, // Set the background color
                 padding: const EdgeInsets.symmetric(
                     horizontal: 40.0, vertical: 15.0), // Set the padding
               ),
@@ -264,7 +265,7 @@ class _UploadImageState extends State<UploadImage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FindTrans()),
+                  MaterialPageRoute(builder: (context) => SimpleUhistory()),
                 );
               },
               child: const Text(
@@ -275,6 +276,7 @@ class _UploadImageState extends State<UploadImage> {
           ),
         ],
       ),
+      backgroundColor: Colors.black,
     );
   }
 }

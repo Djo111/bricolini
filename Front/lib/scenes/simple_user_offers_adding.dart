@@ -18,10 +18,10 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.black45,
         title: Text(widget.title),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () {
             //Navigator.pop(context); // Navigate back when the arrow is pressed
           },
@@ -34,42 +34,58 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Submit your offer!',
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(color: Colors.white, fontSize: 40),
                 ),
 
                 DropdownButton<String>(
                   value: _garbageType,
                   items: const [
                     DropdownMenuItem(
-                        child: Text("garbage type"), value: "garbage type"),
-                    DropdownMenuItem(child: Text("Metal"), value: "metal"),
-                    DropdownMenuItem(child: Text("Wood"), value: "wood"),
+                      child: Text("garbage type"),
+                      value: "garbage type",
+                    ),
                     DropdownMenuItem(
-                        child: Text("Construction waste"),
-                        value: "constructionWaste"),
-                    DropdownMenuItem(child: Text("Other"), value: "other")
+                      child: Text("Metal"),
+                      value: "metal",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Wood"),
+                      value: "wood",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Construction waste"),
+                      value: "constructionWaste",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Other"),
+                      value: "other",
+                    )
                   ],
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  dropdownColor: Colors.black,
                   onChanged: (value) {
                     setState(() {
                       _garbageType = value as String;
                     });
                   },
-                ),
-                const SizedBox(height: 70), //saut de ligne
-                const Text(
+                )
+                ,
+
+                SizedBox(height: 70), //saut de ligne
+                Text(
                   'Choose garbage location',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ],
             ),
           ),
-          const Expanded(
+          Expanded(
             flex: 2,
             child: Align(alignment: Alignment.center, child: Text("")),
           ),
-          const SizedBox(height: 10), //saut de ligne
+          SizedBox(height: 10), //saut de ligne
 
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
@@ -86,8 +102,8 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const UploadImage(
-                          title: "Upload a photo of your garbage")),
+                      builder: (context) =>
+                          UploadImage(title: "Upload a photo of your garbage")),
                 );
               },
               child: const Text(
@@ -98,6 +114,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
           ),
         ],
       ),
+      backgroundColor: Colors.black,
     );
   }
 }
