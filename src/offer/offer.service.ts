@@ -21,12 +21,15 @@ export class OfferService {
   async findAllOffers(): Promise<Offer[]> {
     return this.offerrModel.find().exec();
   }
-
+  
+  async findoffer_transporter(id: string): Promise<Offer[]>{
+    return this.offerrModel.find({id_transporter:id})
+  }
   async findOne(id: string): Promise<Offer> {
     return this.offerrModel.findById(id).exec();
   }
 
-  async update(id: string, offerDto: UpdateOfferDto): Promise<Offer> {
+  async update(id: string, offerDto): Promise<Offer> {
     return this.offerrModel.findByIdAndUpdate(id, offerDto, { new: true }).exec();
   }
 
