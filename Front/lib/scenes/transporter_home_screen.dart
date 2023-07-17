@@ -1,9 +1,10 @@
 import 'package:bricoloni_v2/scenes/home_page.dart';
 import 'package:bricoloni_v2/scenes/marketplace_page.dart';
+import 'package:bricoloni_v2/scenes/profile.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
-import 'package:bricoloni_v2/scenes/transporter_profile_page.dart';
 import 'package:bricoloni_v2/scenes/transporter_received_offers.dart';
 import 'package:flutter/material.dart';
+import 'package:bricoloni_v2/scenes/profile.dart';
 
 // ignore: camel_case_types
 class Transporter_HomeScreen extends StatefulWidget {
@@ -28,6 +29,7 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
     const MarketplacePage(),
     const StatsPage(),
     const TransporterReceivedOffers(),
+    const Profile(),
   ];
 
   final List<IconData> _iconList = [
@@ -35,6 +37,7 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
     Icons.shopping_cart,
     Icons.stacked_line_chart,
     Icons.add_task,
+    Icons.person_2,
   ];
 
   @override

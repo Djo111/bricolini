@@ -1,8 +1,10 @@
+import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:bricoloni_v2/scenes/history_page.dart';
 import 'package:bricoloni_v2/scenes/home_page.dart';
 import 'package:bricoloni_v2/scenes/marketplace_page.dart';
 import 'package:bricoloni_v2/scenes/sign_in_page.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
+import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,6 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
     Icons.stacked_line_chart,
     Icons.person,
   ];
+  void _goToAboutUsPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const About_Us()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +66,16 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: const Text('Bricolini'),
           backgroundColor: const Color(0xFF171918),
+          actions: [
+            GestureDetector(
+              onTap: _goToAboutUsPage,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Image.asset('lib/images/twitter-image.png',
+                    width: 40, height: 40),
+              ),
+            ),
+          ],
         ),
         body: Row(
           children: [
