@@ -64,7 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: const Color(0xFF171918), // Add this line
         appBar: AppBar(
-          title: const Text('Bricolini', style: TextStyle(color: Colors.lightGreen),),
+          title: const Text(
+            'Bricolini',
+            style: TextStyle(color: Colors.lightGreen),
+          ),
           backgroundColor: const Color(0xFF171918),
           actions: [
             GestureDetector(

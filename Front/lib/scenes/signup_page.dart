@@ -34,19 +34,14 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> createSimpleUser(
       String s1, String s2, String s3, String s4, String s5) async {
     try {
-      final response = await http.post(
-        Uri.parse('http://localhost:3000/auth/signup'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          "email": s1,
-          "username": s2,
-          "password": s3,
-          "phoneNumber": s4,
-          "category": s5,
-        }),
-      );
+      final response = await http
+          .post(Uri.parse('http://localhost:3000/auth/signup'), body: {
+        "email": s1,
+        "username": s2,
+        "password": s3,
+        "phoneNumber": s4,
+        "category": s5,
+      });
 
       if (response.statusCode == 200) {
         if (kDebugMode) {
@@ -81,7 +76,6 @@ class _SignupPageState extends State<SignupPage> {
 
     // Navigate to the corresponding page based on the selected category
     if (category == 'Simple user') {
-      await createSimpleUser(email, fullName, password, phoneNumber, category);
       // ignore: use_build_context_synchronously
       Navigator.push(
         context,
