@@ -1,5 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:bricoloni_v2/scenes/recycling_company_home_screen.dart';
 import 'package:bricoloni_v2/scenes/signup_page.dart';
+import 'package:bricoloni_v2/scenes/simple_user_home_screen.dart';
+import 'package:bricoloni_v2/scenes/transporter_home_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -12,6 +20,39 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  Future<String> loginUser(String s1, String s2) async {
+    String category = '';
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:3000/auth/user/login'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{"email": s1, "password": s2}),
+      );
+
+      // Check for successful status codes 200 or 201
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final body = jsonDecode(response.body);
+        final token = body['token'];
+        category = body['category'];
+
+        if (kDebugMode) {
+          print('User logged in: token=$token, category=$category');
+        }
+      } else {
+        if (kDebugMode) {
+          print('Failed to log in user: ${response.statusCode}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Exception occurred: $e');
+      }
+    }
+    return category;
+  }
 
   void _navigateToSignupPage() {
     Navigator.push(
@@ -96,10 +137,37 @@ class _SignInPageState extends State<SignInPage> {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 String email = _emailController.text;
                 String password = _passwordController.text;
                 // Use the email and password for backend processing
+                String category = await loginUser(email, password);
+                switch (category) {
+                  case "DIY workshop":
+                    break;
+                  case "Recycling center":
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const Recycling_Company_HomeScreen()),
+                    );
+                    break;
+                  case "Simple user":
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Simple_User_HomeScreen()),
+                    );
+                    break;
+                  case "Transporter":
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Transporter_HomeScreen()),
+                    );
+                    break;
+                }
               },
               child: const Text('Sign In'),
               style: ElevatedButton.styleFrom(

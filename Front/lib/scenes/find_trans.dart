@@ -1,3 +1,4 @@
+import 'package:bricoloni_v2/scenes/paiement.dart';
 import 'package:flutter/material.dart';
 
 class FindTrans extends StatefulWidget {
@@ -92,9 +93,7 @@ class _FindTransState extends State<FindTrans> {
                 Container(
                   margin: EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    onPressed: () {
-                      // TODO: Implement button functionality
-                    },
+                    onPressed: () {},
                     child: Text('Button'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

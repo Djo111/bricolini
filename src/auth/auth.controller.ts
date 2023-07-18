@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { LogInDto } from './dto/login.dto';
+import { categ } from './schemas/user.schema';
 
 @Controller('auth')
 export class AuthController {
@@ -16,25 +17,24 @@ export class AuthController {
         return this.authService.signUp(signupDto);
     }
 
-    @Get('/login')
-    Login(
-        @Body()
-        loginDto: LogInDto
-    ): Promise<{ token: string }>{
-        return this.authService.login(loginDto);
-    }
+    @Post('/user/login')
+  Login(
+    @Body()
+    loginDto: LogInDto
+  ): Promise<{ token: string, category: categ }>{
+    return this.authService.login(loginDto);
+  }
+
+  @Get('/user/:id')
+  findOne(@Param('id') id: string) {
+    return this.authService.findOne(id);
+  }
 
 
     @Get()
     findAll() {
     return this.authService.findAll();
     }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(id);
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSimpleUserDto: SignUpDto) {
     return this.authService.update(id, updateSimpleUserDto);

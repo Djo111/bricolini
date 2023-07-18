@@ -14,7 +14,7 @@ class Offer {
   final String photo;
   final String address;
   final String type;
-  final double price;
+  final int price;
   final double estimatedDistance;
 
   Offer({
