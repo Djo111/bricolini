@@ -1,4 +1,5 @@
-import { Injectable } from "@nestjs/common";
+/* eslint-disable prettier/prettier */
+import { Injectable } from '@nestjs/common';
 import * as passport from '@nestjs/passport';
 
 @Injectable()
