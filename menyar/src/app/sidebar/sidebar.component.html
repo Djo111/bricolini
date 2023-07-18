@@ -1,0 +1,81 @@
+
+<html>
+  <head>
+ 
+  </head>
+  <body><div class="area"></div><nav class="main-menu">
+            <ul>
+                <li>
+                    <img src="assets/Logo_Arcturus.png" class="fixsize"> 
+                    <a class="navbar-brand" style="color: white;">Bricolini</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="/home/offers">
+                        <img src="assets/offer.png" width="25" > <span class="px-3"></span>
+                        <span class="nav-text">
+                            new Offers 
+                        </span>
+                    </a> <br>
+                   
+                </li>
+                <li>
+                    <a  routerLink="/home/transporter">
+                        <img src="assets/R.png" width="25" ><span class="px-3"></span>
+                        <span class="nav-text">
+                          Transporter management
+                          
+                        </span>
+                    </a> <br>
+                  
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="/home/centers">
+                        <img src="assets/c.png" width="25" > <span class="px-3"></span>
+                        <span class="nav-text">
+                            Recycling Centers management
+                           
+                        </span>
+                    </a> <br>
+                    
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="/home/users">
+                     
+                       <img src="assets/d3.png" width="25" > <span class="px-3"></span>
+                        <span class="nav-text">
+                              DIY workshops management
+                                
+                        </span>
+                    </a> <br>
+                    
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="/home/history">
+                     
+                       <img src="assets/history.png" width="25" > <span class="px-3"></span>
+                        <span class="nav-text">
+                         Offers history                                
+                        </span>
+                    </a> <br>
+                    
+                </li>
+             
+            </ul>
+
+            <ul class="logout">
+                <li>
+                   <a routerLink="">
+                         <i class="fa fa-power-off fa-2x"></i>
+                        <span class="nav-text">
+                            <button class="btn custom-button" (click)=navigateTologin()>Logout
+                            </button>
+                        </span>
+                    </a>
+                </li>  
+            </ul>
+        </nav>
+  </body>
+    </html>
