@@ -2,7 +2,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from './schemas/user.schema';
+import { User, categ } from './schemas/user.schema';
 import * as bcrypt from 'bcryptjs'
 import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signup.dto';
@@ -77,6 +77,9 @@ export class AuthService {
   }
   async findOne(id: string): Promise<User> {
     return this.userModel.findById(id).exec();
+  }
+  async findByCategory(catg: categ): Promise<User[]>{
+    return this.userModel.find({category: catg})
   }
 
   async update(id: string, updateUserDto: SignUpDto): Promise<User> {

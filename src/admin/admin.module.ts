@@ -9,6 +9,7 @@ import { Admin, AdminSchema } from './schemas/admin.schema';
 import { Offer, OfferSchema } from 'src/offer/schemas/offer.schema';
 import { User, UserSchema } from 'src/auth/schemas/user.schema';
 import { JwtService } from '@nestjs/jwt';
+import { OfferService } from 'src/offer/offer.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { JwtService } from '@nestjs/jwt';
     ]),
   ],
   controllers: [AdminController],
-  providers: [AdminService,AuthService,JwtService]
+  providers: [AdminService,AuthService,JwtService,OfferService]
 })
 export class AdminModule {}

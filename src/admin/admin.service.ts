@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/ban-types */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuthService } from 'src/auth/auth.service';
-import { User } from 'src/auth/schemas/user.schema';
+import { categ, User } from 'src/auth/schemas/user.schema';
 import { OfferService } from 'src/offer/offer.service';
 import { Offer } from 'src/offer/schemas/offer.schema';
 import { CreateAdminDto } from './dto/create-admin.dto';
@@ -16,7 +16,8 @@ export class AdminService {
   constructor(
     @InjectModel(Admin.name) private readonly adminModel: Model<Admin>,
     @InjectModel(Offer.name) private readonly offerModel: Model<Offer>,
-    private readonly userService:AuthService
+    private readonly userService:AuthService,
+    private readonly offerservice:OfferService,
   ) {}
 
   async create(createAdminDto: CreateAdminDto): Promise<Admin> {
@@ -56,18 +57,10 @@ export class AdminService {
     }
     await this.offerModel.findByIdAndDelete(offerId).exec();
   }
-  async getAllUsersByCategory(category: string): Promise<User[]> {
-    switch (category) {
-      case 'DIY workshop':
-        return this.userService.findAllDIY();
-      case 'Recycling center':
-        return this.userService.findAllRC();
-      case 'Simple user':
-        return this.userService.findAllU();
-      case 'Transporter':
-        return this.userService.findAllT();
-      default:
-        return [];
-    }
+  async getAllUsersByCategory(category: categ): Promise<User[]> {
+    return this.userService.findByCategory(category);
+  }
+  async getAllNotVerifiedOffers():Promise<Offer[]>{
+    return this.offerservice.findAllNotVerifiedOffers();
   }
 }

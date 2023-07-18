@@ -18,5 +18,13 @@ export class Offer {
     estimateddistance:number;
     @Prop()
     status:number
+    @Prop()
+    id_recyclingCenter: string;
+    @Prop()
+    id_transporter: string;
+    @Prop()
+    id_offerProvider: string
+
+    
 }
 export const OfferSchema=SchemaFactory.createForClass(Offer)    

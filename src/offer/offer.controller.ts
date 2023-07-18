@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+ /* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards, Request } from '@nestjs/common';
 import { OfferService } from './offer.service';
 import { CreateOfferDto } from './dto/create-offer.dto';

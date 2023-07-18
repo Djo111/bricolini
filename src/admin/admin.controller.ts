@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { User } from 'src/auth/schemas/user.schema';
+import { categ, User } from 'src/auth/schemas/user.schema';
+import { Offer } from 'src/offer/schemas/offer.schema';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
@@ -8,7 +9,10 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
-
+  @Get('offers')
+  async getOffers(): Promise<Offer[]> {
+    return this.adminService.getAllNotVerifiedOffers();
+  }
   @Post()
   create(@Body() createAdminDto: CreateAdminDto) {
     return this.adminService.create(createAdminDto);
@@ -44,7 +48,7 @@ export class AdminController {
   }
 
   @Get('users/:category')
-  async getAllUsersByCategory(@Param('category') category: string): Promise<User[]> {
+  async getAllUsersByCategory(@Param('category') category: categ): Promise<User[]> {
     return this.adminService.getAllUsersByCategory(category);
   }
 }

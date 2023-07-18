@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Prop } from "@nestjs/mongoose";
 import { IsEmail, IsNotEmpty, IsString, MinLength} from "class-validator";
 import { categ, waste_type } from "../schemas/user.schema";
@@ -29,9 +30,7 @@ export class SignUpDto{
 
     @Prop()
     diy_waste_type: waste_type;
-
     @Prop()
-    
     region: string;
 
     @Prop()
