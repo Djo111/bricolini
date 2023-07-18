@@ -19,7 +19,10 @@ export class OfferService {
   }
 
   async findAllOffers(): Promise<Offer[]> {
-    return this.offerrModel.find().exec();
+    return this.offerrModel.find({id_recyclingCenter:null}).exec();
+  }
+  async findPendingOffers(id_RecyclingCenter:string): Promise<Offer[]>{
+    return this.offerrModel.find({id_recyclingCenter:id_RecyclingCenter}).exec()
   }
   
   async findoffer_transporter(id: string): Promise<Offer[]>{

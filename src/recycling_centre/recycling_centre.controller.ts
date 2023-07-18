@@ -13,7 +13,13 @@ export class RecyclingCentreController {
     async getAllOffers(): Promise<Offer[]>{
         return this.recyclingCenterservice.getallOffers()
     }
-
+  @Get("offers/pending/:id_recyclingCenter")
+  async getPendingOffers(
+    @Param('id_recyclingCenter')
+    id_recyclingCenter: string
+  ) :Promise<Offer[]>{
+    return this.recyclingCenterservice.getPendingOffers(id_recyclingCenter)
+      }
     
    
     @Get("transporters/:category")

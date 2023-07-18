@@ -43,6 +43,9 @@ export class RecyclingCentreService {
         return res
     }
     
+    async getPendingOffers(id_RecyclingCenter:string): Promise<Offer[]>{
+        return this.offerservice.findPendingOffers(id_RecyclingCenter)
+    }
 
         
 }
