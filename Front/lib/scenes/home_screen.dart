@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: _goToAboutUsPage,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Image.asset('../../Logo_Arcturus.png',
+                child: Image.asset('lib/images/Logo_Arcturus.png',
                     width: 40, height: 40),
               ),
             ),
