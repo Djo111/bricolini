@@ -3,10 +3,7 @@ import 'package:bricoloni_v2/scenes/history_page.dart';
 import 'package:bricoloni_v2/scenes/home_page.dart';
 import 'package:bricoloni_v2/scenes/marketplace_page.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
-import 'package:bricoloni_v2/scenes/paiement.dart';
 import 'package:bricoloni_v2/scenes/sign_in_page.dart';
-import 'package:bricoloni_v2/scenes/stats_page.dart';
-import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -75,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             GestureDetector(
               onTap: _goToAboutUsPage,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Image.asset('lib/images/Logo_Arcturus.png',
                     width: 40, height: 40),
               ),

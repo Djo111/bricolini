@@ -70,8 +70,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                       _garbageType = value as String;
                     });
                   },
-                )
-                ,
+                ),
 
                 SizedBox(height: 70), //saut de ligne
                 Text(
