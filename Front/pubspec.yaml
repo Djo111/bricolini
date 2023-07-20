@@ -19,7 +19,10 @@ dependencies:
   google_fonts : ^4.0.4
   flutter_stripe: ^9.2.2
   jwt_decoder: ^2.0.1
-  open_street_map_search_and_pick: ^0.0.17
+  geolocator: ^8.2.0
+  flutter_map: ^4.0.0
+  flutter_osm_web: any
+  flutter_osm_interface: any
   
 
 dev_dependencies:
