@@ -24,7 +24,5 @@ export class Offer {
     id_transporter: string;
     @Prop()
     id_offerProvider: string
-
-    
 }
 export const OfferSchema=SchemaFactory.createForClass(Offer)    

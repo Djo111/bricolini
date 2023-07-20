@@ -30,7 +30,9 @@ export class SignUpDto{
 
     @Prop()
     diy_waste_type: waste_type;
+
     @Prop()
+    
     region: string;
 
     @Prop()
