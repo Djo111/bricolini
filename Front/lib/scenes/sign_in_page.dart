@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:jwt_decode/jwt_decode.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -20,9 +21,9 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  Future<String> loginUser(String s1, String s2) async {
+  Future<Map<String, String>> loginUser(String s1, String s2) async {
     String category = '';
+    String _id = '';
     try {
       final response = await http.post(
         Uri.parse('http://localhost:3000/auth/user/login'),
@@ -32,14 +33,17 @@ class _SignInPageState extends State<SignInPage> {
         body: jsonEncode(<String, String>{"email": s1, "password": s2}),
       );
 
-      // Check for successful status codes 200 or 201
       if (response.statusCode == 200 || response.statusCode == 201) {
         final body = jsonDecode(response.body);
         final token = body['token'];
-        category = body['category'];
+
+        // Parse JWT to get category and _id
+        Map<String, dynamic> payload = Jwt.parseJwt(token);
+        category = payload['category'];
+        _id = payload['_id'];
 
         if (kDebugMode) {
-          print('User logged in: token=$token, category=$category');
+          print('User logged in: token=$token, category=$category, _id=$_id');
         }
       } else {
         if (kDebugMode) {
@@ -51,7 +55,7 @@ class _SignInPageState extends State<SignInPage> {
         print('Exception occurred: $e');
       }
     }
-    return category;
+    return {'category': category, '_id': _id};
   }
 
   void _navigateToSignupPage() {
@@ -141,7 +145,9 @@ class _SignInPageState extends State<SignInPage> {
                 String email = _emailController.text;
                 String password = _passwordController.text;
                 // Use the email and password for backend processing
-                String category = await loginUser(email, password);
+                Map<String, String> userDetails =
+                    await loginUser(email, password);
+                String category = userDetails['category']!;
                 switch (category) {
                   case "DIY workshop":
                     break;
@@ -157,7 +163,9 @@ class _SignInPageState extends State<SignInPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const Simple_User_HomeScreen()),
+                          builder: (context) => Simple_User_HomeScreen(
+                                id: userDetails['_id']!,
+                              )),
                     );
                     break;
                   case "Transporter":

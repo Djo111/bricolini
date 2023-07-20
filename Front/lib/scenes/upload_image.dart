@@ -1,9 +1,12 @@
 import 'package:bricoloni_v2/scenes/simple_user_offers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'image_upload_widget.dart';
+import 'package:http/http.dart' as http;
 
 class ImageUploadWidget extends StatefulWidget {
+  const ImageUploadWidget({super.key});
+
   @override
   _ImageUploadWidgetState createState() => _ImageUploadWidgetState();
 }
@@ -35,19 +38,19 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
           ),
           child: _image != null
               ? Image.network(
-            //on peut travailler avec Image.file mais _image doit etre un File et pas String .
-            _image!,
-            fit: BoxFit.cover,
-          )
-              : Center(
-            child: Icon(
-              Icons.image,
-              size: 50,
-              color: Colors.black,
-            ),
-          ),
+                  //on peut travailler avec Image.file mais _image doit etre un File et pas String .
+                  _image!,
+                  fit: BoxFit.cover,
+                )
+              : const Center(
+                  child: Icon(
+                    Icons.image,
+                    size: 50,
+                    color: Colors.black,
+                  ),
+                ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -63,9 +66,9 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
               onPressed: () {
                 getImage(ImageSource.gallery);
               },
-              child: Text('Choose from Gallery'),
+              child: const Text('Choose from Gallery'),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             ElevatedButton(
               style: TextButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -78,7 +81,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
               onPressed: () {
                 getImage(ImageSource.camera);
               },
-              child: Text('Take a Photo'),
+              child: const Text('Take a Photo'),
             ),
           ],
         ),
@@ -88,24 +91,61 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
 }
 
 class UploadImage extends StatefulWidget {
-  const UploadImage({Key? key, required this.title}) : super(key: key);
   final String title;
+  final String garbageType;
+  final String location;
+  final String id;
+
+  const UploadImage(
+      {Key? key,
+      required this.title,
+      required this.garbageType,
+      required this.location,
+      required this.id})
+      : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _UploadImageState createState() => _UploadImageState();
 }
 
 class _UploadImageState extends State<UploadImage> {
+  Future<void> createOffer(String s1, String s2) async {
+    try {
+      final response = await http
+          .post(Uri.parse('http://localhost:3000/simple-user/offers'), body: {
+        "_id": s1,
+        "location": s2,
+        "img":
+            "C:/Users:ridha/OneDrive/Desktop/talan_summer_internship/Photos/download (1).jpeg"
+      });
+
+      if (response.statusCode == 200) {
+        if (kDebugMode) {
+          print('Offer created: ${response.body}');
+        }
+      } else {
+        if (kDebugMode) {
+          print('Failed to create offer: ${response.statusCode}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Exception occurred: $e');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text("Submit your Offer!"),
+        title: const Text("Submit your Offer!"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Expanded(
+          const Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -124,7 +164,7 @@ class _UploadImageState extends State<UploadImage> {
             ),
           ),
 
-          SizedBox(height: 10), //saut de ligne
+          const SizedBox(height: 10), //saut de ligne
 
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
@@ -140,8 +180,10 @@ class _UploadImageState extends State<UploadImage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SimpleUserOffers()),
+                  MaterialPageRoute(
+                      builder: (context) => SimpleUserOffers(id: widget.id)),
                 );
+                createOffer(widget.id, widget.location);
               },
               child: const Text(
                 'Verify',

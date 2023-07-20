@@ -7,7 +7,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 
 class SimpleUserOffersAdding extends StatefulWidget {
-  const SimpleUserOffersAdding({Key? key, required this.title})
+  final String id;
+  SimpleUserOffersAdding({Key? key, required this.title, required this.id})
       : super(key: key);
 
   final String title;
@@ -17,8 +18,8 @@ class SimpleUserOffersAdding extends StatefulWidget {
 }
 
 class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
-  String _garbageType = "garbage type";
-  LatLng _currentLocation = LatLng(36, 10);
+  String garbageType = "garbage type";
+  LatLng currentLocation = LatLng(36, 10);
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -55,7 +56,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                   ),
                   const SizedBox(height: 20),
                   DropdownButton<String>(
-                    value: _garbageType,
+                    value: garbageType,
                     items: const [
                       DropdownMenuItem(
                         value: "garbage type",
@@ -82,7 +83,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                     dropdownColor: Colors.black,
                     onChanged: (value) {
                       setState(() {
-                        _garbageType = value as String;
+                        garbageType = value as String;
                       });
                     },
                   ),
@@ -95,12 +96,12 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                     child: FlutterMap(
                       options: MapOptions(
                         minZoom: 10.0,
-                        center: _currentLocation,
+                        center: currentLocation,
                         interactiveFlags: InteractiveFlag
                             .all, // enables all interaction options
                         onTap: (tapPosition, latLngPosition) {
                           setState(() {
-                            _currentLocation = latLngPosition;
+                            currentLocation = latLngPosition;
                           });
                         },
                       ),
@@ -115,7 +116,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                             Marker(
                               width: 45.0,
                               height: 45.0,
-                              point: _currentLocation,
+                              point: currentLocation,
                               builder: (context) => IconButton(
                                 icon: Icon(Icons.location_on),
                                 onPressed: () {
@@ -147,7 +148,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                     List<Location> locations =
                         await locationFromAddress(_controller.text);
                     setState(() {
-                      _currentLocation = LatLng(
+                      currentLocation = LatLng(
                           locations.first.latitude, locations.first.longitude);
                     });
                   },
@@ -172,8 +173,12 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const UploadImage(
-                          title: "Upload a photo of your garbage")),
+                      builder: (context) => UploadImage(
+                            id: widget.id,
+                            title: "Upload a photo of your garbage",
+                            garbageType: garbageType,
+                            location: currentLocation.toString(),
+                          )),
                 );
               },
               child: const Text(
@@ -191,7 +196,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
     Position position = await Geolocator.getCurrentPosition();
 
     setState(() {
-      _currentLocation = LatLng(position.latitude, position.longitude);
+      currentLocation = LatLng(position.latitude, position.longitude);
     });
   }
 }

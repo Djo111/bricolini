@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UseGuards, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards, Request } from '@nestjs/common';
 import { OfferService } from './offer.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
@@ -10,8 +10,10 @@ import { v4 as uuidv4 } from 'uuid';
 //mport path from 'path';
 import path = require('path');
 import { join } from 'path';
-import { JwtAuthGuard } from 'src/guards/jwt-guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
 import { Offer } from './schemas/offer.schema';
+import { User } from 'src/auth/schemas/user.schema';
+import { AuthGuard } from '@nestjs/passport';
 
 
 export const storage = {
@@ -45,10 +47,7 @@ export class OfferController {
     return "success";
   }*/
   
-  create(@Body() createOfferDto: CreateOfferDto) {
-    
-    return this.offerService.createNewOffer(createOfferDto);
-  }
+
 
   @Get()
   findAll() {
@@ -60,11 +59,12 @@ export class OfferController {
     return this.offerService.findOne(id);
   }
 
-
+  @UseGuards(AuthGuard('JWT'))
   @Post()
   @UseInterceptors(FileInterceptor('file', storage))
-
-  uploadFile(@UploadedFile() file) : Observable<Object>{
+  uploadFile(@UploadedFile() file, @Request() req) : Observable<Object>{
+    const user: User =req.user.user;
+    console.log(req.user)
     console.log(file);
     return of({imagePath : file.filename});
   }

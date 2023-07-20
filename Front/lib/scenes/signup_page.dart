@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decode/jwt_decode.dart';
 
 import 'diy_sign_up.dart';
 
@@ -31,8 +32,9 @@ class _SignupPageState extends State<SignupPage> {
     'Recycling center',
     'Transporter',
   ];
-  Future<void> createSimpleUser(
+  Future<String> createSimpleUser(
       String s1, String s2, String s3, String s4, String s5) async {
+    String id = '';
     try {
       final response = await http
           .post(Uri.parse('http://localhost:3000/auth/signup'), body: {
@@ -46,6 +48,10 @@ class _SignupPageState extends State<SignupPage> {
       if (response.statusCode == 200) {
         if (kDebugMode) {
           print('User created: ${response.body}');
+          final body = jsonDecode(response.body);
+          final token = body['token'];
+          Map<String, dynamic> payload = Jwt.parseJwt(token);
+          id = payload['_id'];
         }
       } else {
         if (kDebugMode) {
@@ -57,6 +63,7 @@ class _SignupPageState extends State<SignupPage> {
         print('Exception occurred: $e');
       }
     }
+    return id;
   }
 
   void _submitForm() async {
@@ -77,12 +84,13 @@ class _SignupPageState extends State<SignupPage> {
     // Navigate to the corresponding page based on the selected category
     if (category == 'Simple user') {
       // ignore: use_build_context_synchronously
+      String id = await createSimpleUser(
+          email, fullName, password, phoneNumber, category);
+      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Simple_User_HomeScreen()),
+        MaterialPageRoute(builder: (context) => Simple_User_HomeScreen(id: id)),
       );
-
-      await createSimpleUser(email, fullName, password, phoneNumber, category);
     } else if (category == 'DIY workshop') {
       Navigator.push(
         context,
@@ -126,7 +134,10 @@ class _SignupPageState extends State<SignupPage> {
       backgroundColor: const Color(0xFF171918),
       appBar: AppBar(
         backgroundColor: const Color(0xFF171918),
-        title: const Text('Sign Up', style: TextStyle(color: Colors.lightGreen),),
+        title: const Text(
+          'Sign Up',
+          style: TextStyle(color: Colors.lightGreen),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -138,10 +149,9 @@ class _SignupPageState extends State<SignupPage> {
               const Text(
                 'Sign Up',
                 style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white
-                ),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
               const SizedBox(height: 32),
               TextField(
@@ -271,7 +281,10 @@ class _SignupPageState extends State<SignupPage> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text('Go back', style: TextStyle(color: Colors.white),),
+                child: const Text(
+                  'Go back',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
