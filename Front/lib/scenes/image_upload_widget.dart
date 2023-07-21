@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageUploadWidget extends StatefulWidget {
+  String? _image;
   @override
   _ImageUploadWidgetState createState() => _ImageUploadWidgetState();
+
+  String? getImagePath() {
+    return _image;
+  }
 }
 
 class _ImageUploadWidgetState extends State<ImageUploadWidget> {
@@ -20,6 +25,9 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
         _image = pickedFile.path; //_image = File(pickedFile.path)
       }
     });
+  }
+  String? getImagePath() {
+    return _image;
   }
 
   @override

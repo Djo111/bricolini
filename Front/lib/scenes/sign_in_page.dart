@@ -108,16 +108,17 @@ class _SignInPageState extends State<SignInPage> {
                 labelText: 'Email',
                 border: OutlineInputBorder(),
                 hintText: "Enter Your Mail",
-                hintStyle: TextStyle(color: Colors.white70),
+                hintStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: Colors.white),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Colors
-                          .green), // Set the color of the border when the field is focused
+                          .white), // Set the color of the border when the field is focused
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Colors
-                          .green), // Set the color of the border when the field is not focused
+                          .white), // Set the color of the border when the field is not focused
                 ),
               ),
             ),

@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'dart:io';
+import 'image_upload_widget.dart';
+import 'image_verification.dart';
 
 class ImageUploadWidget extends StatefulWidget {
   final Function(String) onImageSelect;
@@ -198,7 +200,7 @@ class _UploadImageState extends State<UploadImage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SimpleUserOffers(id: widget.id)),
+                      builder: (context) => ImageVerificationPage()),
                 );
                 print(widget.id);
                 createOffer(widget.id, widget.location, path);
