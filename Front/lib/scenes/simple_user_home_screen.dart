@@ -26,6 +26,7 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
 
   @override
   void initState() {
+    print("homescreen:${widget.id}");
     super.initState();
     _pages = [
       const HomePage(),

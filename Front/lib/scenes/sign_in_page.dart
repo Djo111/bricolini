@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -23,7 +24,7 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _passwordController = TextEditingController();
   Future<Map<String, String>> loginUser(String s1, String s2) async {
     String category = '';
-    String _id = '';
+    String id = '';
     try {
       final response = await http.post(
         Uri.parse('http://localhost:3000/auth/user/login'),
@@ -39,11 +40,11 @@ class _SignInPageState extends State<SignInPage> {
 
         // Parse JWT to get category and _id
         Map<String, dynamic> payload = Jwt.parseJwt(token);
-        category = payload['category'];
-        _id = payload['_id'];
+        category = body['category'];
+        id = payload['id'];
 
         if (kDebugMode) {
-          print('User logged in: token=$token, category=$category, _id=$_id');
+          print('User logged in: token=$token, category=$category, id=$id');
         }
       } else {
         if (kDebugMode) {
@@ -55,7 +56,7 @@ class _SignInPageState extends State<SignInPage> {
         print('Exception occurred: $e');
       }
     }
-    return {'category': category, '_id': _id};
+    return {'category': category, 'id': id};
   }
 
   void _navigateToSignupPage() {
@@ -145,9 +146,10 @@ class _SignInPageState extends State<SignInPage> {
                 String email = _emailController.text;
                 String password = _passwordController.text;
                 // Use the email and password for backend processing
-                Map<String, String> userDetails =
-                    await loginUser(email, password);
-                String category = userDetails['category']!;
+                Map<String, String> userData = await loginUser(email, password);
+                String id = userData["id"] ?? "";
+                String category = userData["category"] ?? "";
+                print(category);
                 switch (category) {
                   case "DIY workshop":
                     break;
@@ -163,9 +165,7 @@ class _SignInPageState extends State<SignInPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Simple_User_HomeScreen(
-                                id: userDetails['_id']!,
-                              )),
+                          builder: (context) => Simple_User_HomeScreen(id: id)),
                     );
                     break;
                   case "Transporter":

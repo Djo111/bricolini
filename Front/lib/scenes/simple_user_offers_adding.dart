@@ -170,14 +170,15 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                     horizontal: 40.0, vertical: 15.0), // Set the padding
               ),
               onPressed: () {
+                print("offeradding : ${widget.id}");
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => UploadImage(
-                            id: widget.id,
                             title: "Upload a photo of your garbage",
                             garbageType: garbageType,
                             location: currentLocation.toString(),
+                            id: widget.id,
                           )),
                 );
               },

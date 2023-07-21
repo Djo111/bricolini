@@ -96,13 +96,13 @@ class UploadImage extends StatefulWidget {
   final String location;
   final String id;
 
-  const UploadImage(
-      {Key? key,
-      required this.title,
-      required this.garbageType,
-      required this.location,
-      required this.id})
-      : super(key: key);
+  const UploadImage({
+    Key? key,
+    required this.title,
+    required this.garbageType,
+    required this.location,
+    required this.id,
+  }) : super(key: key);
   @override
   // ignore: library_private_types_in_public_api
   _UploadImageState createState() => _UploadImageState();
@@ -113,13 +113,12 @@ class _UploadImageState extends State<UploadImage> {
     try {
       final response = await http
           .post(Uri.parse('http://localhost:3000/simple-user/offers'), body: {
-        "_id": s1,
+        "id_offerProvider": s1,
         "location": s2,
-        "img":
-            "C:/Users:ridha/OneDrive/Desktop/talan_summer_internship/Photos/download (1).jpeg"
+        "img": "lib/images/construct.jpg"
       });
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         if (kDebugMode) {
           print('Offer created: ${response.body}');
         }
@@ -178,11 +177,13 @@ class _UploadImageState extends State<UploadImage> {
                     horizontal: 40.0, vertical: 15.0), // Set the padding
               ),
               onPressed: () {
+                print("offeverify : ${widget.id}");
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => SimpleUserOffers(id: widget.id)),
                 );
+                print(widget.id);
                 createOffer(widget.id, widget.location);
               },
               child: const Text(

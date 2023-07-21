@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class SimpleUserOffers extends StatefulWidget {
-  String id;
-  SimpleUserOffers({Key? key, required this.id}) : super(key: key);
+  final String id;
+  const SimpleUserOffers({Key? key, required this.id}) : super(key: key);
 
   @override
   State<SimpleUserOffers> createState() => _SimpleUserOffersState();
@@ -19,6 +19,7 @@ class _SimpleUserOffersState extends State<SimpleUserOffers> {
         child: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () {
+            print("simpleoffers:${widget.id}");
             Navigator.push(
               context,
               MaterialPageRoute(

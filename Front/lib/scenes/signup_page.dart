@@ -15,6 +15,7 @@ class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignupPageState createState() => _SignupPageState();
 }
 
@@ -46,12 +47,12 @@ class _SignupPageState extends State<SignupPage> {
       });
 
       if (response.statusCode == 200) {
+        final body = jsonDecode(response.body);
+        final token = body['token'];
+        Map<String, dynamic> payload = Jwt.parseJwt(token);
+        id = payload['id'];
         if (kDebugMode) {
           print('User created: ${response.body}');
-          final body = jsonDecode(response.body);
-          final token = body['token'];
-          Map<String, dynamic> payload = Jwt.parseJwt(token);
-          id = payload['_id'];
         }
       } else {
         if (kDebugMode) {
@@ -84,8 +85,9 @@ class _SignupPageState extends State<SignupPage> {
     // Navigate to the corresponding page based on the selected category
     if (category == 'Simple user') {
       // ignore: use_build_context_synchronously
-      String id = await createSimpleUser(
-          email, fullName, password, phoneNumber, category);
+      String id = '';
+      id = createSimpleUser(email, fullName, password, phoneNumber, category)
+          as String;
       // ignore: use_build_context_synchronously
       Navigator.push(
         context,
