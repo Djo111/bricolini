@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // auth.service.ts
+=======
+/* eslint-disable prettier/prettier */
+>>>>>>> origin/develop
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -55,17 +59,34 @@ export class AuthService {
       throw new UnauthorizedException("Invalid email or password!");
     }
 
+<<<<<<< HEAD
     const token = this.jwtService.sign({ id: user._id });
 
     return { token, category: user.category };
   }
 
+=======
+>>>>>>> origin/develop
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
-
+  async findAllDIY(): Promise<User[]> {
+    return this.userModel.find({category:"DIY workshop"}).exec();
+  }
+  async findAllRC(): Promise<User[]> {
+    return this.userModel.find({category:"Recycling center"}).exec();
+  }
+  async findAllU(): Promise<User[]> {
+    return this.userModel.find({category:"Simple user"}).exec();
+  }
+  async findAllT(): Promise<User[]> {
+    return this.userModel.find({category:"Transporter"}).exec();
+  }
   async findOne(id: string): Promise<User> {
     return this.userModel.findById(id).exec();
+  }
+  async findByCategory(catg: categ): Promise<User[]>{
+    return this.userModel.find({category: catg})
   }
 
   async update(id: string, updateUserDto: SignUpDto): Promise<User> {
@@ -74,5 +95,9 @@ export class AuthService {
 
   async remove(id: string): Promise<void> {
     await this.userModel.findByIdAndRemove(id).exec();
+<<<<<<< HEAD
   }
+=======
+  }    
+>>>>>>> origin/develop
 }
