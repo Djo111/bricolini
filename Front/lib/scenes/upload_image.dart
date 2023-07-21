@@ -2,6 +2,7 @@ import 'package:bricoloni_v2/scenes/simple_user_offers.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'image_upload_widget.dart';
+import 'image_verification.dart';
 
 class ImageUploadWidget extends StatefulWidget {
   @override
@@ -95,6 +96,7 @@ class UploadImage extends StatefulWidget {
 }
 
 class _UploadImageState extends State<UploadImage> {
+  ImageUploadWidget uploader = ImageUploadWidget();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +121,7 @@ class _UploadImageState extends State<UploadImage> {
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
                 SizedBox(height: 40),
-                ImageUploadWidget(),
+                uploader,
               ],
             ),
           ),
@@ -140,7 +142,7 @@ class _UploadImageState extends State<UploadImage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SimpleUserOffers()),
+                  MaterialPageRoute(builder: (context) => ImageVerificationPage()),
                 );
               },
               child: const Text(

@@ -53,7 +53,8 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
             icon: Icon(_navigationRailVisible ? Icons.menu_open : Icons.menu),
             onPressed: _toggleNavigationBar,
           ),
-          title: const Text('Simple User HomeScreen'),
+          title: const Text('Simple User HomeScreen', style: TextStyle(color: Colors.lightGreen, fontSize: 20),),
+          backgroundColor: Colors.black,
         ),
         body: Row(
           children: [
