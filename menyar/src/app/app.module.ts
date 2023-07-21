@@ -11,6 +11,11 @@ import { HistoryComponent } from './history/history.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { TestComponent } from './test/test.component';
+import { HttpClientModule } from '@angular/common/http';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
+import {MatTableModule} from "@angular/material/table";
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,13 +28,19 @@ import { TestComponent } from './test/test.component';
     OffersComponent,
     HistoryComponent,
     TestComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatTableModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }
