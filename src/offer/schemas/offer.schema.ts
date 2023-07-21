@@ -16,6 +16,14 @@ export class Offer {
     price: number;
     @Prop()
     estimateddistance:number;
+    @Prop()
+    status:number
+    @Prop()
+    id_recyclingCenter: string;
+    @Prop()
+    id_transporter: string;
+    @Prop()
+    id_offerProvider: string
 
     
 }

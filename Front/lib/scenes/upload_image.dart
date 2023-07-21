@@ -3,9 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+// ignore: depend_on_referenced_packages
+import 'package:path/path.dart';
+import 'dart:io';
 
 class ImageUploadWidget extends StatefulWidget {
-  const ImageUploadWidget({super.key});
+  final Function(String) onImageSelect;
+
+  ImageUploadWidget({Key? key, required this.onImageSelect}) : super(key: key);
 
   @override
   _ImageUploadWidgetState createState() => _ImageUploadWidgetState();
@@ -14,15 +19,21 @@ class ImageUploadWidget extends StatefulWidget {
 class _ImageUploadWidgetState extends State<ImageUploadWidget> {
   String? _image;
   final picker = ImagePicker();
-
+  String _newImagePath = '';
   Future<void> getImage(ImageSource source) async {
     final pickedFile = await picker.pickImage(source: source);
 
-    setState(() {
-      if (pickedFile != null) {
-        _image = pickedFile.path; //_image = File(pickedFile.path)
-      }
-    });
+    if (pickedFile != null) {
+      _image = pickedFile.path;
+      const String path = "lib/images";
+      final String fileName = basename(_image!);
+      final File newImage = await File('$path/$fileName').create();
+      await newImage.writeAsBytes(await File(_image!).readAsBytes());
+      _newImagePath = '$path/$fileName';
+      setState(() {
+        widget.onImageSelect(_newImagePath);
+      });
+    }
   }
 
   @override
@@ -36,10 +47,10 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
             color: Colors.lightGreen,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: _image != null
-              ? Image.network(
-                  //on peut travailler avec Image.file mais _image doit etre un File et pas String .
-                  _image!,
+          // ignore: unnecessary_null_comparison
+          child: _newImagePath != null
+              ? Image.file(
+                  File(_newImagePath),
                   fit: BoxFit.cover,
                 )
               : const Center(
@@ -104,19 +115,25 @@ class UploadImage extends StatefulWidget {
     required this.id,
   }) : super(key: key);
   @override
+
   // ignore: library_private_types_in_public_api
   _UploadImageState createState() => _UploadImageState();
 }
 
 class _UploadImageState extends State<UploadImage> {
-  Future<void> createOffer(String s1, String s2) async {
+  String path = '';
+
+  void onImageSelect(String newPath) {
+    setState(() {
+      path = newPath;
+    });
+  }
+
+  Future<void> createOffer(String s1, String s2, String s3) async {
     try {
-      final response = await http
-          .post(Uri.parse('http://localhost:3000/simple-user/offers'), body: {
-        "id_offerProvider": s1,
-        "location": s2,
-        "img": "lib/images/construct.jpg"
-      });
+      final response = await http.post(
+          Uri.parse('http://localhost:3000/simple-user/offers'),
+          body: {"id_offerProvider": s1, "location": s2, "img": s3});
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (kDebugMode) {
@@ -144,21 +161,21 @@ class _UploadImageState extends State<UploadImage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Expanded(
+          Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Upload a photo of your garbage!',
                   style: TextStyle(color: Colors.white, fontSize: 30),
                 ),
-                SizedBox(height: 10), //saut de ligne
-                Text(
+                const SizedBox(height: 10), //saut de ligne
+                const Text(
                   'Regulations require you to upload a photo of your garbage...',
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
-                SizedBox(height: 40),
-                ImageUploadWidget(),
+                const SizedBox(height: 40),
+                ImageUploadWidget(onImageSelect: onImageSelect),
               ],
             ),
           ),
@@ -184,7 +201,7 @@ class _UploadImageState extends State<UploadImage> {
                       builder: (context) => SimpleUserOffers(id: widget.id)),
                 );
                 print(widget.id);
-                createOffer(widget.id, widget.location);
+                createOffer(widget.id, widget.location, path);
               },
               child: const Text(
                 'Verify',

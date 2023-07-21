@@ -27,7 +27,7 @@ class Offer {
   factory Offer.fromJson(Map<String, dynamic> json) {
     return Offer(
       photo: json['img'],
-      price: json['price'],
+      price: 300,
       address: json['location'],
       estimatedDistance: 0,
       type: '',
@@ -92,6 +92,7 @@ class _RecyclingCompanyReceivedOffersState
                   8.0), // Adjust the border radius as needed.
             ),
             child: ListTile(
+              textColor: Colors.white10,
               leading: Image.asset(
                 offer.photo,
                 width: 50,
