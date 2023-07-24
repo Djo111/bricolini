@@ -5,6 +5,9 @@ import { Model } from 'mongoose';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
 import { Offer } from './schemas/offer.schema';
+import * as tf from '@tensorflow/tfjs-node';
+
+
 
 @Injectable()
 export class OfferService {
@@ -39,4 +42,10 @@ export class OfferService {
   async remove(id: string): Promise<void> {
     await this.offerrModel.findByIdAndRemove(id).exec();
   }
+
+  async loadModel() {
+  const model = await tf.loadLayersModel('/home/youssef/Desktop/backend/backend/src/offer/CNN model/imageclassifier_v2.keras');
+  return model;
+  }
+
 }
