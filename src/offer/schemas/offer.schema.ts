@@ -15,6 +15,10 @@ export class Offer {
     @Prop()
     price: number;
     @Prop()
+    cordonnes : string ;
+    @Prop()
+    waste_type : string ;
+    @Prop()
     estimateddistance:number;
     @Prop()
     status:number

@@ -29,7 +29,9 @@ import { AddsModule } from './adds/adds.module';
     SimpleUserModule,
     TransporterModule,
     OfferModule,
-    AddsModule
+    AddsModule,
+    AdminModule,
+    
   ],
   controllers: [AppController],
   providers: [AppService],

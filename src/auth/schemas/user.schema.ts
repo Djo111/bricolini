@@ -30,17 +30,17 @@ export class User{
     category: categ;
     @Prop()
     phoneNumber: number;
-    @Prop()
+    @Prop({required :false})
     address: string;
-    @Prop()
+    @Prop({required :false})
     diy_waste_type: waste_type;
-    @Prop()
+    @Prop({required :false})
     region: string;
-    @Prop()
+    @Prop({required :false})
     number_of_small_trucks: number;
-    @Prop()
+    @Prop({required :false})
     number_of_medium_trucks: number;
-    @Prop()
+    @Prop({required :false})
     number_of_big_trucks: number;
 }
 
