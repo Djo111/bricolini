@@ -5,18 +5,40 @@ import * as mongoose from 'mongoose';
 import { Offer } from 'src/offer/schemas/offer.schema';
 import { OfferService } from 'src/offer/offer.service';
 import { AuthService } from 'src/auth/auth.service';
+<<<<<<< HEAD
 import { categ, User } from 'src/auth/schemas/user.schema';
+=======
+import { User, categ } from 'src/auth/schemas/user.schema';
+import { UpdateOfferDto } from 'src/offer/dto/update-offer.dto';
+import { plainToClass } from 'class-transformer';
+import { AddsService } from 'src/adds/adds.service';
+import { Add } from 'src/adds/schemas/addds.schema';
+>>>>>>> 8fbf7ec (add Adds module)
 
 @Injectable()
 export class RecyclingCentreService {
     constructor(
         private offerservice: OfferService,
+<<<<<<< HEAD
         private authservice: AuthService
     ) { }   
+=======
+        private authservice: AuthService,
+        private addservice: AddsService
+    ) { }
+>>>>>>> 8fbf7ec (add Adds module)
     
     async getallOffers(): Promise<Offer[]>{
         return this.offerservice.findAllOffers()
     }
+<<<<<<< HEAD
+=======
+    
+    async getallAdds(): Promise<Add[]>{
+        return this.addservice.getVerifiedAdds()
+    }
+
+>>>>>>> 8fbf7ec (add Adds module)
     async selectOffer(offer_id: string, id_RC:string) {
         
         const update_offer = await this.offerservice.findOne(offer_id);
