@@ -1,7 +1,5 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel, MongooseModule } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
 import { Offer } from 'src/offer/schemas/offer.schema';
 import { OfferService } from 'src/offer/offer.service';
 import { AuthService } from 'src/auth/auth.service';
@@ -10,6 +8,7 @@ import { UpdateOfferDto } from 'src/offer/dto/update-offer.dto';
 import { plainToClass } from 'class-transformer';
 import { AddsService } from 'src/adds/adds.service';
 import { Add } from 'src/adds/schemas/addds.schema';
+import { addDto } from 'src/adds/dto/create_add.dto';
 
 @Injectable()
 export class RecyclingCentreService {
@@ -26,6 +25,9 @@ export class RecyclingCentreService {
     
     async getallAdds(): Promise<Add[]>{
         return this.addservice.getVerifiedAdds()
+    }
+    async createAdd(addDto: addDto): Promise<Add>{
+        return this.addservice.createAdd(addDto)
     }
 
     async selectOffer(offer_id: string, id_RC:string) {

@@ -4,6 +4,8 @@ import { RecyclingCentreService } from './recycling_centre.service';
 import { Offer } from 'src/offer/schemas/offer.schema';
 
 import { User, categ } from 'src/auth/schemas/user.schema';
+import { Add } from 'src/adds/schemas/addds.schema';
+import { addDto } from 'src/adds/dto/create_add.dto';
 
 @Controller('recycling-centre')
 export class RecyclingCentreController {
@@ -14,11 +16,27 @@ export class RecyclingCentreController {
     async getAllOffers(): Promise<Offer[]>{
         return this.recyclingCenterservice.getallOffers()
     }
-  @Get("offers/pending/:id_recyclingCenter")
-  async getPendingOffers(
+  @Get("/Adds")
+  async getAllAdds(): Promise<Add[]>{
+    return this.recyclingCenterservice.getallAdds()
+  }
+
+
+  
+  @Post("/adds")
+  createAdd(
+    @Body()
+    add: addDto
+  ) {
+    return this.recyclingCenterservice.createAdd(add)
+    }
+  
+  
+    @Get("offers/pending/:id_recyclingCenter")
+    async getPendingOffers(
     @Param('id_recyclingCenter')
     id_recyclingCenter: string
-  ) :Promise<Offer[]>{
+    ) :Promise<Offer[]>{
     return this.recyclingCenterservice.getPendingOffers(id_recyclingCenter)
       }
     

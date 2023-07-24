@@ -10,14 +10,19 @@ import { Offer } from 'src/offer/schemas/offer.schema';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { Admin } from './schemas/admin.schema';
+import { Add } from 'src/adds/schemas/addds.schema';
+import { AddsService } from 'src/adds/adds.service';
 
 @Injectable()
 export class AdminService {
   constructor(
     @InjectModel(Admin.name) private readonly adminModel: Model<Admin>,
     @InjectModel(Offer.name) private readonly offerModel: Model<Offer>,
+    @InjectModel(Add.name) private readonly AddModel: Model<Add>,
     private readonly userService:AuthService,
-    private readonly offerservice:OfferService,
+    private readonly offerservice: OfferService,
+    private addservice: AddsService
+   
   ) {}
 
   async create(createAdminDto: CreateAdminDto): Promise<Admin> {
@@ -48,6 +53,19 @@ export class AdminService {
     }
     offer.status = 1;
     await offer.save();
+  }
+
+
+  async acceptAdd(addId: string) {
+    const add = await this.AddModel.findById(addId).exec();
+    if (!add) {
+      throw new NotFoundException('add not found')
+    }
+    add.status = 1;
+    await add.save();
+  }
+  async getAllNotAcceptedAdds(): Promise<Add[]>{
+    return this.addservice.getAllNotVerifiedAdds();
   }
 
   async deleteOffer(offerId: string): Promise<void> {

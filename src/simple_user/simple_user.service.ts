@@ -6,12 +6,15 @@ import { OfferService } from 'src/offer/offer.service';
 import { CreateOfferDto } from 'src/offer/dto/create-offer.dto';
 import { Offer } from 'src/offer/schemas/offer.schema';
 import { UpdateOfferDto } from 'src/offer/dto/update-offer.dto';
+import { AddsService } from 'src/adds/adds.service';
+import { Add } from 'src/adds/schemas/addds.schema';
 
 
 @Injectable()
 export class SimpleUserService {
   constructor(
-    private offerservice: OfferService
+    private offerservice: OfferService,
+        private addservice: AddsService
   ) {}
 
   
@@ -28,5 +31,7 @@ export class SimpleUserService {
     return this.offerservice.update(id, offerdto)
   }
 
-
+    async getallAdds(): Promise<Add[]>{
+        return this.addservice.getVerifiedAdds()
+    }
 }

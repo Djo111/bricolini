@@ -24,15 +24,20 @@ export class AddsService {
         return this.addModel.find({status: 1})
     }
     
-
+     async getAllNotVerifiedAdds(): Promise<Add[]>{
+        return this.addModel.find({status: 0})
+    }
     async findAddByUser(username: string): Promise<Add[]>{
         return this.addModel.find({username: username})
+    }
+    async findAddById(addId: string): Promise<Add>{
+        return this.addModel.findById(addId)
     }
     async deleteAdd(id: string) {
         await this.addModel.findByIdAndDelete(id)
     }
 
-    //Admin can verifie add by updating its status
+   
     async updateAdd(id: string, addDto: addDto):Promise<Add> {
         return this.addModel.findByIdAndUpdate(id, addDto,{new: true}).exec()
     }
