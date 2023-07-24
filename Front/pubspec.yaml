@@ -23,7 +23,8 @@ dependencies:
   jwt_decode: ^0.3.1
   firebase_storage: ^11.2.5
   path_provider: any
-  
+  pdf: any
+  url_launcher: any
 
   
 
