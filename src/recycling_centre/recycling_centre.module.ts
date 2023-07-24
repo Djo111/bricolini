@@ -4,11 +4,13 @@ import { RecyclingCentreService } from './recycling_centre.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OfferModule } from 'src/offer/offer.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { AddsModule } from 'src/adds/adds.module';
 
 @Module({
   imports: [
     OfferModule,
-    AuthModule
+    AuthModule,
+    AddsModule
   ],
   controllers: [RecyclingCentreController],
   providers: [RecyclingCentreService]

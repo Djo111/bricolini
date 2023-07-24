@@ -10,6 +10,7 @@ import { SimpleUserModule } from './simple_user/simple_user.module';
 import { TransporterModule } from './transporter/transporter.module';
 import { OfferModule } from './offer/offer.module';
 import { AuthModule } from './auth/auth.module';
+import { AddsModule } from './adds/adds.module';
 
 
 
@@ -26,7 +27,8 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     SimpleUserModule,
     TransporterModule,
-    OfferModule
+    OfferModule,
+    AddsModule
   ],
   controllers: [AppController],
   providers: [AppService],
