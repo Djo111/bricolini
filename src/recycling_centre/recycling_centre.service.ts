@@ -8,16 +8,23 @@ import { AuthService } from 'src/auth/auth.service';
 import { User, categ } from 'src/auth/schemas/user.schema';
 import { UpdateOfferDto } from 'src/offer/dto/update-offer.dto';
 import { plainToClass } from 'class-transformer';
+import { AddsService } from 'src/adds/adds.service';
+import { Add } from 'src/adds/schemas/addds.schema';
 
 @Injectable()
 export class RecyclingCentreService {
     constructor(
         private offerservice: OfferService,
-        private authservice: AuthService
+        private authservice: AuthService,
+        private addservice: AddsService
     ) { }
     
     async getallOffers(): Promise<Offer[]>{
         return this.offerservice.findAllOffers()
+    }
+    
+    async getallAdds(): Promise<Add[]>{
+        return this.addservice.getVerifiedAdds()
     }
 
     async selectOffer(offer_id: string, id_RC:string) {
