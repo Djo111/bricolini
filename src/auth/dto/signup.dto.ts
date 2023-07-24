@@ -31,13 +31,9 @@ export class SignUpDto{
     @IsOptional()
     @Prop()
     diy_waste_type: waste_type;
-<<<<<<< HEAD
     @IsOptional()
     @Prop()
     @IsOptional()
-=======
-    @Prop()
->>>>>>> origin/develop
     region: string;
     @IsOptional()
     @Prop()

@@ -19,6 +19,7 @@ class SimpleUserOffersAdding extends StatefulWidget {
 
 class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
   String garbageType = "garbage type";
+  String region = '';
   LatLng currentLocation = LatLng(36, 10);
   final TextEditingController _controller = TextEditingController();
 
@@ -26,6 +27,20 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
   void initState() {
     super.initState();
     _determinePosition();
+  }
+
+  Future<String> getRegionName(LatLng position) async {
+    try {
+      final List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      if (placemarks.isNotEmpty) {
+        return placemarks[0].administrativeArea ?? '';
+      }
+      return 'Unknown';
+    } catch (e) {
+      print(e);
+      return 'Error';
+    }
   }
 
   @override
@@ -87,7 +102,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                       });
                     },
                   ),
-                  const SizedBox(height: 55), //saut de ligne
+                  const SizedBox(height: 55, width: 5), //saut de ligne
                   const Text(
                     'Choose garbage location',
                     style: TextStyle(color: Colors.white, fontSize: 20),
@@ -99,7 +114,9 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                         center: currentLocation,
                         interactiveFlags: InteractiveFlag
                             .all, // enables all interaction options
-                        onTap: (tapPosition, latLngPosition) {
+                        onTap: (tapPosition, latLngPosition) async {
+                          region = await getRegionName(latLngPosition);
+                          print('Region: $region');
                           setState(() {
                             currentLocation = latLngPosition;
                           });
@@ -179,6 +196,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                             garbageType: garbageType,
                             location: currentLocation.toString(),
                             id: widget.id,
+                            region: region,
                           )),
                 );
               },

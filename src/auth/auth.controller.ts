@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-// auth.controller.ts
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
-=======
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
->>>>>>> origin/develop
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { LogInDto } from './dto/login.dto';
@@ -29,23 +24,7 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-<<<<<<< HEAD
   @Get('/user/:id')
-=======
-    @Get()
-    findAll() {
-    return this.authService.findAll();
-    }
-  @Get('category/:catg')
-  findCateg( @Param("catg")
-    catg: categ) {
-   
-    return this.authService.findByCategory(catg)
-    }
-   
-
-  @Get(':id')
->>>>>>> origin/develop
   findOne(@Param('id') id: string) {
     return this.authService.findOne(id);
   }

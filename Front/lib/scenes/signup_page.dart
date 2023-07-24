@@ -46,7 +46,7 @@ class _SignupPageState extends State<SignupPage> {
         "category": s5,
       });
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final body = jsonDecode(response.body);
         final token = body['token'];
         Map<String, dynamic> payload = Jwt.parseJwt(token);
@@ -74,6 +74,27 @@ class _SignupPageState extends State<SignupPage> {
     final String confirmPassword = _confirmPasswordController.text;
     final String phoneNumber = _phoneNumberController.text;
     final String category = _selectedCategory;
+    // Check if the password and confirm password fields match
+    if (password != confirmPassword) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Password Mismatch'),
+            content: const Text('Please make sure the passwords match.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Stop the sign-up process if passwords don't match
+    }
 
     // Reset the text fields
     _emailController.clear();
@@ -88,7 +109,6 @@ class _SignupPageState extends State<SignupPage> {
       String id = '';
       id = createSimpleUser(email, fullName, password, phoneNumber, category)
           as String;
-      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Simple_User_HomeScreen(id: id)),

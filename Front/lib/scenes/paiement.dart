@@ -26,7 +26,7 @@ class _PaiementState extends State<Paiement> {
                 'Card Form',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 50),
               CardFormField(controller: CardFormEditController()),
               const SizedBox(
                 height: 20,

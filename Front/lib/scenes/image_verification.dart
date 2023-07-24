@@ -1,8 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ImageVerificationPage extends StatefulWidget {
+  const ImageVerificationPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ImageVerificationPageState createState() => _ImageVerificationPageState();
 }
 
@@ -12,8 +14,9 @@ class _ImageVerificationPageState extends State<ImageVerificationPage> {
   @override
   void initState() {
     super.initState();
-    // Simulate image verification delay, you should replace this with actual verification logic
-    Future.delayed(Duration(seconds: 3), () {
+    // Simulate image verification delay, you should replace
+    //this with actual verification logic
+    Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         _isLoading = false;
       });
@@ -25,44 +28,43 @@ class _ImageVerificationPageState extends State<ImageVerificationPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           'Image Verification',
           style: TextStyle(color: Colors.lightGreen, fontSize: 20),
         ),
       ),
       body: Center(
         child: _isLoading
-            ? CircularProgressIndicator() // Show loading indicator while verifying
+            ? const CircularProgressIndicator() // Show loading indicator while verifying
             : Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.circular(10),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 200,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Your offer has been created successfully!',
+                    style: TextStyle(color: Colors.lightGreen, fontSize: 20),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add logic to return to your offers page
+                      // For example, you can use Navigator to navigate to the page
+                      // Navigator.of(context).pop();
+                    },
+                    child: const Text('Return To My Offers'),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Your offer has been created successfully!',
-              style: TextStyle(color: Colors.lightGreen, fontSize: 20),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Add logic to return to your offers page
-                // For example, you can use Navigator to navigate to the page
-                // Navigator.of(context).pop();
-              },
-              child: Text('Return To My Offers'),
-            ),
-          ],
-        ),
       ),
       backgroundColor: Colors.black,
     );
   }
 }
-5

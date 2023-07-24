@@ -154,7 +154,7 @@ class _SignInPageState extends State<SignInPage> {
                 switch (category) {
                   case "DIY workshop":
                     break;
-                  case "recycling center":
+                  case "Recycling center":
                     Navigator.push(
                       context,
                       MaterialPageRoute(

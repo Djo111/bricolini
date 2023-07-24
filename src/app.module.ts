@@ -11,6 +11,7 @@ import { TransporterModule } from './transporter/transporter.module';
 import { OfferModule } from './offer/offer.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
+import {IAModule} from './Ia_model/ia.module'
 
 
 
@@ -28,7 +29,8 @@ import { AdminModule } from './admin/admin.module';
     SimpleUserModule,
     TransporterModule,
     OfferModule,
-    AdminModule
+    AdminModule,
+    
   ],
   controllers: [AppController],
   providers: [AppService],

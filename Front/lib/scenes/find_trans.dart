@@ -93,7 +93,13 @@ class _FindTransState extends State<FindTrans> {
                 Container(
                   margin: EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Paiement()),
+                      );
+                    },
                     child: Text('Button'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

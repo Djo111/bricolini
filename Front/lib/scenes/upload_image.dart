@@ -108,6 +108,7 @@ class UploadImage extends StatefulWidget {
   final String garbageType;
   final String location;
   final String id;
+  final String region;
 
   const UploadImage({
     Key? key,
@@ -115,6 +116,7 @@ class UploadImage extends StatefulWidget {
     required this.garbageType,
     required this.location,
     required this.id,
+    required this.region,
   }) : super(key: key);
   @override
 
@@ -131,11 +133,17 @@ class _UploadImageState extends State<UploadImage> {
     });
   }
 
-  Future<void> createOffer(String s1, String s2, String s3) async {
+  Future<void> createOffer(
+      String s1, String s2, String s3, String s4, String s5) async {
     try {
-      final response = await http.post(
-          Uri.parse('http://localhost:3000/simple-user/offers'),
-          body: {"id_offerProvider": s1, "location": s2, "img": s3});
+      final response = await http
+          .post(Uri.parse('http://localhost:3000/simple-user/offers'), body: {
+        "id_offerProvider": s1,
+        "location": s2,
+        "img": s3,
+        "cordonnes": s4,
+        "waste_type": s5
+      });
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (kDebugMode) {
@@ -196,14 +204,17 @@ class _UploadImageState extends State<UploadImage> {
                     horizontal: 40.0, vertical: 15.0), // Set the padding
               ),
               onPressed: () {
-                print("offeverify : ${widget.id}");
+                if (kDebugMode) {
+                  print("offeverify : ${widget.id}");
+                }
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ImageVerificationPage()),
+                      builder: (context) => const ImageVerificationPage()),
                 );
                 print(widget.id);
-                createOffer(widget.id, widget.location, path);
+                createOffer(widget.id, widget.region, path, widget.location,
+                    widget.garbageType);
               },
               child: const Text(
                 'Verify',
