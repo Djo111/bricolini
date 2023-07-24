@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 export enum categ{
     DIY_WORKSHOP = "DIY workshop",
@@ -41,9 +42,6 @@ export class User{
     number_of_medium_trucks: number;
     @Prop()
     number_of_big_trucks: number;
-
-
-
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

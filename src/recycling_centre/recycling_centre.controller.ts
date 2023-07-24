@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { RecyclingCentreService } from './recycling_centre.service';
 import { Offer } from 'src/offer/schemas/offer.schema';

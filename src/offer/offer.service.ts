@@ -18,14 +18,20 @@ export class OfferService {
 
   async createNewOffer(offerdto: CreateOfferDto): Promise<Offer> {
     const createdoffer= new this.offerrModel(offerdto);
+    createdoffer.status=0;
     return createdoffer.save();
   }
-
   async findAllOffers(): Promise<Offer[]> {
     return this.offerrModel.find({id_recyclingCenter:null}).exec();
   }
   async findPendingOffers(id_RecyclingCenter:string): Promise<Offer[]>{
     return this.offerrModel.find({id_recyclingCenter:id_RecyclingCenter}).exec()
+  }
+  async findAllVerifiedOffers(): Promise<Offer[]> {
+    return this.offerrModel.find({status:1}).exec();
+  }
+  async findAllNotVerifiedOffers(): Promise<Offer[]> {
+    return this.offerrModel.find({status:0}).exec();
   }
   
   async findoffer_transporter(id: string): Promise<Offer[]>{
