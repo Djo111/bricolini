@@ -16,13 +16,15 @@ dependencies:
   geocoding: any
   http: ^0.13.3
   google_fonts : ^4.0.4
-  flutter_stripe: any
+  flutter_stripe: ^9.3.0
   jwt_decoder: ^2.0.1
   geolocator: ^8.2.0
   flutter_map: ^4.0.0
   jwt_decode: ^0.3.1
   firebase_storage: ^11.2.5
   path_provider: any
+  tflite_flutter: ^0.10.1
+  flutter_paystack: ^1.0.7
   
 
   
