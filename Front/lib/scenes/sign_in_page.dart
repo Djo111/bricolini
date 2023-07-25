@@ -24,6 +24,7 @@ class _SignInPageState extends State<SignInPage> {
   Future<Map<String, String>> loginUser(String s1, String s2) async {
     String category = '';
     String id = '';
+    String wasteType = '';
     try {
       final response = await http.post(
         Uri.parse('http://localhost:3000/auth/user/login'),
@@ -41,6 +42,7 @@ class _SignInPageState extends State<SignInPage> {
         Map<String, dynamic> payload = Jwt.parseJwt(token);
         category = body['category'];
         id = payload['id'];
+        wasteType = body['diy_waste_type'] ?? '';
 
         if (kDebugMode) {
           print('User logged in: token=$token, category=$category, id=$id');
@@ -55,7 +57,7 @@ class _SignInPageState extends State<SignInPage> {
         print('Exception occurred: $e');
       }
     }
-    return {'category': category, 'id': id};
+    return {'category': category, 'id': id, 'wasteType': wasteType};
   }
 
   void _navigateToSignupPage() {
@@ -149,16 +151,18 @@ class _SignInPageState extends State<SignInPage> {
                 Map<String, String> userData = await loginUser(email, password);
                 String id = userData["id"] ?? "";
                 String category = userData["category"] ?? "";
+                String wasteType = userData["wasteType"] ?? "";
                 print(category);
                 switch (category) {
                   case "DIY workshop":
                     break;
                   case "Recycling center":
+                    print(wasteType);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              const Recycling_Company_HomeScreen()),
+                          builder: (context) => Recycling_Company_HomeScreen(
+                              wasteType: wasteType)),
                     );
                     break;
                   case "Simple user":

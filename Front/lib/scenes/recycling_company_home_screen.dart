@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
 class Recycling_Company_HomeScreen extends StatefulWidget {
-  const Recycling_Company_HomeScreen({super.key});
+  final String wasteType;
+  const Recycling_Company_HomeScreen({super.key, required this.wasteType});
 
   @override
   _Recycling_Company_HomeScreenState createState() =>
@@ -24,13 +25,6 @@ class _Recycling_Company_HomeScreenState
     });
   }
 
-  final List<Widget> _pages = [
-    const HomePage(),
-    const MarketplacePage(),
-    const StatsPage(),
-    const RecyclingCompanyReceivedOffers(),
-  ];
-
   final List<IconData> _iconList = [
     Icons.home,
     Icons.shopping_cart,
@@ -40,6 +34,12 @@ class _Recycling_Company_HomeScreenState
 
   @override
   Widget build(BuildContext context) {
+    final _pages = [
+      const HomePage(),
+      const MarketplacePage(),
+      const StatsPage(),
+      RecyclingCompanyReceivedOffers(wasteType: widget.wasteType),
+    ];
     return WillPopScope(
       onWillPop: () async {
         if (!_navigationRailVisible) {
@@ -69,6 +69,7 @@ class _Recycling_Company_HomeScreenState
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
+                        print("waste :${widget.wasteType}");
                         setState(() {
                           _selectedIndex = index;
                         });

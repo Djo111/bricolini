@@ -21,7 +21,6 @@ dependencies:
   geolocator: ^8.2.0
   flutter_map: ^4.0.0
   jwt_decode: ^0.3.1
-  firebase_storage: ^11.2.5
   path_provider: any
   flutter_paystack: ^1.0.7
   

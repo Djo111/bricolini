@@ -4,4 +4,5 @@ export class CreateOfferDto {
     readonly img:string
     readonly location:string
     readonly price:number
+    readonly waste_type:String 
 }

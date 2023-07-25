@@ -57,6 +57,8 @@ class _PaiementState extends State<Paiement> {
   Future<void> makePayment() async {
     try {
       paymentIntentData = await createPaymentIntent(money, 'USD');
+      Stripe.publishableKey =
+          'pk_test_51NURdLJiqOibQhjfx6GwbsZXQpIgylHVPUMTWEmlH7BiOjdsoC0hW7AfCKSL9aZGU6ew9NTNgRbahhmwITpYTIXG00TtsmwGAA';
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: paymentIntentData!['client_secret'],

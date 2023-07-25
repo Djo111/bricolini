@@ -4,7 +4,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class RecyclingCompanyReceivedOffers extends StatefulWidget {
-  const RecyclingCompanyReceivedOffers({Key? key}) : super(key: key);
+  final String wasteType;
+  const RecyclingCompanyReceivedOffers({Key? key, required this.wasteType})
+      : super(key: key);
   @override
   State<RecyclingCompanyReceivedOffers> createState() =>
       _RecyclingCompanyReceivedOffersState();
@@ -30,7 +32,7 @@ class Offer {
       price: 300,
       address: json['location'],
       estimatedDistance: 0,
-      type: '',
+      type: json['waste_type'],
     );
   }
 }
@@ -53,21 +55,14 @@ class _RecyclingCompanyReceivedOffersState
     }
   }
 
-  List<Offer> receivedOffers = [
-    Offer(
-      photo: 'lib/images/construct.jpg',
-      address: '123 Main St',
-      type: 'construct',
-      estimatedDistance: 2.5,
-      price: 200,
-    )
-  ];
+  List<Offer> receivedOffers = [];
   @override
   void initState() {
     super.initState();
     fetchAllOffers().then((offers) {
       setState(() {
-        receivedOffers.addAll(offers);
+        receivedOffers
+            .addAll(offers.where((offer) => offer.type == widget.wasteType));
       });
       print(receivedOffers.length);
     });
