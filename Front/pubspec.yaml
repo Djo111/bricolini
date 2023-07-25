@@ -26,6 +26,8 @@ dependencies:
   tflite_flutter: ^0.10.1
   flutter_paystack: ^1.0.7
   
+  pdf: any
+  url_launcher: any
 
   
 
