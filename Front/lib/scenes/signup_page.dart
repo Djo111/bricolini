@@ -279,13 +279,23 @@ class _SignupPageState extends State<SignupPage> {
                   });
                 },
                 decoration: const InputDecoration(
-                  labelText: 'Category',
-                  border: OutlineInputBorder(),
+                labelText: 'Category',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
                 ),
+                labelStyle: TextStyle(color: Colors.white),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+              ),
+                dropdownColor: Colors.black87,
                 items: _categories.map((String category) {
                   return DropdownMenuItem<String>(
                     value: category,
-                    child: Text(category),
+                    child: Text(category, style: TextStyle(color: Colors.blue),),
                   );
                 }).toList(),
               ),
