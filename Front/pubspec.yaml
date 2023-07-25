@@ -23,7 +23,6 @@ dependencies:
   jwt_decode: ^0.3.1
   firebase_storage: ^11.2.5
   path_provider: any
-  tflite_flutter: ^0.10.1
   flutter_paystack: ^1.0.7
   
   pdf: any

@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:jwt_decode/jwt_decode.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});

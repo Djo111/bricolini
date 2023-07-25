@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pdf/widgets.dart' as pw; // Make sure to include this line
 import 'dart:io';
 import 'dart:math';
@@ -23,8 +22,8 @@ class MyApp extends StatelessWidget {
  */
 
 class ScorePage extends StatelessWidget {
-  final double userScore =1110;
-  double savedCo2=1;// Replace this with the actual user score
+  final double userScore = 1110;
+  double savedCo2 = 1; // Replace this with the actual user score
   Future<File> generatePDF() async {
     final pdf = pw.Document();
 
@@ -78,7 +77,11 @@ class ScorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(' Environmental Certification', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.lightGreen),),
+        title: Text(
+          ' Environmental Certification',
+          style:
+              TextStyle(fontWeight: FontWeight.bold, color: Colors.lightGreen),
+        ),
         backgroundColor: Colors.black,
       ),
       body: Center(
@@ -94,7 +97,10 @@ class ScorePage extends StatelessWidget {
             _buildProgressBar(),
             SizedBox(height: 20),
             CircularProgressBar(progressValue: savedCo2),
-            Text('CO2 saved quantity ', style: TextStyle(color: Colors.white),),
+            Text(
+              'CO2 saved quantity ',
+              style: TextStyle(color: Colors.white),
+            ),
             SizedBox(height: 50),
             SizedBox(height: 50),
             HorizontalLineWithText(
@@ -105,7 +111,8 @@ class ScorePage extends StatelessWidget {
             SizedBox(height: 50),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.brown), // Set the background color here
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Colors.brown), // Set the background color here
               ),
               onPressed: () async {
                 File pdfFile = await generatePDF();
@@ -119,7 +126,6 @@ class ScorePage extends StatelessWidget {
               },
               child: const Text('Download PDF'),
             ),
-
           ],
         ),
       ),
@@ -169,18 +175,19 @@ class ScorePage extends StatelessWidget {
       return _buildBadge('badge3', '+1000');
     } else if (userScore >= 2000) {
       return _buildBadge('badge2', '+2000');
-
-    }else if (userScore >= 3000) {
+    } else if (userScore >= 3000) {
       return _buildBadge('badge1', '+3000');
-    }else {
+    } else {
       return Container();
     }
   }
 
   Widget _buildBadge(String badgeName, String title) {
-    return Image.network("lib/images/" + badgeName +".png",
-    width: 150,
-    height: 150,);
+    return Image.network(
+      "lib/images/" + badgeName + ".png",
+      width: 150,
+      height: 150,
+    );
   }
 }
 
@@ -198,8 +205,9 @@ class CircularProgressBar extends StatelessWidget {
         painter: CircularProgressBarPainter(progressValue),
         child: Center(
           child: Text(
-            '${(progressValue).toInt()/100} CO2kg',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+            '${(progressValue).toInt() / 100} CO2kg',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
       ),
@@ -216,19 +224,24 @@ class CircularProgressBarPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
       ..shader = RadialGradient(
-        colors: [Colors.blue, Colors.green], // Add the colors you want for the gradient here
+        colors: [
+          Colors.blue,
+          Colors.green
+        ], // Add the colors you want for the gradient here
         center: Alignment.center,
-        radius: 0.8, // Adjust the radius to control the size of the gradient within the circle
+        radius:
+            0.8, // Adjust the radius to control the size of the gradient within the circle
         tileMode: TileMode.clamp,
-      ).createShader(Rect.fromCircle(center:Offset(0, 0) , radius: 0.5))
+      ).createShader(Rect.fromCircle(center: Offset(0, 0), radius: 0.5))
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10.0;
-
 
     final double startAngle = -pi / 2; // Start at 12 o'clock position
     final double sweepAngle = 2 * pi * progressValue;
 
-    final Rect rect = Rect.fromCircle(center: Offset(size.width / 2, size.height / 2), radius: size.width / 2 - 10);
+    final Rect rect = Rect.fromCircle(
+        center: Offset(size.width / 2, size.height / 2),
+        radius: size.width / 2 - 10);
 
     canvas.drawArc(rect, startAngle, sweepAngle, false, paint);
   }

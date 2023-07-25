@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'dart:io';
-import 'image_upload_widget.dart';
 import 'image_verification.dart';
 
 class ImageUploadWidget extends StatefulWidget {
