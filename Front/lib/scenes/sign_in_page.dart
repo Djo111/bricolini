@@ -22,6 +22,8 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoginFailed = false; // Track the login status
+
   Future<Map<String, String>> loginUser(String s1, String s2) async {
     String category = '';
     String id = '';
@@ -50,11 +52,17 @@ class _SignInPageState extends State<SignInPage> {
         if (kDebugMode) {
           print('Failed to log in user: ${response.statusCode}');
         }
+        setState(() {
+          _isLoginFailed = true; // Set the login failure status to true
+        });
       }
     } catch (e) {
       if (kDebugMode) {
         print('Exception occurred: $e');
       }
+      setState(() {
+        _isLoginFailed = true; // Set the login failure status to true
+      });
     }
     return {'category': category, 'id': id};
   }
@@ -129,7 +137,7 @@ class _SignInPageState extends State<SignInPage> {
               decoration: const InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+                  borderSide: BorderSide(color: Colors.red),
                 ),
                 labelStyle: TextStyle(color: Colors.white),
                 focusedBorder: OutlineInputBorder(
@@ -144,6 +152,9 @@ class _SignInPageState extends State<SignInPage> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
+                setState(() {
+                  _isLoginFailed = false; // Reset login failure status on button press
+                });
                 String email = _emailController.text;
                 String password = _passwordController.text;
                 // Use the email and password for backend processing
@@ -159,7 +170,7 @@ class _SignInPageState extends State<SignInPage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              const Recycling_Company_HomeScreen()),
+                          const Recycling_Company_HomeScreen()),
                     );
                     break;
                   case "Simple user":
@@ -197,6 +208,18 @@ class _SignInPageState extends State<SignInPage> {
                     color: Colors.white),
               ),
             ),
+            // Display error message if login failed
+            if (_isLoginFailed)
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Email or password is incorrect',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
           ],
         ),
       ),
