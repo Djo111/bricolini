@@ -42,7 +42,7 @@ export class AuthService {
     return { token };
   }
 
-  async login(logindto: LogInDto): Promise<{ token: string, category: categ }> {
+  async login(logindto: LogInDto): Promise<{ token: string, category: categ, diy_waste_type?: string }> {
     const { email, password } = logindto;
     const user = await this.userModel.findOne({ email });
 
@@ -58,8 +58,13 @@ export class AuthService {
 
     const token = this.jwtService.sign({ id: user._id });
 
-    return { token, category: user.category };
-  }
+    if (user.category === 'Recycling center') {
+      return { token, category: user.category, diy_waste_type: user.diy_waste_type };
+    } else {
+      return { token, category: user.category };
+    }
+}
+
 
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();

@@ -20,7 +20,7 @@ export class AuthController {
   @Post('/user/login')
   Login(
     @Body() loginDto: LogInDto
-  ): Promise<{ token: string, category: categ }> {
+  ): Promise<{ token: string, category: categ ,diy_waste_type?: string}> {
     return this.authService.login(loginDto);
   }
 

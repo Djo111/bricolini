@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class About_Us extends StatelessWidget {
   @override
@@ -7,31 +6,32 @@ class About_Us extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child :AppBar(
-          backgroundColor: Colors.black87,
-          leadingWidth: 100,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'lib/images/Logo_Arcturus.png',
-                width:45,// Replace with your logo image path
-                height:45,
-                // You can adjust the height of the logo as needed
-              ),
-              SizedBox(width: 8),
-              Text(
-                'Bricolini',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightGreen,
+          preferredSize: Size.fromHeight(100),
+          child: AppBar(
+            backgroundColor: Colors.black87,
+            leadingWidth: 100,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'lib/images/Logo_Arcturus.png',
+                  width: 45, // Replace with your logo image path
+                  height: 45,
+                  // You can adjust the height of the logo as needed
                 ),
-              ),
-            ],
+                SizedBox(width: 8),
+                Text(
+                  'Bricolini',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightGreen,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),),
+        ),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(16.0),
           child: Column(
@@ -54,14 +54,19 @@ class About_Us extends StatelessWidget {
               SizedBox(height: 32.0),
               Text(
                 'Statistics',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
               SizedBox(height: 16.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildStatisticCard('+30 000', 'cubic meters of landfill space'),
-                  _buildStatisticCard('85%', 'recycling rate for construction waste '),
+                  _buildStatisticCard(
+                      '+30 000', 'cubic meters of landfill space'),
+                  _buildStatisticCard(
+                      '85%', 'recycling rate for construction waste '),
                   _buildStatisticCard('1M \$', 'Revenue'),
                 ],
               ),
@@ -108,7 +113,10 @@ class About_Us extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87),
           ),
           SizedBox(height: 2.0),
           Text(
@@ -117,8 +125,6 @@ class About_Us extends StatelessWidget {
           ),
         ],
       ),
-
     );
-
   }
 }

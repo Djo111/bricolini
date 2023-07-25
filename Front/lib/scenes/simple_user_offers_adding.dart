@@ -78,19 +78,19 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                         child: Text("garbage type"),
                       ),
                       DropdownMenuItem(
-                        value: "metal",
+                        value: "iron waste",
                         child: Text("Metal"),
                       ),
                       DropdownMenuItem(
-                        value: "wood",
+                        value: "wood waste",
                         child: Text("Wood"),
                       ),
                       DropdownMenuItem(
-                        value: "constructionWaste",
+                        value: "construction waste",
                         child: Text("Construction waste"),
                       ),
                       DropdownMenuItem(
-                        value: "other",
+                        value: "others",
                         child: Text("Other"),
                       )
                     ],
