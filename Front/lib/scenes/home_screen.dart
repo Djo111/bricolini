@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  bool _isRailVisible = true; 
+  bool _isRailVisible = true;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _goToAboutUsPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const About_Us()),
+      MaterialPageRoute(builder: (context) => About_Us()),
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:bricoloni_v2/scenes/home_screen.dart';
+import 'package:bricoloni_v2/scenes/welcomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:bricoloni_v2/scenes/web3_service.dart';
 class MyApp extends StatelessWidget {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: FirstScreen(),
     );
   }
 }

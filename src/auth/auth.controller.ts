@@ -7,27 +7,25 @@ import { categ } from './schemas/user.schema';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService) { }
-    
-    @Post('/signup')
-    SignUp(
-        @Body()
-        signupDto: SignUpDto
-    ): Promise<{ token: string }>{
-        return this.authService.signUp(signupDto);
-    }
+  constructor(private authService: AuthService) {}
 
-    @Get('/login')
-    Login(
-        @Body()
-        loginDto: LogInDto
-    ): Promise<{ token: string }>{
-        return this.authService.login(loginDto);
-    }
+  @Post('/signup')
+  SignUp(
+    @Body() signupDto: SignUpDto
+  ): Promise<{ token: string }> {
+    console.log("controller");
+    return this.authService.signUp(signupDto);
+  }
 
+  @Post('/user/login')
+  Login(
+    @Body() loginDto: LogInDto
+  ): Promise<{ token: string, category: categ ,diy_waste_type?: string}> {
+    return this.authService.login(loginDto);
+  }
 
-    @Get()
-    findAll() {
+  @Get()
+  findAll() {
     return this.authService.findAll();
     }
   @Get('category/:catg')
@@ -47,7 +45,7 @@ export class AuthController {
   update(@Param('id') id: string, @Body() updateSimpleUserDto: SignUpDto) {
     return this.authService.update(id, updateSimpleUserDto);
   }
-  
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.authService.remove(id);
