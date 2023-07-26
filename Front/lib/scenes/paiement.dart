@@ -1,130 +1,144 @@
-import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:http/http.dart' as http;
+import 'package:stripe_sdk/stripe_sdk.dart' as stripe;
 
 class Paiement extends StatefulWidget {
-  const Paiement({Key? key}) : super(key: key);
-
   @override
-  State<Paiement> createState() => _PaiementState();
+  _PaiementState createState() => _PaiementState();
 }
 
 class _PaiementState extends State<Paiement> {
-  Map<String, dynamic>? paymentIntentData;
-  String money = 10.toString();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late String _cardNumber;
+  late int _expiryMonth;
+  late int _expiryYear;
+  late String _cvc;
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    _formKey.currentState?.save();
+
+    stripe.Stripe.apiKey =
+        "pk_test_51NURdLJiqOibQhjfx6GwbsZXQpIgylHVPUMTWEmlH7BiOjdsoC0hW7AfCKSL9aZGU6ew9NTNgRbahhmwITpYTIXG00TtsmwGAA";
+
+    final paymentMethod = await stripe.Stripe.instance.createPaymentMethod(
+      stripe.PaymentMethodRequest(
+          card: stripe.CardParams(
+              number: _cardNumber,
+              expMonth: _expiryMonth,
+              expYear: _expiryYear,
+              cvc: _cvc)),
+    );
+
+    final clientSecret = '<client_secret>';
+
+    final paymentIntent = await stripe.Stripe.instance.confirmPaymentIntent(
+      stripe.PaymentIntentConfirmParams(
+        paymentMethodId: paymentMethod.id,
+        clientSecret: clientSecret,
+      ),
+    );
+
+    if (paymentIntent.status == stripe.PaymentIntentStatus.succeeded) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Payment succeeded.')));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Payment failed.')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber,
-        title: const Text('PAYMENT METHOD (STRIPE)'),
-        centerTitle: true,
-        toolbarHeight: 80,
+        title: Text('Stripe Payment'),
       ),
-      body: Center(
-          child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.deepPurple,
-          minimumSize: const Size(250, 50),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Card number',
+                ),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your card number';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _cardNumber = value!;
+                },
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Expiry month',
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter the expiry month';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _expiryMonth = int.parse(value!);
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Expiry year',
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter the expiry year';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _expiryYear = int.parse(value!);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'CVC',
+                ),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter the CVC';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _cvc = value!;
+                },
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _submit,
+                child: const Text('Pay'),
+              ),
+            ],
           ),
         ),
-        child: const Text(
-          'STRIPE PAYMENT',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        onPressed: () {
-          makePayment();
-        },
-      )),
+      ),
     );
-  }
-
-  payFee() {
-    try {
-      //if you want to upload data to any database do it here
-    } catch (e) {
-      // exception while uploading data
-    }
-  }
-
-  Future<void> makePayment() async {
-    try {
-      paymentIntentData = await createPaymentIntent(money, 'USD');
-      
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: paymentIntentData!['client_secret'],
-          style: ThemeMode.dark,
-          merchantDisplayName: 'ANNIE',
-        ),
-      );
-      displayPaymentSheet();
-    } catch (e, s) {
-      if (kDebugMode) {
-        print(s);
-      }
-    }
-  }
-
-  displayPaymentSheet() async {
-    try {
-      await Stripe.instance.presentPaymentSheet().then((newValue) {
-        payFee();
-
-        paymentIntentData = null;
-      }).onError((error, stackTrace) {
-        if (kDebugMode) {
-          print('Exception/DISPLAYPAYMENTSHEET==> $error $stackTrace');
-        }
-      });
-    } on StripeException catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-      showDialog(
-          context: context,
-          builder: (_) => const AlertDialog(
-                content: Text("Cancelled "),
-              ));
-    } catch (e) {
-      if (kDebugMode) {
-        print('$e');
-      }
-    }
-  }
-
-  createPaymentIntent(String amount, String currency) async {
-    try {
-      Map<String, dynamic> body = {
-        'amount': calculateAmount(amount),
-        'currency': currency,
-        'payment_method_types[]': 'card'
-      };
-      var response = await http.post(
-          Uri.parse('https://api.stripe.com/v1/payment_intents'),
-          body: body,
-          headers: {
-            'Authorization':
-                'Bearer sk_test_51L8PzGKEp9uhBKrrWhzpS6OoCZSlUfjEakjHRoLwBOrcSLeUDUZZw1QbX7BgWXjV6w9SMcDLAUlRzorynyrC1OrV00c4HIw4Ns',
-            'Content-Type': 'application/x-www-form-urlencoded'
-          });
-      return jsonDecode(response.body);
-    } catch (err) {
-      if (kDebugMode) {
-        print('err charging user: ${err.toString()}');
-      }
-    }
-  }
-
-  calculateAmount(String amount) {
-    final a = (int.parse(amount)) * 100;
-    return a.toString();
   }
 }
