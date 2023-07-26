@@ -57,18 +57,23 @@ class _DIY_Sign_UpState extends State<DIY_Sign_Up> {
               controller: _addressController,
               decoration: const InputDecoration(
                 labelText: 'Address',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                labelStyle: TextStyle(color: Colors.white),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
               ),
             ),
             const SizedBox(height: 16),
             const Text(
-              'Checklist',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              'Garbage type',
+              style: TextStyle(fontSize: 18, color: Colors.lightGreen),
             ),
-            buildCheckboxListTile(0, 'WoodWaste'),
-            buildCheckboxListTile(1, 'MetalWaste'),
-            buildCheckboxListTile(2, 'ConstructionWaste'),
-            buildCheckboxListTile(3, 'Other'),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
@@ -100,7 +105,11 @@ class _DIY_Sign_UpState extends State<DIY_Sign_Up> {
                     address,
                     Type_Waste);
               },
-              child: const Text('Sign Up'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightGreen,
+                foregroundColor: Colors.black,
+              ),
+              child: const Text('Sign Up', style: TextStyle(color: Colors.black),),
             ),
           ],
         ),
