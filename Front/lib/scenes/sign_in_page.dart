@@ -68,6 +68,26 @@ class _SignInPageState extends State<SignInPage> {
     return {'category': category, 'id': id, 'wasteType': wasteType};
   }
 
+  void _showLoginFailedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Email or password is incorrect'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _navigateToSignupPage() {
     Navigator.push(
       context,
@@ -91,7 +111,10 @@ class _SignInPageState extends State<SignInPage> {
         title: const Text(
           'Sign In / Sign Up',
           style: TextStyle(
-              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
       ),
       body: Container(
@@ -103,9 +126,10 @@ class _SignInPageState extends State<SignInPage> {
             const Text(
               'Welcome to Brocolini',
               style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightGreen),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.lightGreen,
+              ),
             ),
             const SizedBox(height: 32),
             TextField(
@@ -121,13 +145,13 @@ class _SignInPageState extends State<SignInPage> {
                 labelStyle: TextStyle(color: Colors.white),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: Colors
-                          .white), // Set the color of the border when the field is focused
+                    color: Colors.white,
+                  ), // Set the color of the border when the field is focused
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      color: Colors
-                          .white), // Set the color of the border when the field is not focused
+                    color: Colors.white,
+                  ), // Set the color of the border when the field is not focused
                 ),
               ),
             ),
@@ -154,7 +178,8 @@ class _SignInPageState extends State<SignInPage> {
             ElevatedButton(
               onPressed: () async {
                 setState(() {
-                  _isLoginFailed = false; // Reset login failure status on button press
+                  _isLoginFailed =
+                      false; // Reset login failure status on button press
                 });
                 String email = _emailController.text;
                 String password = _passwordController.text;
@@ -172,24 +197,29 @@ class _SignInPageState extends State<SignInPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Recycling_Company_HomeScreen(
-                              wasteType: wasteType)),
+                        builder: (context) =>
+                            Recycling_Company_HomeScreen(wasteType: wasteType),
+                      ),
                     );
                     break;
                   case "Simple user":
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Simple_User_HomeScreen(id: id)),
+                        builder: (context) => Simple_User_HomeScreen(id: id),
+                      ),
                     );
                     break;
                   case "Transporter":
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const Transporter_HomeScreen()),
+                        builder: (context) => const Transporter_HomeScreen(),
+                      ),
                     );
                     break;
+                  default:
+                    _showLoginFailedDialog(); // Show the dialog for login failure
                 }
               },
               child: const Text('Sign In'),
@@ -206,23 +236,12 @@ class _SignInPageState extends State<SignInPage> {
               child: const Text(
                 'Don\'t have an account? Sign Up',
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white),
-              ),
-            ),
-            // Display error message if login failed
-            if (_isLoginFailed)
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Email or password is incorrect',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 13,
-                  ),
+                  fontSize: 13,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white,
                 ),
               ),
+            ),
           ],
         ),
       ),

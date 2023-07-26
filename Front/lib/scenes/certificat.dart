@@ -1,29 +1,16 @@
-import 'dart:typed_data';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pdf/widgets.dart' as pw; // Make sure to include this line
 import 'dart:io';
 import 'dart:math';
-/*
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ScorePage(),
-    );
-  }
-}
-
- */
-
+// ignore: must_be_immutable
 class ScorePage extends StatelessWidget {
   final double userScore = 1110;
-  double savedCo2 = 1; // Replace this with the actual user score
+  double savedCo2 = 1;
+
+  ScorePage({super.key}); // Replace this with the actual user score
   Future<File> generatePDF() async {
     final pdf = pw.Document();
 
@@ -51,7 +38,9 @@ class ScorePage extends StatelessWidget {
       await output.writeAsBytes(await pdf.save());
       return output;
     } catch (e) {
-      print('Error generating PDF: $e');
+      if (kDebugMode) {
+        print('Error generating PDF: $e');
+      }
 
       // If there was an error, return an empty PDF file with an error message
       pdf.addPage(
@@ -77,7 +66,7 @@ class ScorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           ' Environmental Certification',
           style:
               TextStyle(fontWeight: FontWeight.bold, color: Colors.lightGreen),
@@ -89,26 +78,26 @@ class ScorePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildBadgeWidget(),
-            Text(
+            const Text(
               'Your Score',
               style: TextStyle(fontSize: 16, color: Colors.white),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildProgressBar(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CircularProgressBar(progressValue: savedCo2),
-            Text(
+            const Text(
               'CO2 saved quantity ',
               style: TextStyle(color: Colors.white),
             ),
-            SizedBox(height: 50),
-            SizedBox(height: 50),
-            HorizontalLineWithText(
+            const SizedBox(height: 50),
+            const SizedBox(height: 50),
+            const HorizontalLineWithText(
               url: 'https://www.example.com',
               clickableText: 'download',
               nonClickableText: 'Download your actual certification here : ',
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
@@ -118,7 +107,9 @@ class ScorePage extends StatelessWidget {
                 File pdfFile = await generatePDF();
                 String path = pdfFile.path;
                 // Use the url_launcher package to open the file in a PDF viewer
+                // ignore: deprecated_member_use
                 if (await canLaunch(path)) {
+                  // ignore: deprecated_member_use
                   await launch(path);
                 } else {
                   throw 'Could not launch $path';
@@ -140,7 +131,7 @@ class ScorePage extends StatelessWidget {
       height: 20,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [Colors.black, Colors.black],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -152,7 +143,7 @@ class ScorePage extends StatelessWidget {
             width: 300 * progress,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 colors: [Colors.brown, Colors.lightGreen],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -162,7 +153,7 @@ class ScorePage extends StatelessWidget {
           Center(
             child: Text(
               '${(progress * 100).toInt()}%',
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ],
@@ -184,7 +175,7 @@ class ScorePage extends StatelessWidget {
 
   Widget _buildBadge(String badgeName, String title) {
     return Image.network(
-      "lib/images/" + badgeName + ".png",
+      "lib/images/$badgeName.png",
       width: 150,
       height: 150,
     );
@@ -194,7 +185,7 @@ class ScorePage extends StatelessWidget {
 class CircularProgressBar extends StatelessWidget {
   final double progressValue;
 
-  const CircularProgressBar({required this.progressValue});
+  const CircularProgressBar({super.key, required this.progressValue});
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +197,7 @@ class CircularProgressBar extends StatelessWidget {
         child: Center(
           child: Text(
             '${(progressValue).toInt() / 100} CO2kg',
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
@@ -223,7 +214,7 @@ class CircularProgressBarPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..shader = RadialGradient(
+      ..shader = const RadialGradient(
         colors: [
           Colors.blue,
           Colors.green
@@ -232,11 +223,11 @@ class CircularProgressBarPainter extends CustomPainter {
         radius:
             0.8, // Adjust the radius to control the size of the gradient within the circle
         tileMode: TileMode.clamp,
-      ).createShader(Rect.fromCircle(center: Offset(0, 0), radius: 0.5))
+      ).createShader(Rect.fromCircle(center: const Offset(0, 0), radius: 0.5))
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10.0;
 
-    final double startAngle = -pi / 2; // Start at 12 o'clock position
+    const double startAngle = -pi / 2; // Start at 12 o'clock position
     final double sweepAngle = 2 * pi * progressValue;
 
     final Rect rect = Rect.fromCircle(
@@ -257,14 +248,17 @@ class HorizontalLineWithText extends StatelessWidget {
   final String clickableText;
   final String nonClickableText;
 
-  HorizontalLineWithText({
+  const HorizontalLineWithText({
+    super.key,
     required this.url,
     required this.clickableText,
     required this.nonClickableText,
   });
 
   void _launchURL() async {
+    // ignore: deprecated_member_use
     if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
       await launch(url);
     } else {
       throw 'Could not launch $url';
@@ -275,7 +269,7 @@ class HorizontalLineWithText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
+        const Row(
           children: [
             Expanded(
               child: Divider(
@@ -286,20 +280,21 @@ class HorizontalLineWithText extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 8), // Add some spacing between the line and the text
+        const SizedBox(
+            height: 8), // Add some spacing between the line and the text
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               nonClickableText,
-              style: TextStyle(fontSize: 16, color: Colors.white),
+              style: const TextStyle(fontSize: 16, color: Colors.white),
             ),
-            SizedBox(width: 8), // Add some spacing between the two texts
+            const SizedBox(width: 8), // Add some spacing between the two texts
             GestureDetector(
               onTap: _launchURL,
               child: Text(
                 clickableText,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.blue,
                   decoration: TextDecoration.underline,

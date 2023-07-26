@@ -29,7 +29,9 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
     const MarketplacePage(),
     const StatsPage(),
     const TransporterReceivedOffers(),
-    const Profile(),
+    const Profile(
+      title: '',
+    ),
   ];
 
   final List<IconData> _iconList = [
