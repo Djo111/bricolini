@@ -61,7 +61,7 @@ class _ProfileState extends State<Profile> {
                 Padding(
                   padding: EdgeInsets.only(top: height / 2.2),
                   child: Container(
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 Padding(
@@ -109,7 +109,7 @@ class _ProfileState extends State<Profile> {
                                   _logout(context);
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  primary: const Color(0xFF26CBE6),
+                                  backgroundColor: const Color(0xFF26CBE6),
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.circular(height / 40),
