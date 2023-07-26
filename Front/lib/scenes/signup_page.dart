@@ -279,23 +279,26 @@ class _SignupPageState extends State<SignupPage> {
                   });
                 },
                 decoration: const InputDecoration(
-                labelText: 'Category',
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+                  labelText: 'Category',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  labelStyle: TextStyle(color: Colors.white),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
                 ),
-                labelStyle: TextStyle(color: Colors.white),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-              ),
                 dropdownColor: Colors.black87,
                 items: _categories.map((String category) {
                   return DropdownMenuItem<String>(
                     value: category,
-                    child: Text(category, style: TextStyle(color: Colors.blue),),
+                    child: Text(
+                      category,
+                      style: TextStyle(color: Colors.blue),
+                    ),
                   );
                 }).toList(),
               ),
@@ -306,7 +309,11 @@ class _SignupPageState extends State<SignupPage> {
                   backgroundColor: Colors.lightGreen,
                   foregroundColor: Colors.black,
                 ),
-                child: const Text('Next'),
+                // ignore: unrelated_type_equality_checks
+                child:
+                    // ignore: unrelated_type_equality_checks
+                    Text(
+                        _selectedCategory == 'Simple user' ? 'SignUp' : 'Next'),
               ),
               const SizedBox(height: 8),
               TextButton(

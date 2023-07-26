@@ -1,4 +1,3 @@
-import 'package:bricoloni_v2/scenes/simple_user_offers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

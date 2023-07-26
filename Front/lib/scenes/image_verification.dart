@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Ia_model.dart';
 
 class ImageVerificationPage extends StatefulWidget {
   const ImageVerificationPage({super.key});
@@ -55,9 +56,7 @@ class _ImageVerificationPageState extends State<ImageVerificationPage> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      // Add logic to return to your offers page
-                      // For example, you can use Navigator to navigate to the page
-                      // Navigator.of(context).pop();
+                      runModelOnImage();
                     },
                     child: const Text('Return To My Offers'),
                   ),
