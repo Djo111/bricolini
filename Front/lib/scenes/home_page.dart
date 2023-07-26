@@ -1,64 +1,139 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.d    art' as http;
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 
 
-class Adds extends StatefulWidget {
+class MyAppBar extends StatelessWidget {
+  final int currentIndex;
+  final void Function(int) onTabTapped;
+
+  MyAppBar({
+    required this.currentIndex,
+    required this.onTabTapped,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      shape: CircularNotchedRectangle(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              onTabTapped(0);
+            },
+            color: currentIndex == 0 ? Colors.blue : Colors.grey,
+          ),
+          IconButton(
+            icon: Icon(Icons.history),
+            onPressed: () {
+              onTabTapped(1);
+            },
+            color: currentIndex == 1 ? Colors.blue : Colors.grey,
+          ),
+          IconButton(
+            icon: Icon(Icons.local_offer),
+            onPressed: () {
+              onTabTapped(2);
+            },
+            color: currentIndex == 2 ? Colors.blue : Colors.grey,
+          ),
+          IconButton(
+            icon: Icon(Icons.bar_chart),
+            onPressed: () {
+              onTabTapped(3);
+            },
+            color: currentIndex == 3 ? Colors.blue : Colors.grey,
+          ),
+          IconButton(
+            icon: Icon(Icons.store),
+            onPressed: () {
+              onTabTapped(4);
+            },
+            color: currentIndex == 4 ? Colors.blue : Colors.grey,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+class HomePage extends StatefulWidget{
+  const HomePage({Key? key}) : super(key: key);
+  @override
+  State<HomePage> createState() =>
+      _AddsState();
+}
+
+/*class Adds extends StatefulWidget {
   const Adds({Key? key}) : super(key: key);
   @override
   State<Adds> createState() =>
       _AddsState();
-}
+}*/
 
 class Add{
-  String username;
-  String description;
-  String img;
-  String user_category;
+  final String username;
+  final String description;
+  final String img;
+  final String userCategory;
 
   Add({
     required this.username,
-    this.description,
-    this.img,
-    required this.user_category
+    required this.description,
+    required this.img,
+    required this.userCategory
   });
 
-  factory Add.fromJson(Map<String, dynamic>){
+  factory Add.fromJson(Map<String, dynamic> json){
   return Add(
   username: json['username'],
   description: json['description'],
   img: json['img'],
-  user_category: json['user_category'],
+  userCategory: json['user_category'],
   );
   }
 }
 
-calss _AddsState extends State<Adds>{
-Future<List<Add> fetchAllAdds() async{
-  final response = await http.get(Uri.parse('http://localhost:3000/adds'));
+class _AddsState
+    extends State<HomePage> {
+  int _currentIndex = 0;
+  Future<List<Add>> fetchAllAdds() async {
+    final response = await http
+          .get(Uri.parse('http://localhost:3000/adds/accepted'));
 
-  if (response.statusCode == 200) {
-    // If the server returns a 200 OK response, parse the JSON.
-    List<dynamic> jsonList = jsonDecode(response.body);
-    List<Add> adds =
-    jsonList.map((json) => Offer.fromJson(json)).toList();
-    return adds;
-  } else {
-    // If the server did not return a 200 OK response, throw an exception.
-    throw Exception('Failed to load adds');
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      List<dynamic> jsonList = jsonDecode(response.body);
+      List<Add> adds =
+      jsonList.map((json) => Add.fromJson(json)).toList();
+
+      return adds;
+    } else {
+      // If the server did not return a 200 OK response, throw an exception.
+      throw Exception('Failed to load users');
+    }
   }
-}
 
-List<Add> AllAdds=[];
+List<Add> allAdds=[
+
+];
 @override
 void initState() {
   super.initState();
   fetchAllAdds().then((adds) {
     setState(() {
-      AllAdds.addAll(adds);
+      allAdds.addAll(adds);
     });
-    print(AllAdds.length);
+    print(allAdds.length);
   });
 }
 
@@ -67,9 +142,17 @@ Widget build(BuildContext context) {
   return Scaffold(
     backgroundColor: const Color(0xFF171918),
     body: ListView.builder(
-      itemCount: AllAdds.length,
+      itemCount: allAdds.length,
       itemBuilder: (context, index) {
-        return _buildPostContainer(adds[index]);
+        return _buildPostContainer(allAdds[index]);
+      },
+    ),
+    bottomNavigationBar: MyAppBar(
+      currentIndex: _currentIndex,
+      onTabTapped: (index) {
+        setState(() {
+          _currentIndex = index;
+        });
       },
     ),
   );
@@ -82,13 +165,13 @@ Widget _buildPostContainer(Add post) {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
     ListTile(
-    leading: //CircleAvatar(
+    leading: CircleAvatar(
     // You can use a NetworkImage or AssetImage based on your data.
-    // backgroundImage: NetworkImage(post.img),
-    //),
+      backgroundImage: NetworkImage(post.img),
+    ),
     title: Text(post.username),
   ),
-  Image.network(post.imageUrl),
+  Image.network(post.img),
   Padding(
   padding: EdgeInsets.all(16.0),
   child: Text(post.description),

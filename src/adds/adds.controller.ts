@@ -20,6 +20,10 @@ export class AddsController {
     findAll() {
         return this.addservice.getAllAdds()
     }
+    @Get("/accepted")
+    findposts() {
+        return this.addservice.getVerifiedAdds()
+    }
     @Get(':username')
     findByUser(
         @Param('username')
