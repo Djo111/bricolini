@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Ia_model.dart';
+
 
 class ImageVerificationPage extends StatefulWidget {
   const ImageVerificationPage({super.key});
@@ -56,7 +56,7 @@ class _ImageVerificationPageState extends State<ImageVerificationPage> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      runModelOnImage();
+
                     },
                     child: const Text('Return To My Offers'),
                   ),
