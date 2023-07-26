@@ -1,3 +1,4 @@
+import 'package:bricoloni_v2/pages/SimpleUserProfile.dart';
 import 'package:bricoloni_v2/scenes/home_screen.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
 import 'package:bricoloni_v2/scenes/booking_offer_page.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.d    art' as http;
 import 'dart:convert';
 
 class RecyclingCompanyReceivedOffers extends StatefulWidget {
