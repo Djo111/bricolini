@@ -1,34 +1,68 @@
 import 'package:bricoloni_v2/scenes/paiement.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class FindTrans extends StatefulWidget {
-  const FindTrans({Key? key}) : super(key: key);
+  final String location;
+  const FindTrans({Key? key, required this.location}) : super(key: key);
 
   @override
   _FindTransState createState() => _FindTransState();
 }
 
-class _FindTransState extends State<FindTrans> {
-  List<Transporter> historyList = [
-    Transporter(
-      photo: "lib/images/Logo_Arcturus.png",
-      tName: "Ahmed",
-      location: "Casablanca",
-      pricePerKm: 100,
-      vehicule: "camion blabla",
-    ),
-    Transporter(
-      photo: "lib/images/Logo_Arcturus.png",
-      tName: "Hamiiid",
-      location: "Tunis, Tunisie",
-      pricePerKm: 100,
-      vehicule: "camion blabla",
-    ),
-  ];
+class Transporter {
+  final String tName;
+  final String photo;
+  final String location;
+  final String vehicule;
+  final double pricePerKm;
 
-  void addToHistory(Transporter transporter) {
-    setState(() {
-      historyList.add(transporter);
+  Transporter({
+    required this.tName,
+    required this.photo,
+    required this.location,
+    required this.vehicule,
+    required this.pricePerKm,
+  });
+  factory Transporter.fromJson(Map<String, dynamic> json) {
+    return Transporter(
+      tName: json['username'],
+      photo: "lib/images/Logo_Arcturus.png",
+      location: json['location'],
+      vehicule: "",
+      pricePerKm: 10,
+    );
+  }
+}
+
+class _FindTransState extends State<FindTrans> {
+  List<Transporter> historyList = [];
+  Future<List<Transporter>> fetchAllOffers() async {
+    final response = await http.get(Uri.parse(
+        'http://localhost:3000/recycling-centre/transporters/:category'));
+
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      List<dynamic> jsonList = jsonDecode(response.body);
+      List<Transporter> transporters =
+          jsonList.map((json) => Transporter.fromJson(json)).toList();
+      return transporters;
+    } else {
+      // If the server did not return a 200 OK response, throw an exception.
+      throw Exception('Failed to load transporters');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAllOffers().then((offers) {
+      setState(() {
+        historyList
+            .addAll(offers.where((offer) => offer.location == widget.location));
+      });
+      print(historyList.length);
     });
   }
 
@@ -115,20 +149,4 @@ class _FindTransState extends State<FindTrans> {
       ),
     );
   }
-}
-
-class Transporter {
-  final String tName;
-  final String photo;
-  final String location;
-  final String vehicule;
-  final double pricePerKm;
-
-  Transporter({
-    required this.tName,
-    required this.photo,
-    required this.location,
-    required this.vehicule,
-    required this.pricePerKm,
-  });
 }

@@ -2,7 +2,6 @@ import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:bricoloni_v2/scenes/history_page.dart';
 import 'package:bricoloni_v2/scenes/home_page.dart';
 import 'package:bricoloni_v2/scenes/marketplace_page.dart';
-import 'package:bricoloni_v2/scenes/paiement.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
 import 'package:bricoloni_v2/scenes/sign_in_page.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const HomePage(),
     const HistoryPage(),
     const MarketplacePage(),
-    const Paiement(),
+    const StatsPage(),
     const SignInPage(),
   ];
 

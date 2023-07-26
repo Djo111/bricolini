@@ -52,7 +52,9 @@ class _BookingOfferPageState extends State<BookingOfferPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const FindTrans()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          FindTrans(location: widget.offer.address)),
                 );
               },
               child: const Text('Choosing Transporter'),
