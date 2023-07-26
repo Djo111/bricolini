@@ -7,7 +7,6 @@ import * as bcrypt from 'bcryptjs'
 import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signup.dto';
 import { LogInDto } from './dto/login.dto';
-
 @Injectable()
 export class AuthService {
     constructor(
@@ -17,7 +16,7 @@ export class AuthService {
      ) {}
 
     
-    async signUp(signupDto: SignUpDto): Promise<string> {
+    async signUp(signupDto: SignUpDto): Promise<{ token: string }> {
         const { username, email, password, category, phoneNumber, address, diy_waste_type, region,
             number_of_small_trucks, number_of_medium_trucks, number_of_big_trucks } = signupDto
         
@@ -37,28 +36,29 @@ export class AuthService {
             number_of_big_trucks
         })
 
-      return "SignUp done."
+        const token = this.jwtService.sign({ id: user._id })
+        console.log("signup done")
+        return {token};
     }
 
-    async login(logindto: LogInDto): Promise<{ token: string }>{
-        const { email, password } = logindto
-        const user = await this.userModel.findOne({ email })
-        
-        if (!user) {
-            throw new UnauthorizedException("Invalid email!")
-        }
-        const isPasswordMatched = await bcrypt.compare(password, user.password)
-         if (!isPasswordMatched) {
-            throw new UnauthorizedException("Invalid email or password!")
-         }
-        
-        const token = this.jwtService.sign({ id: user._id , category: user.category })
-        
-        return { token };
-    }
-    async validate(payload:any) {
-        return{'User':payload.user};
-    }
+    async login(logindto: LogInDto): Promise<{ token: string, category: categ }>{
+      const { email, password } = logindto;
+      const user = await this.userModel.findOne({ email });
+  
+      if (!user) {
+          throw new UnauthorizedException("Invalid email!");
+      }
+  
+      const isPasswordMatched = await bcrypt.compare(password, user.password);
+  
+      if (!isPasswordMatched) {
+          throw new UnauthorizedException("Invalid email or password!");
+      }
+  
+      const token = this.jwtService.sign({ id: user._id });
+  
+      return { token, category: user.category }; // make sure to return category here
+  }
 
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();

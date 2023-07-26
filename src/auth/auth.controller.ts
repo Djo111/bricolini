@@ -13,7 +13,7 @@ export class AuthController {
     SignUp(
         @Body()
         signupDto: SignUpDto
-    ): Promise<string>{
+    ): Promise<{ token: string }>{
         return this.authService.signUp(signupDto);
     }
 
@@ -47,8 +47,11 @@ export class AuthController {
   update(@Param('id') id: string, @Body() updateSimpleUserDto: SignUpDto) {
     return this.authService.update(id, updateSimpleUserDto);
   }
+  
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.authService.remove(id);
-  }  
+  }
+
+  
 }
