@@ -1,3 +1,16 @@
-table {
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-table-container {
+  width: 100%; /* Ajuster la largeur selon vos besoins */
+  overflow-y: auto;
+}
+.mat-table {
   width: 100%;
+  overflow-x: auto;
+}
+.custom-table-padding {
+  padding-top: 50px; /* Ajustez la valeur du padding selon vos besoins */
 }

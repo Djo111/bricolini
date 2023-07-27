@@ -16,4 +16,5 @@ export class TransporterService {
       const url = `${this.apiUrl}/users/${category}`;
       return this.http.get<User[]>(url);
     }
+
 }
