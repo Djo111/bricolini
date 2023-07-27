@@ -733,8 +733,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-<<<<<<< HEAD
-=======
   quiver:
     dependency: transitive
     description:
@@ -751,7 +749,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
->>>>>>> 4d950ab986ff40b6a3d49ec16b3268264cf66a60
   sky_engine:
     dependency: transitive
     description: flutter
@@ -877,8 +874,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
-<<<<<<< HEAD
-=======
   tflite_flutter:
     dependency: "direct main"
     description:
@@ -895,7 +890,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.2"
->>>>>>> 4d950ab986ff40b6a3d49ec16b3268264cf66a60
   tuple:
     dependency: transitive
     description:
