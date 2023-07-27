@@ -6,7 +6,7 @@ import Web3 from 'web3';
 @Injectable()
 export class BlockchainService {
   private MyContractJson = require('C:/Users/yousf/Bureau/SummerCamp/bricolini/blockchain/build/contracts/TransactionManagement.json');
-  private contractAddress = '0x3A51644EF4c44644F6Ae39E66e165e1Ab6F7945e'; // The deployed contract address
+  private contractAddress = '0xa3662A6D851675bbd7bB432B0b74D3Ad7d69CC9A'; // The deployed contract address
   private contractAbi = this.MyContractJson.abi;
   private web3: Web3;
  private contractInstance; 
@@ -26,7 +26,6 @@ async addTransaction(date: number, wasteType: string, quantity: number, price: n
     from: accounts[0],
     gas: 200000,
   });
-
 }
 
 async getTransactions(): Promise<Transaction[]> {
@@ -44,5 +43,12 @@ async getTransactions(): Promise<Transaction[]> {
       price: parseInt(transaction.price),
     }));    
 }
+async getBadgeStatus(): Promise<string> {
+  const accounts = await this.web3.eth.getAccounts();
+  const badgeStatus = await this.contractInstance.methods.getBadgeStatus().call( {from: accounts[0],
+    gas: 200000,});
+  return badgeStatus;
+}
+
 }
 
