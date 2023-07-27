@@ -1,4 +1,4 @@
-import 'package:bricoloni_v2/scenes/paiement.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -128,11 +128,7 @@ class _FindTransState extends State<FindTrans> {
                   margin: EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Paiement()),
-                      );
+
                     },
                     child: Text('Button'),
                     style: ElevatedButton.styleFrom(

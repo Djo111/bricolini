@@ -42,7 +42,7 @@ export class AdminController {
   remove(@Param('id') id: string) {
     return this.adminService.delete(id);
   }
-  @Post('offers/:offerId/accept')
+  @Patch('offers/:offerId/accept')
   async acceptOffer(@Param('offerId') offerId: string): Promise<void> {
     return this.adminService.acceptOffer(offerId);
   }
