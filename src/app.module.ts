@@ -13,7 +13,7 @@ import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { AddsModule } from './adds/adds.module';
 import { StripeModule } from './stripe_sdk/stripe.module';
-
+import { BlockchainModule } from './blockchain/blockchain.module';
 
 
 
@@ -33,7 +33,8 @@ import { StripeModule } from './stripe_sdk/stripe.module';
     OfferModule,
     AddsModule,
     AdminModule, 
-    StripeModule
+    StripeModule,
+    BlockchainModule
   ],
   controllers: [AppController],
   providers: [AppService],

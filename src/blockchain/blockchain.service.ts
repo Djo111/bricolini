@@ -45,4 +45,3 @@ async getTransactions(): Promise<Transaction[]> {
     }));    
 }
 }
-
