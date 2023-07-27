@@ -1,6 +1,6 @@
 name: bricoloni_v2
 description: A new Flutter project.
-publish_to: 'none' 
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:
@@ -30,7 +30,8 @@ dependencies:
   image: ^3.0.2
   stripe_sdk: any
 
-  
+
+
 
 dev_dependencies:
   flutter_test:
@@ -38,7 +39,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 flutter:
   uses-material-design: true
-  assets : 
+  assets :
     - lib/images/
     - assets/classifier.tflite
     

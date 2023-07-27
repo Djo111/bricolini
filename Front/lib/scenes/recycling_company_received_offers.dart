@@ -90,42 +90,72 @@ class _RecyclingCompanyReceivedOffersState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF171918),
+      backgroundColor: Colors.black,
       body: ListView.builder(
         itemCount: receivedOffers.length,
         itemBuilder: (context, index) {
           final offer = receivedOffers[index];
 
-          return Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey, // Choose the desired border color here.
-                width: 1.0, // Adjust the border width as needed.
+          return Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: 8.0), // Adjust the vertical distance as needed
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white10,
+                border: Border.all(
+                  color: Colors.grey, // Choose the desired border color here.
+                  width: 1.0, // Adjust the border width as needed.
+                ),
+                borderRadius: BorderRadius.circular(
+                    8.0), // Adjust the border radius as needed.
               ),
-              borderRadius: BorderRadius.circular(
-                  8.0), // Adjust the border radius as needed.
-            ),
-            child: ListTile(
-              textColor: Colors.white10,
-              leading: Image.asset(
-                offer.photo,
-                width: 50,
-                height: 50,
-              ),
-              title: Text(offer.address),
-              subtitle: Text(
-                  '${offer.type} | ${offer.estimatedDistance} km | ${offer.price} \$'),
-              trailing: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          BookingOfferPage(offer: offer, id: widget.id),
+              child: ListTile(
+                textColor: Colors.white,
+                leading: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey
+                          .shade600, // Choose the desired image border color here.
+                      width: 1.0, // Adjust the image border width as needed.
                     ),
-                  );
-                },
-                child: const Text('Book Offer'),
+                    borderRadius: BorderRadius.circular(
+                        8.0), // Adjust the image border radius as needed.
+                  ),
+                  child: ClipRRect(
+                    // Use ClipRRect to apply borderRadius to the image
+                    borderRadius: BorderRadius.circular(
+                        6.0), // Adjust the image border radius as needed.
+                    child: Image.asset(
+                      offer.photo,
+                      width: 72,
+                      height: 90,
+                      fit: BoxFit
+                          .cover, // Use BoxFit.cover to scale and maintain aspect ratio
+                    ),
+                  ),
+                ),
+                title: Text(offer.address),
+                subtitle: Text(
+                  '${offer.type} | ${offer.estimatedDistance} km | ${offer.price} \$',
+                ),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            BookingOfferPage(offer: offer, id: widget.id),
+                      ),
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.lightGreen), // Change the background color here
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                        Colors.white), // Change the text color here
+                  ),
+                  child: const Text('Book Offer'),
+                ),
               ),
             ),
           );

@@ -13,6 +13,7 @@ import { User } from 'src/auth/schemas/user.schema';
 
 import { CreateOfferDto } from 'src/offer/dto/create-offer.dto';
 import { UpdateOfferDto } from 'src/offer/dto/update-offer.dto';
+import { Add } from 'src/adds/schemas/addds.schema';
 
 @Controller('simple-user')
 export class SimpleUserController {
@@ -25,7 +26,10 @@ export class SimpleUserController {
   ) {
     return this.simpleUserService.createOffer(offerdto)
   }
-  
+  @Get("/Adds")
+  async getAllAdds(): Promise<Add[]>{
+    return this.simpleUserService.getallAdds()
+  }
   @Patch("offers/:id")
   updateOffer(
     @Param('id')

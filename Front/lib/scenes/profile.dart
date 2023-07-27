@@ -1,5 +1,6 @@
-import 'package:bricoloni_v2/scenes/welcomePage.dart';
 import 'package:flutter/material.dart';
+import 'package:bricoloni_v2/scenes/welcomePage.dart';
+import 'dart:async';
 
 class Profile extends StatefulWidget {
   final String title;
@@ -84,9 +85,7 @@ class _ProfileState extends State<Profile> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              headerChild('Photos', 114),
-                              headerChild('Followers', 1205),
-                              headerChild('Following', 360),
+                              headerChild(fetchBadge()),
                             ],
                           ),
                         ),
@@ -98,9 +97,6 @@ class _ProfileState extends State<Profile> {
                             infoChild(
                                 width, Icons.email, 'zulfiqar108@gmail.com'),
                             infoChild(width, Icons.call, '+12-1234567890'),
-                            infoChild(width, Icons.group_add, 'Add to group'),
-                            infoChild(
-                                width, Icons.chat_bubble, 'Show all comments'),
                             Padding(
                               padding: EdgeInsets.only(top: height / 30),
                               child: ElevatedButton(
@@ -115,7 +111,7 @@ class _ProfileState extends State<Profile> {
                                         BorderRadius.circular(height / 40),
                                   ),
                                 ),
-                                child: Padding(
+                                child: const Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 12.0, horizontal: 24.0),
                                   child: Text(
@@ -143,22 +139,24 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget headerChild(String header, int value) => Expanded(
-        child: Column(
-          children: <Widget>[
-            Text(header),
-            const SizedBox(
-              height: 8.0,
-            ),
-            Text(
-              '$value',
-              style: const TextStyle(
-                fontSize: 14.0,
-                color: Color(0xFF26CBE6),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+  Widget headerChild(Future<String> future) => Expanded(
+        child: FutureBuilder<String>(
+          future: future,
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.hasData) {
+              return AnimatedContainer(
+                width: MediaQuery.of(context).size.width / 2,
+                height: MediaQuery.of(context).size.height / 2,
+                duration: const Duration(seconds: 2),
+                curve: Curves.easeInOut,
+                child: Image.network(snapshot.data!, fit: BoxFit.cover),
+              );
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
         ),
       );
 
@@ -192,5 +190,9 @@ class _ProfileState extends State<Profile> {
       context,
       MaterialPageRoute(builder: (context) => FirstScreen()),
     );
+  }
+
+  Future<String> fetchBadge() async {
+    return 'https://example.com/path/to/badge.png';
   }
 }

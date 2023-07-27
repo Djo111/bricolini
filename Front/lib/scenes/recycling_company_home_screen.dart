@@ -1,6 +1,7 @@
 import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:bricoloni_v2/scenes/home_page.dart';
 import 'package:bricoloni_v2/scenes/marketplace_page.dart';
+import 'package:bricoloni_v2/scenes/profile.dart';
 import 'package:bricoloni_v2/scenes/recycling_company_received_offers.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
 import 'package:flutter/material.dart';
@@ -23,14 +24,6 @@ class _Recycling_Company_HomeScreenState
     extends State<Recycling_Company_HomeScreen> {
   int _selectedIndex = 0;
 
-  final List<IconData> _iconList = [
-    Icons.home,
-    Icons.shopping_cart,
-    Icons.stacked_line_chart,
-    Icons.call_received,
-    Icons.offline_pin_rounded,
-  ];
-
   void _goToAboutUsPage() {
     Navigator.push(
       context,
@@ -48,7 +41,8 @@ class _Recycling_Company_HomeScreenState
         wasteType: widget.wasteType,
         id: widget.id,
       ),
-      Recycling_center_confirmed_offer(id: widget.id)
+      Recycling_center_confirmed_offer(id: widget.id),
+      const Profile(title: "title")
     ];
     return Scaffold(
       backgroundColor: const Color(0xFF171918),
@@ -96,6 +90,10 @@ class _Recycling_Company_HomeScreenState
           BottomNavigationBarItem(
             icon: Icon(Icons.offline_pin_rounded),
             label: 'Confirmed Offers',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
           )
         ],
       ),

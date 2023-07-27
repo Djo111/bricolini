@@ -4,6 +4,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
+<<<<<<< HEAD
+=======
+import { Offer } from './schemas/offer.schema';
+import * as tf from '@tensorflow/tfjs-node';
+
+
+>>>>>>> youssef
 import { spawn } from 'child_process';
 import { json } from 'express';
 import { Offer } from './schemas/offer.schema';
@@ -20,7 +27,7 @@ export class OfferService {
     return createdoffer.save();
   }
   async findAllOffers(): Promise<Offer[]> {
-    return this.offerrModel.find({id_recyclingCenter:null}).exec();
+    return this.offerrModel.find({id_recyclingCenter:null, status:1}).exec();
   }
   async findPendingOffers(id_RecyclingCenter:string): Promise<Offer[]>{
     return this.offerrModel.find({id_recyclingCenter:id_RecyclingCenter}).exec()
@@ -50,6 +57,7 @@ export class OfferService {
   async remove(id: string): Promise<void> {
     await this.offerrModel.findByIdAndRemove(id).exec();
   }
+<<<<<<< HEAD
 
   async verifyFile(imageUrl : string){
     const pythonProcess = spawn('python3', ['IA_MODEL\main.py', imageUrl]);
@@ -79,3 +87,9 @@ export class OfferService {
 
 
 }
+=======
+ 
+ 
+
+}
+>>>>>>> youssef

@@ -5,6 +5,7 @@ import { Offer } from 'src/offer/schemas/offer.schema';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
+import { Add } from 'src/adds/schemas/addds.schema';
 
 @Controller('admin')
 export class AdminController {
@@ -12,6 +13,10 @@ export class AdminController {
   @Get('offers')
   async getOffers(): Promise<Offer[]> {
     return this.adminService.getAllNotVerifiedOffers();
+  }
+  @Get('Adds/notAccepted')
+  async getNotAcceptedAdds(): Promise<Add[]> {
+    return this.adminService.getAllNotAcceptedAdds();
   }
   @Post()
   create(@Body() createAdminDto: CreateAdminDto) {
@@ -37,9 +42,13 @@ export class AdminController {
   remove(@Param('id') id: string) {
     return this.adminService.delete(id);
   }
-  @Post('offers/:offerId/accept')
+  @Patch('offers/:offerId/accept')
   async acceptOffer(@Param('offerId') offerId: string): Promise<void> {
     return this.adminService.acceptOffer(offerId);
+  }
+  @Post('adds/:addId/accept')
+  async acceptAdd(@Param('addId') addId: string): Promise<void> {
+    return this.adminService.acceptAdd(addId);
   }
 
   @Delete('offers/:offerId')
