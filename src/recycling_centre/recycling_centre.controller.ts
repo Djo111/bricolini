@@ -39,16 +39,6 @@ export class RecyclingCentreController {
     ) :Promise<Offer[]>{
     return this.recyclingCenterservice.getPendingOffers(id_recyclingCenter)
       }
-    
-   
-    @Get("transporters/:category")
-    async GetTransporters(
-        @Param('category')
-        category: categ
-    ): Promise<User[]>{
-        return this.recyclingCenterservice.getallTransporters(category)
-        }
-
     @Put(':id_RC/offers/:offer_id/select')
   async selectOffer(
     @Param('offer_id') offerId: string,

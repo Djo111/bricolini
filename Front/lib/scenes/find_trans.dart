@@ -1,13 +1,29 @@
+<<<<<<< HEAD
 
+=======
+import 'package:bricoloni_v2/scenes/paiement.dart';
+import 'package:bricoloni_v2/scenes/recycling_company_home_screen.dart';
+import 'package:bricoloni_v2/scenes/recycling_company_received_offers.dart';
+>>>>>>> BestPractices
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class FindTrans extends StatefulWidget {
+  final String id;
+  final Offer offer;
   final String location;
-  const FindTrans({Key? key, required this.location}) : super(key: key);
+  final String waste;
+  const FindTrans(
+      {Key? key,
+      required this.location,
+      required this.offer,
+      required this.id,
+      required this.waste})
+      : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _FindTransState createState() => _FindTransState();
 }
 
@@ -17,50 +33,78 @@ class Transporter {
   final String location;
   final String vehicule;
   final double pricePerKm;
+  final String idTransporter;
 
-  Transporter({
-    required this.tName,
-    required this.photo,
-    required this.location,
-    required this.vehicule,
-    required this.pricePerKm,
-  });
-  factory Transporter.fromJson(Map<String, dynamic> json) {
+  Transporter(
+      {required this.tName,
+      required this.photo,
+      required this.location,
+      required this.vehicule,
+      required this.pricePerKm,
+      required this.idTransporter});
+
+  factory Transporter.fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      throw const FormatException("JSON data is null.");
+    }
+
+    // Perform null checks and handle missing keys appropriately
+    if (json['username'] == null || json['region'] == null) {
+      throw const FormatException("JSON data is missing required fields.");
+    }
+
     return Transporter(
-      tName: json['username'],
-      photo: "lib/images/Logo_Arcturus.png",
-      location: json['location'],
-      vehicule: "",
-      pricePerKm: 10,
-    );
+        tName: json['username'],
+        photo: "lib/images/Logo_Arcturus.png",
+        location: json['region'],
+        vehicule: "Volvo",
+        pricePerKm: 100,
+        idTransporter: json["_id"] ?? "");
   }
 }
 
 class _FindTransState extends State<FindTrans> {
   List<Transporter> historyList = [];
-  Future<List<Transporter>> fetchAllOffers() async {
-    final response = await http.get(Uri.parse(
-        'http://localhost:3000/recycling-centre/transporters/:category'));
+  Future<void> updateOffer(String id, String s) async {
+    var url = Uri.parse(
+        'http://localhost:3000/offer/$id'); // update with your endpoint url
+    var response = await http.patch(url, body: {"id_transporter": s});
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print('Offer updated successfully');
+    } else {
+      print('Failed to update the offer');
+    }
+  }
+
+  Future<List<Transporter>> fetchAllTransporters() async {
+    final response = await http.get(
+      Uri.parse('http://localhost:3000/auth/usersbycategory/Transporter'),
+    );
 
     if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON.
-      List<dynamic> jsonList = jsonDecode(response.body);
-      List<Transporter> transporters =
-          jsonList.map((json) => Transporter.fromJson(json)).toList();
-      return transporters;
+      List<dynamic>? jsonResponse = json.decode(response.body);
+      if (jsonResponse != null) {
+        List<Transporter> transporters = jsonResponse
+            .map((dynamic item) => Transporter.fromJson(item))
+            .toList();
+        return transporters;
+      } else {
+        print('JSON response data is null or empty.');
+        return []; // Return an empty list in case of null JSON data
+      }
     } else {
-      // If the server did not return a 200 OK response, throw an exception.
-      throw Exception('Failed to load transporters');
+      throw Exception('Failed to load transporters ${response.statusCode}');
     }
   }
 
   @override
   void initState() {
     super.initState();
-    fetchAllOffers().then((offers) {
+    fetchAllTransporters().then((transporters) {
       setState(() {
-        historyList
-            .addAll(offers.where((offer) => offer.location == widget.location));
+        historyList.addAll(transporters
+            .where((transporter) => transporter.location == widget.location));
       });
       print(historyList.length);
     });
@@ -72,7 +116,7 @@ class _FindTransState extends State<FindTrans> {
       backgroundColor: const Color(0xFF171918),
       appBar: AppBar(
         backgroundColor: const Color(0xFF171918),
-        title: Text(
+        title: const Text(
           'Find a transporter',
           style: TextStyle(color: Colors.lightGreen, fontSize: 20),
         ),
@@ -80,10 +124,10 @@ class _FindTransState extends State<FindTrans> {
       body: ListView.builder(
         itemCount: historyList.length,
         itemBuilder: (context, index) {
-          final offer = historyList[index];
+          final transporter = historyList[index];
 
           return Container(
-            margin: EdgeInsets.all(10.0),
+            margin: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.grey,
@@ -94,9 +138,9 @@ class _FindTransState extends State<FindTrans> {
             child: Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
-                    offer.photo,
+                    transporter.photo,
                     width: 50,
                     height: 50,
                   ),
@@ -106,36 +150,48 @@ class _FindTransState extends State<FindTrans> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        offer.tName,
-                        style: TextStyle(
+                        transporter.tName,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        '${offer.vehicule}',
+                        transporter.vehicule,
                       ),
                       Text(
-                        '${offer.location}',
+                        transporter.location,
                       ),
                       Text(
-                        '${offer.pricePerKm} \$',
+                        '${transporter.pricePerKm} \$',
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
+<<<<<<< HEAD
 
+=======
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Recycling_Company_HomeScreen(
+                              wasteType: widget.waste, id: widget.id),
+                        ),
+                      );
+                      updateOffer(
+                          widget.offer.offerId, transporter.idTransporter);
+>>>>>>> BestPractices
                     },
-                    child: Text('Button'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
+                    child: const Text('Select this Transporter'),
                   ),
                 ),
               ],

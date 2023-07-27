@@ -63,12 +63,13 @@ export class OfferController {
   @UseGuards(AuthGuard('JWT'))
   @Post()
   @UseInterceptors(FileInterceptor('file', storage))
-  uploadFile(@UploadedFile() file, @Request() req) : Observable<object>{
-    const user: User =req.user.user;
-    console.log(req.user)
+
+  async uploadFile(@UploadedFile() file, @Request() req): Observable<object> {
+    const user: User = req.user.user;
+    console.log(req.user);
     console.log(file);
-    return of({imagePath : file.filename});
-  }
+    return of({imagePath: file.filename});
+}
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOfferDto: UpdateOfferDto) {
@@ -78,6 +79,15 @@ export class OfferController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.offerService.remove(id);
+  }
+
+  @Get("/verify/:imageUrl")
+  verifyingImgC(
+    @Param("imageUrl")
+    imageUrl : String
+
+  ){
+    return this.offerService.verifyFile(imageUrl);
   }
 
 

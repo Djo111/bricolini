@@ -5,10 +5,14 @@ import 'package:bricoloni_v2/scenes/recycling_company_received_offers.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
 import 'package:flutter/material.dart';
 
-// ignore: camel_case_types
 class Recycling_Company_HomeScreen extends StatefulWidget {
   final String wasteType;
-  const Recycling_Company_HomeScreen({super.key, required this.wasteType});
+  final String id;
+  const Recycling_Company_HomeScreen({
+    Key? key,
+    required this.wasteType,
+    required this.id,
+  }) : super(key: key);
 
   @override
   _Recycling_Company_HomeScreenState createState() =>
@@ -18,20 +22,15 @@ class Recycling_Company_HomeScreen extends StatefulWidget {
 class _Recycling_Company_HomeScreenState
     extends State<Recycling_Company_HomeScreen> {
   int _selectedIndex = 0;
-  bool _navigationRailVisible = true;
-
-  void _toggleNavigationBar() {
-    setState(() {
-      _navigationRailVisible = !_navigationRailVisible;
-    });
-  }
 
   final List<IconData> _iconList = [
     Icons.home,
     Icons.shopping_cart,
     Icons.stacked_line_chart,
     Icons.call_received,
+    Icons.offline_pin_rounded,
   ];
+
   void _goToAboutUsPage() {
     Navigator.push(
       context,
@@ -45,73 +44,60 @@ class _Recycling_Company_HomeScreenState
       const HomePage(),
       const MarketplacePage(),
       const StatsPage(),
-      RecyclingCompanyReceivedOffers(wasteType: widget.wasteType),
+      RecyclingCompanyReceivedOffers(
+        wasteType: widget.wasteType,
+        id: widget.id,
+      ),
+      Recycling_center_confirmed_offer(id: widget.id)
     ];
-    return WillPopScope(
-      onWillPop: () async {
-        if (!_navigationRailVisible) {
-          _toggleNavigationBar();
-          return false;
-        }
-        return true;
-      },
-      child: Scaffold(
-        backgroundColor: const Color(0xFF171918),
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(_navigationRailVisible ? Icons.menu_open : Icons.menu),
-            onPressed: _toggleNavigationBar,
+    return Scaffold(
+      backgroundColor: const Color(0xFF171918),
+      appBar: AppBar(
+        title: const Text('Recycling Company HomeScreen'),
+        actions: [
+          GestureDetector(
+            onTap: _goToAboutUsPage,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Image.asset('lib/images/Logo_Arcturus.png',
+                  width: 40, height: 40),
+            ),
           ),
-          title: const Text('Recycling Company HomeScreen'),
-          actions: [
-            GestureDetector(
-              onTap: _goToAboutUsPage,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Image.asset('lib/images/Logo_Arcturus.png',
-                    width: 40, height: 40),
-              ),
-            ),
-          ],
-        ),
-        body: Row(
-          children: [
-            if (_navigationRailVisible)
-              Container(
-                width: 92,
-                height: double.infinity,
-                color: const Color(0xFF171918),
-                child: ListView.builder(
-                  itemCount: _iconList.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        print("waste :${widget.wasteType}");
-                        setState(() {
-                          _selectedIndex = index;
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Icon(
-                          _iconList[index],
-                          color: Colors.white,
-                          size: 30.0,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            const VerticalDivider(thickness: 1, width: 1),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: _pages[_selectedIndex],
-              ),
-            ),
-          ],
-        ),
+        ],
+      ),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xFF171918),
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Colors.blue, // Change this to your desired color
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Marketplace',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.stacked_line_chart),
+            label: 'Stats',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.call_received),
+            label: 'Received Offers',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.offline_pin_rounded),
+            label: 'Confirmed Offers',
+          )
+        ],
       ),
     );
   }

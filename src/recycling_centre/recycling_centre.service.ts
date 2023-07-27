@@ -44,13 +44,6 @@ export class RecyclingCentreService {
         this.offerservice.update(offer_id, updateoffer)
       
     }   
-    async getallTransporters(category: categ): Promise<User[]>{
-        const res = await this.authservice.findByCategory(category);
-         if (!res) {
-             throw new NotFoundException('Transporter not found!')
-         }
-        return res
-    }
     
     async getPendingOffers(id_RecyclingCenter:string): Promise<Offer[]>{
         return this.offerservice.findPendingOffers(id_RecyclingCenter)

@@ -194,11 +194,12 @@ class _SignInPageState extends State<SignInPage> {
                     break;
                   case "Recycling center":
                     print(wasteType);
+                    print(id);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            Recycling_Company_HomeScreen(wasteType: wasteType),
+                        builder: (context) => Recycling_Company_HomeScreen(
+                            wasteType: wasteType, id: id),
                       ),
                     );
                     break;

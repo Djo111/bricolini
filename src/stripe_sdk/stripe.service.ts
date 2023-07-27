@@ -6,7 +6,7 @@ export class StripeService {
   private stripe: Stripe;
 
   constructor() {
-    this.stripe = new Stripe('<your_secret_key>', { apiVersion: '2022-11-15' });
+    this.stripe = new Stripe('sk_test_51NURdLJiqOibQhjffptoHhV7Up0Vo9wbG3auh6L6lCTwQBPZiOBSyxRPFHGIy3hzSjctdSTW0CrV9Tvx35pE7j5i000AepjnL8', { apiVersion: '2022-11-15' });
   }
 
   async createPaymentIntent(amount: number, currency: string): Promise<string> {

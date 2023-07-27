@@ -1,6 +1,6 @@
 // auth.service.ts
 /* eslint-disable prettier/prettier */
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, categ } from './schemas/user.schema';
@@ -84,8 +84,12 @@ export class AuthService {
   async findOne(id: string): Promise<User> {
     return this.userModel.findById(id).exec();
   }
-  async findByCategory(catg: categ): Promise<User[]>{
-    return this.userModel.find({category: catg})
+  async findByCategory(category: categ): Promise<User[]> {
+    const users = await this.userModel.find({ category }).exec();
+    if (!users || users.length === 0) {
+      throw new NotFoundException('Users not found for the given category!');
+    }
+    return users;
   }
 
   async update(id: string, updateUserDto: SignUpDto): Promise<User> {

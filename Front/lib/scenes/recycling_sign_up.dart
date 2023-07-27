@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:bricoloni_v2/scenes/recycling_company_home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:http/http.dart' as http;
 
 class Recycling_Sign_Up extends StatefulWidget {
@@ -26,9 +29,11 @@ class _Recycling_Sign_UpState extends State<Recycling_Sign_Up> {
   int? _selectedItemIndex; // Track the index of the selected item
   // ignore: non_constant_identifier_names
   String Type_Waste = "";
-  Future<void> createRecyclingCenter(String s1, String s2, String s3, String s4,
-      String s5, String s6, String s7) async {
-    await http.post(Uri.parse("http://localhost:3000/auth/signup"), body: {
+  Future<String> createRecyclingCenter(String s1, String s2, String s3,
+      String s4, String s5, String s6, String s7) async {
+    String id = "";
+    final response =
+        await http.post(Uri.parse("http://localhost:3000/auth/signup"), body: {
       "email": s1,
       "username": s2,
       "password": s3,
@@ -37,6 +42,13 @@ class _Recycling_Sign_UpState extends State<Recycling_Sign_Up> {
       "address": s6,
       "diy_waste_type": s7,
     });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final body = jsonDecode(response.body);
+      final token = body['token'];
+      Map<String, dynamic> payload = Jwt.parseJwt(token);
+      id = payload['id'];
+    }
+    return id;
   }
 
   @override
@@ -91,13 +103,7 @@ class _Recycling_Sign_UpState extends State<Recycling_Sign_Up> {
                     Type_Waste = "others";
                     break;
                 }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          Recycling_Company_HomeScreen(wasteType: Type_Waste)),
-                );
-                await createRecyclingCenter(
+                var id = await createRecyclingCenter(
                     widget.email,
                     widget.fullName,
                     widget.password,
@@ -105,6 +111,14 @@ class _Recycling_Sign_UpState extends State<Recycling_Sign_Up> {
                     "Recycling center",
                     address,
                     Type_Waste);
+                print(id);
+                // ignore: use_build_context_synchronously
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Recycling_Company_HomeScreen(
+                          wasteType: Type_Waste, id: id)),
+                );
               },
               child: const Text('Sign Up'),
             ),

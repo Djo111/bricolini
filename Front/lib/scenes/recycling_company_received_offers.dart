@@ -1,12 +1,15 @@
 import 'package:bricoloni_v2/scenes/booking_offer_page.dart';
+import 'package:bricoloni_v2/scenes/paiement.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
     
 class RecyclingCompanyReceivedOffers extends StatefulWidget {
+  final String id;
   final String wasteType;
-  const RecyclingCompanyReceivedOffers({Key? key, required this.wasteType})
+  const RecyclingCompanyReceivedOffers(
+      {Key? key, required this.wasteType, required this.id})
       : super(key: key);
   @override
   State<RecyclingCompanyReceivedOffers> createState() =>
@@ -18,23 +21,48 @@ class Offer {
   final String address;
   final String type;
   final int price;
+  final bool selected;
   final double estimatedDistance;
+  final String offerId;
+  final String idTransporter;
+  final String idOfferProvider;
+  final String idRecyclingCenter;
+  final bool confirmedByTransporter;
 
-  Offer({
-    required this.photo,
-    required this.address,
-    required this.type,
-    required this.estimatedDistance,
-    required this.price,
-  });
+  Offer(
+      {required this.selected,
+      required this.photo,
+      required this.address,
+      required this.type,
+      required this.estimatedDistance,
+      required this.price,
+      required this.offerId,
+      required this.idTransporter,
+      required this.idOfferProvider,
+      required this.idRecyclingCenter,
+      required this.confirmedByTransporter});
   factory Offer.fromJson(Map<String, dynamic> json) {
     return Offer(
+<<<<<<< HEAD
       photo: json['img'],
       price: 0,
       address: json['location'],
       estimatedDistance: 0,
       type: json['waste_type'],
     );
+=======
+        selected: json['selected'] ?? false,
+        photo: json['img'],
+        price: 300,
+        address: json['location'],
+        estimatedDistance: 0,
+        type: json['waste_type'],
+        offerId: json['_id'],
+        idTransporter: json['id_transporter'] ?? "",
+        idOfferProvider: json['id_offerProvider'] ?? "",
+        idRecyclingCenter: json['id_recyclingCenter'] ?? "",
+        confirmedByTransporter: json['confirmedByTransporter'] ?? false);
+>>>>>>> BestPractices
   }
 }
 
@@ -62,8 +90,8 @@ class _RecyclingCompanyReceivedOffersState
     super.initState();
     fetchAllOffers().then((offers) {
       setState(() {
-        receivedOffers
-            .addAll(offers.where((offer) => offer.type == widget.wasteType));
+        receivedOffers.addAll(offers.where((offer) =>
+            (offer.type == widget.wasteType && offer.selected == false)));
       });
       print(receivedOffers.length);
     });
@@ -89,6 +117,7 @@ class _RecyclingCompanyReceivedOffersState
                 ),
                 borderRadius: BorderRadius.circular(8.0), // Adjust the border radius as needed.
               ),
+<<<<<<< HEAD
               child: ListTile(
                 textColor: Colors.white,
                 leading: Container(
@@ -96,6 +125,118 @@ class _RecyclingCompanyReceivedOffersState
                     border: Border.all(
                       color: Colors.grey.shade600, // Choose the desired image border color here.
                       width: 1.0, // Adjust the image border width as needed.
+=======
+              borderRadius: BorderRadius.circular(
+                  8.0), // Adjust the border radius as needed.
+            ),
+            child: ListTile(
+              textColor: Colors.white10,
+              leading: Image.asset(
+                offer.photo,
+                width: 50,
+                height: 50,
+              ),
+              title: Text(offer.address),
+              subtitle: Text(
+                  '${offer.type} | ${offer.estimatedDistance} km | ${offer.price} \$'),
+              trailing: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          BookingOfferPage(offer: offer, id: widget.id),
+                    ),
+                  );
+                },
+                child: const Text('Book Offer'),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+// ignore: camel_case_types
+class Recycling_center_confirmed_offer extends StatefulWidget {
+  final String id;
+  const Recycling_center_confirmed_offer({super.key, required this.id});
+
+  @override
+  State<Recycling_center_confirmed_offer> createState() =>
+      _Recycling_center_confirmed_offer();
+}
+
+// ignore: camel_case_types
+class _Recycling_center_confirmed_offer
+    extends State<Recycling_center_confirmed_offer> {
+  Future<List<Offer>> fetchAllOffers() async {
+    final response = await http
+        .get(Uri.parse('http://localhost:3000/recycling-centre/offers'));
+
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      List<dynamic> jsonList = jsonDecode(response.body);
+      List<Offer> offers =
+          jsonList.map((json) => Offer.fromJson(json)).toList();
+      return offers;
+    } else {
+      // If the server did not return a 200 OK response, throw an exception.
+      throw Exception('Failed to load users');
+    }
+  }
+
+  List<Offer> receivedOffers = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchAllOffers().then((offers) {
+      setState(() {
+        receivedOffers.addAll(offers.where((offer) =>
+            (offer.idRecyclingCenter == widget.id &&
+                offer.confirmedByTransporter == true)));
+      });
+      print(receivedOffers.length);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF171918),
+      body: ListView.builder(
+        itemCount: receivedOffers.length,
+        itemBuilder: (context, index) {
+          final offer = receivedOffers[index];
+
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey, // Choose the desired border color here.
+                width: 1.0, // Adjust the border width as needed.
+              ),
+              borderRadius: BorderRadius.circular(
+                  8.0), // Adjust the border radius as needed.
+            ),
+            child: ListTile(
+              textColor: Colors.white10,
+              leading: Image.asset(
+                offer.photo,
+                width: 50,
+                height: 50,
+              ),
+              title: Text(offer.address),
+              subtitle: Text(
+                  '${offer.type} | ${offer.estimatedDistance} km | ${offer.price} \$'),
+              trailing: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Paiement(),
+>>>>>>> BestPractices
                     ),
                     borderRadius: BorderRadius.circular(8.0), // Adjust the image border radius as needed.
                   ),

@@ -9,6 +9,7 @@ export class UpdateOfferDto extends PartialType(CreateOfferDto) {
     readonly location?:string
     readonly paid?:boolean
     readonly price?: number
-     id_recyclingCenter: string
-     id_transporter: string
+    readonly id_recyclingCenter: string
+    readonly id_transporter: string
+    readonly selected : boolean
 }
