@@ -22,7 +22,8 @@ export class OfferService {
     return createdoffer.save();
   }
   async findAllOffers(): Promise<Offer[]> {
-    return this.offerrModel.find({id_recyclingCenter:null, status:1}).exec();
+    return this.offerrModel.find(//{id_recyclingCenter:null, status:1}
+    ).exec();
   }
   async findPendingOffers(id_RecyclingCenter:string): Promise<Offer[]>{
     return this.offerrModel.find({id_recyclingCenter:id_RecyclingCenter}).exec()

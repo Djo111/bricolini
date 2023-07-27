@@ -4,7 +4,6 @@ import 'package:bricoloni_v2/scenes/marketplace_page.dart';
 import 'package:bricoloni_v2/scenes/recycling_company_received_offers.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
 import 'package:flutter/material.dart';
-
 class Recycling_Company_HomeScreen extends StatefulWidget {
   final String wasteType;
   final String id;
@@ -51,7 +50,7 @@ class _Recycling_Company_HomeScreenState
       Recycling_center_confirmed_offer(id: widget.id)
     ];
     return Scaffold(
-      backgroundColor: const Color(0xFF171918),
+
       appBar: AppBar(
         title: const Text('Recycling Company HomeScreen'),
         actions: [
@@ -67,8 +66,8 @@ class _Recycling_Company_HomeScreenState
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF171918),
-        unselectedItemColor: Colors.white,
+        backgroundColor: Colors.black,
+        unselectedItemColor: Colors.black,
         selectedItemColor: Colors.blue, // Change this to your desired color
         currentIndex: _selectedIndex,
         onTap: (index) {

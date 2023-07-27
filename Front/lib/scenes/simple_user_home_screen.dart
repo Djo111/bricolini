@@ -42,7 +42,7 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
       SimpleUserOffers(id: widget.id),
     ];
     return Scaffold(
-      backgroundColor: const Color(0xFF171918),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Simple User HomeScreen'),
         actions: [
@@ -58,8 +58,8 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF171918),
-        unselectedItemColor: Colors.white,
+        backgroundColor: Colors.white,
+        unselectedItemColor: Colors.black,
         selectedItemColor: Colors.blue, // Change this to your desired color
         currentIndex: _selectedIndex,
         onTap: (index) {

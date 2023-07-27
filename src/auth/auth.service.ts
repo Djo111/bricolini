@@ -85,7 +85,7 @@ export class AuthService {
     return this.userModel.findById(id).exec();
   }
   async findByCategory(category: categ): Promise<User[]> {
-    const users = await this.userModel.find({ category }).exec();
+    const users = await this.userModel.find({ category: category }).exec();
     if (!users || users.length === 0) {
       throw new NotFoundException('Users not found for the given category!');
     }

@@ -55,7 +55,7 @@ class Transporter {
         photo: "lib/images/Logo_Arcturus.png",
         location: json['region'],
         vehicule: "Volvo",
-        pricePerKm: 100,
+        pricePerKm: 10,
         idTransporter: json["_id"] ?? "");
   }
 }
@@ -100,8 +100,7 @@ class _FindTransState extends State<FindTrans> {
     super.initState();
     fetchAllTransporters().then((transporters) {
       setState(() {
-        historyList.addAll(transporters
-            .where((transporter) => transporter.location == widget.location));
+        historyList.addAll(transporters);
       });
       print(historyList.length);
     });
@@ -110,12 +109,12 @@ class _FindTransState extends State<FindTrans> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF171918),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF171918),
+        backgroundColor: Colors.blue,
         title: const Text(
           'Find a transporter',
-          style: TextStyle(color: Colors.lightGreen, fontSize: 20),
+          style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
       body: ListView.builder(
@@ -136,10 +135,9 @@ class _FindTransState extends State<FindTrans> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    transporter.photo,
-                    width: 50,
-                    height: 50,
+                  child: CircleAvatar(
+                    radius: 25, // Adjust the radius to control the size of the circular image
+                    backgroundImage: AssetImage(transporter.photo),
                   ),
                 ),
                 Expanded(
@@ -154,13 +152,7 @@ class _FindTransState extends State<FindTrans> {
                         ),
                       ),
                       Text(
-                        transporter.vehicule,
-                      ),
-                      Text(
-                        transporter.location,
-                      ),
-                      Text(
-                        '${transporter.pricePerKm} \$',
+                        '${transporter.vehicule} | ${transporter.location} | ${transporter.pricePerKm}\$ PerKM',
                       ),
                     ],
                   ),
@@ -169,28 +161,31 @@ class _FindTransState extends State<FindTrans> {
                   margin: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => Recycling_Company_HomeScreen(
-                              wasteType: widget.waste, id: widget.id),
+                            wasteType: widget.waste,
+                            id: widget.id,
+                          ),
                         ),
                       );
-                      updateOffer(
-                          widget.offer.offerId, transporter.idTransporter);
+                      updateOffer(widget.offer.offerId, transporter.idTransporter);
                     },
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen, // Change the background color here
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    child: const Text('Select this Transporter'),
+                    child: const Text('Select'),
                   ),
                 ),
               ],
             ),
           );
+
         },
       ),
     );

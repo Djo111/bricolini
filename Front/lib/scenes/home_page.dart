@@ -140,44 +140,50 @@ void initState() {
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    backgroundColor: const Color(0xFF171918),
+    backgroundColor: Colors.white,
     body: ListView.builder(
       itemCount: allAdds.length,
       itemBuilder: (context, index) {
         return _buildPostContainer(allAdds[index]);
       },
     ),
-    bottomNavigationBar: MyAppBar(
-      currentIndex: _currentIndex,
-      onTabTapped: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
-      },
-    ),
+
   );
 }
 
 Widget _buildPostContainer(Add post) {
-  return Card(
-    margin: EdgeInsets.all(8.0),
-    child: Column(
+  return Container(
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: Colors.grey, // Choose the desired border color here.
+        width: 1.0, // Adjust the border width as needed.
+      ),
+      borderRadius: BorderRadius.circular(8.0), // Adjust the border radius as needed.
+    ),
+    child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0), // Adjust the border radius to match the Container.
+        // You can also add additional border customization here if needed.
+      ),
+      margin: EdgeInsets.zero, // Remove any margin from the Card.
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-    ListTile(
-    leading: CircleAvatar(
-    // You can use a NetworkImage or AssetImage based on your data.
-      backgroundImage: NetworkImage(post.img),
+          ListTile(
+            leading: CircleAvatar(
+              // You can use a NetworkImage or AssetImage based on your data.
+              backgroundImage: NetworkImage(post.img),
+            ),
+            title: Text(post.username),
+          ),
+          Image.network(post.img),
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(post.description),
+          ),
+        ],
+      ),
     ),
-    title: Text(post.username),
-  ),
-  Image.network(post.img),
-  Padding(
-  padding: EdgeInsets.all(16.0),
-  child: Text(post.description),
-  ),
-  ],
-  ),
   );
 }
 }
