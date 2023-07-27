@@ -1,143 +1,115 @@
+import 'dart:convert';
+import 'package:bricoloni_v2/scenes/recycling_company_home_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:stripe_sdk/stripe_sdk.dart' as stripe;
+import 'package:http/http.dart' as http;
 
-class Paiement extends StatefulWidget {
+class Paiement extends StatelessWidget {
+  const Paiement({super.key});
+
   @override
-  _PaiementState createState() => _PaiementState();
-}
-
-class _PaiementState extends State<Paiement> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late String _cardNumber;
-  late int _expiryMonth;
-  late int _expiryYear;
-  late String _cvc;
-
-  Future<void> _submit() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-    _formKey.currentState?.save();
-
-    stripe.Stripe.apiKey =
-        "pk_test_51NURdLJiqOibQhjfx6GwbsZXQpIgylHVPUMTWEmlH7BiOjdsoC0hW7AfCKSL9aZGU6ew9NTNgRbahhmwITpYTIXG00TtsmwGAA";
-
-    final paymentMethod = await stripe.Stripe.instance.createPaymentMethod(
-      stripe.PaymentMethodRequest(
-          card: stripe.CardParams(
-              number: _cardNumber,
-              expMonth: _expiryMonth,
-              expYear: _expiryYear,
-              cvc: _cvc)),
-    );
-
-    final clientSecret = '<client_secret>';
-
-    final paymentIntent = await stripe.Stripe.instance.confirmPaymentIntent(
-      stripe.PaymentIntentConfirmParams(
-        paymentMethodId: paymentMethod.id,
-        clientSecret: clientSecret,
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Stripe Payment'),
+        ),
+        body: Center(
+          child: PaymentForm(),
+        ),
       ),
     );
+  }
+}
 
-    if (paymentIntent.status == stripe.PaymentIntentStatus.succeeded) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Payment succeeded.')));
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Payment failed.')));
+class PaymentForm extends StatefulWidget {
+  @override
+  _PaymentFormState createState() => _PaymentFormState();
+}
+
+class _PaymentFormState extends State<PaymentForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _cardNumberController = TextEditingController();
+  final TextEditingController _expiryDateController = TextEditingController();
+  final TextEditingController _cvvController = TextEditingController();
+
+  Future<void> createPaymentIntent() async {
+    if (_formKey.currentState!.validate()) {
+      final response = await http.post(
+        Uri.parse(
+            'http://localhost:3000/payment/create-payment-intent'), // replace with your server address
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final String clientSecret = jsonDecode(response.body)['clientSecret'];
+        print('Client secret: $clientSecret');
+        // Use clientSecret to complete the payment on the frontend
+        // As we can't make Stripe's client-side calls directly, we just print the client secret here
+        // ignore: use_build_context_synchronously
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: const Text('Payment Intent Created'),
+            content: Text('Client secret: $clientSecret'),
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Recycling_Company_HomeScreen(
+                        wasteType: '', id: ""))),
+              ),
+            ],
+          ),
+        );
+      } else {
+        if (kDebugMode) {
+          print('Failed to create payment intent.${response.statusCode}');
+        }
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Stripe Payment'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Card number',
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter your card number';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _cardNumber = value!;
-                },
-              ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Expiry month',
-                      ),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter the expiry month';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _expiryMonth = int.parse(value!);
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Expiry year',
-                      ),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter the expiry year';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _expiryYear = int.parse(value!);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'CVC',
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter the CVC';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _cvc = value!;
-                },
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _submit,
-                child: const Text('Pay'),
-              ),
-            ],
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _cardNumberController,
+            decoration: const InputDecoration(labelText: 'Card number'),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter card number';
+              }
+              return null;
+            },
           ),
-        ),
+          TextFormField(
+            controller: _expiryDateController,
+            decoration: const InputDecoration(labelText: 'Expiry date'),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter expiry date';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: _cvvController,
+            decoration: const InputDecoration(labelText: 'CVV'),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter CVV';
+              }
+              return null;
+            },
+          ),
+          ElevatedButton(
+            onPressed: createPaymentIntent,
+            child: const Text('Pay'),
+          ),
+        ],
       ),
     );
   }

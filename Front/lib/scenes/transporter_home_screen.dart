@@ -6,7 +6,6 @@ import 'package:bricoloni_v2/scenes/stats_page.dart';
 import 'package:bricoloni_v2/scenes/transporter_received_offers.dart';
 import 'package:flutter/material.dart';
 
-// ignore: camel_case_types
 class Transporter_HomeScreen extends StatefulWidget {
   const Transporter_HomeScreen({super.key});
 
@@ -16,31 +15,14 @@ class Transporter_HomeScreen extends StatefulWidget {
 
 class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
   int _selectedIndex = 0;
-  bool _navigationRailVisible = true;
-
-  void _toggleNavigationBar() {
-    setState(() {
-      _navigationRailVisible = !_navigationRailVisible;
-    });
-  }
-
   final List<Widget> _pages = [
     const HomePage(),
     const MarketplacePage(),
     const StatsPage(),
     const TransporterReceivedOffers(),
-    const Profile(
-      title: '',
-    ),
+    const Profile(title: ''),
   ];
 
-  final List<IconData> _iconList = [
-    Icons.home,
-    Icons.shopping_cart,
-    Icons.stacked_line_chart,
-    Icons.add_task,
-    Icons.person_2,
-  ];
   void _goToAboutUsPage() {
     Navigator.push(
       context,
@@ -50,70 +32,54 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (!_navigationRailVisible) {
-          _toggleNavigationBar();
-          return false;
-        }
-        return true;
-      },
-      child: Scaffold(
-        backgroundColor: const Color(0xFF171918),
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(_navigationRailVisible ? Icons.menu_open : Icons.menu),
-            onPressed: _toggleNavigationBar,
+    return Scaffold(
+      backgroundColor: const Color(0xFF171918),
+      appBar: AppBar(
+        title: const Text('Transporter Home Screen'),
+        actions: [
+          GestureDetector(
+            onTap: _goToAboutUsPage,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Image.asset('lib/images/Logo_Arcturus.png',
+                  width: 40, height: 40),
+            ),
           ),
-          title: const Text('Transporter Home Screen'),
-          actions: [
-            GestureDetector(
-              onTap: _goToAboutUsPage,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Image.asset('lib/images/Logo_Arcturus.png',
-                    width: 40, height: 40),
-              ),
-            ),
-          ],
-        ),
-        body: Row(
-          children: [
-            if (_navigationRailVisible)
-              Container(
-                width: 92,
-                height: double.infinity,
-                color: const Color(0xFF171918),
-                child: ListView.builder(
-                  itemCount: _iconList.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedIndex = index;
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Icon(
-                          _iconList[index],
-                          color: Colors.white,
-                          size: 30.0,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            const VerticalDivider(thickness: 1, width: 1),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: _pages[_selectedIndex],
-              ),
-            ),
-          ],
-        ),
+        ],
+      ),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xFF171918),
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Colors.blue, // Change this to your desired color
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Marketplace',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.stacked_line_chart),
+            label: 'Stats',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_task),
+            label: 'Received Offers',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_2),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

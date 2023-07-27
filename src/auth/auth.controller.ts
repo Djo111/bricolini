@@ -43,4 +43,8 @@ export class AuthController {
   remove(@Param('id') id: string) {
     return this.authService.remove(id);
   }
+  @Get('/usersbycategory/:category')
+  findAllUsersByCategory(@Param('category') category: categ) {
+    return this.authService.findByCategory(category);
+  }
 }

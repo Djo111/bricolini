@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 
 class Simple_User_HomeScreen extends StatefulWidget {
   final String id;
-  const Simple_User_HomeScreen({Key? key, required this.id}) : super(key: key);
+  const Simple_User_HomeScreen({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
   _Simple_User_HomeScreenState createState() => _Simple_User_HomeScreenState();
@@ -15,33 +18,13 @@ class Simple_User_HomeScreen extends StatefulWidget {
 
 class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
   int _selectedIndex = 0;
-  bool _navigationRailVisible = true;
 
-  late List<Widget> _pages;
   final List<IconData> _iconList = [
     Icons.home,
     Icons.shopping_cart,
     Icons.stacked_line_chart,
     Icons.add_task,
   ];
-
-  @override
-  void initState() {
-    print("homescreen:${widget.id}");
-    super.initState();
-    _pages = [
-      const HomePage(),
-      const MarketplacePage(),
-      const StatsPage(),
-      SimpleUserOffers(id: widget.id),
-    ];
-  }
-
-  void _toggleNavigationBar() {
-    setState(() {
-      _navigationRailVisible = !_navigationRailVisible;
-    });
-  }
 
   void _goToAboutUsPage() {
     Navigator.push(
@@ -52,74 +35,56 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (!_navigationRailVisible) {
-          _toggleNavigationBar();
-          return false;
-        }
-        return true;
-      },
-      child: Scaffold(
+    final _pages = [
+      const HomePage(),
+      const MarketplacePage(),
+      const StatsPage(),
+      SimpleUserOffers(id: widget.id),
+    ];
+    return Scaffold(
+      backgroundColor: const Color(0xFF171918),
+      appBar: AppBar(
+        title: const Text('Simple User HomeScreen'),
+        actions: [
+          GestureDetector(
+            onTap: _goToAboutUsPage,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Image.asset('lib/images/Logo_Arcturus.png',
+                  width: 40, height: 40),
+            ),
+          ),
+        ],
+      ),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(0xFF171918),
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(_navigationRailVisible ? Icons.menu_open : Icons.menu),
-            onPressed: _toggleNavigationBar,
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Colors.blue, // Change this to your desired color
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
-          title: const Text(
-            'Simple User HomeScreen',
-            style: TextStyle(color: Colors.lightGreen, fontSize: 20),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Marketplace',
           ),
-          backgroundColor: Colors.black,
-          actions: [
-            GestureDetector(
-              onTap: _goToAboutUsPage,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Image.asset('lib/images/Logo_Arcturus.png',
-                    width: 40, height: 40),
-              ),
-            ),
-          ],
-        ),
-        body: Row(
-          children: [
-            if (_navigationRailVisible)
-              Container(
-                width: 92,
-                height: double.infinity,
-                color: const Color(0xFF171918),
-                child: ListView.builder(
-                  itemCount: _iconList.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedIndex = index;
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Icon(
-                          _iconList[index],
-                          color: Colors.white,
-                          size: 30.0,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            const VerticalDivider(thickness: 1, width: 1),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: _pages[_selectedIndex],
-              ),
-            ),
-          ],
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.stacked_line_chart),
+            label: 'Stats',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_task),
+            label: 'Offers',
+          ),
+        ],
       ),
     );
   }

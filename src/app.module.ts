@@ -11,7 +11,6 @@ import { TransporterModule } from './transporter/transporter.module';
 import { OfferModule } from './offer/offer.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
-import { BlockchainModule } from './blockchain/blockchain.module';
 import { StripeModule } from './stripe_sdk/stripe.module'; 
 
 
@@ -32,7 +31,6 @@ import { StripeModule } from './stripe_sdk/stripe.module';
     TransporterModule,
     OfferModule,
     AdminModule,
-    BlockchainModule,
     StripeModule
   ],
   controllers: [AppController],

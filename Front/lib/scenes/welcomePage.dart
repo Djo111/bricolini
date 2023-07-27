@@ -16,44 +16,53 @@ class WelcomeScreen extends StatelessWidget {
             const SizedBox(height: 30),
             const Text(
               'Welcome to',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
             const SizedBox(height: 10),
             const Text(
               'BriColini',
-              style: TextStyle(fontSize: 70, fontWeight: FontWeight.bold, color: Colors.lightGreen),
+              style: TextStyle(
+                  fontSize: 70,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.lightGreen),
             ),
             // Space between "Welcome to" and the logo
             // Add your logo widget here, you can use Image.asset or any other widget
             // Example: Image.asset('assets/logo.png', width: 100, height: 100),
-            const SizedBox(height: 150), // Space between the logo and the button
+            const SizedBox(
+                height: 120), // Space between the logo and the button
             InkWell(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => SignInPage()),
+                  MaterialPageRoute(builder: (context) => const SignInPage()),
                 );
-
               },
               child: Container(
                 width: 150, // Set the width of the button
                 height: 40, // Set the height of the button
                 decoration: BoxDecoration(
                   color: Colors.brown, // Set the button background color
-                  borderRadius: BorderRadius.circular(30), // Set rounded corners
+                  borderRadius:
+                      BorderRadius.circular(30), // Set rounded corners
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
                       blurRadius: 6,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
                 child: const Center(
                   child: Text(
                     'Identify',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
               ),
@@ -75,7 +84,7 @@ class _FirstScreenState extends State<FirstScreen> {
   void initState() {
     super.initState();
     // Start a timer when the screen is loaded
-    Timer(Duration(seconds: 5), () {
+    Timer(const Duration(seconds: 5), () {
       // After 5 seconds, navigate to the second screen
       Navigator.push(
         context,
@@ -93,11 +102,16 @@ class _FirstScreenState extends State<FirstScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 200),
-            Image.asset('lib/images/Logo_Arcturus.png',
-            width:150,
-            height:150 ,),
+            Image.asset(
+              'lib/images/Logo_Arcturus.png',
+              width: 150,
+              height: 150,
+            ),
             const SizedBox(height: 270),
-            Text("@Arcturus", style: TextStyle(color: Colors.lightGreen),),// Space between the logo and the button
+            const Text(
+              "@Arcturus",
+              style: TextStyle(color: Colors.lightGreen),
+            ), // Space between the logo and the button
           ],
         ),
       ),

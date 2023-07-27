@@ -1,11 +1,13 @@
 import 'package:bricoloni_v2/scenes/find_trans.dart';
 import 'package:bricoloni_v2/scenes/recycling_company_received_offers.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class BookingOfferPage extends StatefulWidget {
   final Offer offer;
-
-  const BookingOfferPage({Key? key, required this.offer}) : super(key: key);
+  final String id;
+  const BookingOfferPage({Key? key, required this.offer, required this.id})
+      : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -13,6 +15,19 @@ class BookingOfferPage extends StatefulWidget {
 }
 
 class _BookingOfferPageState extends State<BookingOfferPage> {
+  Future<void> updateOffer(String id, String s) async {
+    var url = Uri.parse(
+        'http://localhost:3000/offer/$id'); // update with your endpoint url
+    var response =
+        await http.patch(url, body: {"id_recyclingCenter": s, "selected": "1"});
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print('Offer updated successfully');
+    } else {
+      print('Failed to update the offer');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,9 +68,13 @@ class _BookingOfferPageState extends State<BookingOfferPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          FindTrans(location: widget.offer.address)),
+                      builder: (context) => FindTrans(
+                          location: widget.offer.address,
+                          offer: widget.offer,
+                          id: widget.id,
+                          waste: widget.offer.type)),
                 );
+                updateOffer(widget.offer.offerId, widget.id);
               },
               child: const Text('Choosing Transporter'),
             ),

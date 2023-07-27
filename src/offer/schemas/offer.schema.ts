@@ -28,5 +28,7 @@ export class Offer {
     id_transporter: string;
     @Prop()
     id_offerProvider: string
+    @Prop()
+    selected : boolean
 }
 export const OfferSchema=SchemaFactory.createForClass(Offer)    
