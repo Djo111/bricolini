@@ -14,7 +14,7 @@ from PIL import Image
 import sys
 import numpy as np
 
-BASEPATH = "C:\\Users\\akilh\\OneDrive\\Bureau\\STAGE FH\\bricolini 2\\bricolini\\IA_MODEL\\"
+BASEPATH = "\uploads" 
 
 def image_save(image, name):
     image = image.convert("RGB")
