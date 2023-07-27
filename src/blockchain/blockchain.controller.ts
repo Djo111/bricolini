@@ -6,9 +6,8 @@ import { BlockchainService } from './blockchain.service';
 export class BlockchainController {
   constructor(private readonly blockchainService: BlockchainService) {}
 
-  @Post('/transactions/:address') 
+  @Post('/transactions') 
   async addTransaction(
-    @Param('address') address: string,
     @Body() transactionData: {
       date: number;
       wasteType: string;

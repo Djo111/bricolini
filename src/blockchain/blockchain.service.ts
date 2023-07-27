@@ -6,7 +6,7 @@ import Web3 from 'web3';
 @Injectable()
 export class BlockchainService {
   private MyContractJson = require('C:/Users/yousf/Bureau/SummerCamp/bricolini/blockchain/build/contracts/TransactionManagement.json');
-  private contractAddress = '0xa3662A6D851675bbd7bB432B0b74D3Ad7d69CC9A'; // The deployed contract address
+  private contractAddress = '0x72904df8214ae370661256b2C4A97A683CaB53A6'; // The deployed contract address
   private contractAbi = this.MyContractJson.abi;
   private web3: Web3;
  private contractInstance; 
