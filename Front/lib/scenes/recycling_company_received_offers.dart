@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-    
 class RecyclingCompanyReceivedOffers extends StatefulWidget {
   final String id;
   final String wasteType;
@@ -43,14 +42,6 @@ class Offer {
       required this.confirmedByTransporter});
   factory Offer.fromJson(Map<String, dynamic> json) {
     return Offer(
-<<<<<<< HEAD
-      photo: json['img'],
-      price: 0,
-      address: json['location'],
-      estimatedDistance: 0,
-      type: json['waste_type'],
-    );
-=======
         selected: json['selected'] ?? false,
         photo: json['img'],
         price: 300,
@@ -62,7 +53,6 @@ class Offer {
         idOfferProvider: json['id_offerProvider'] ?? "",
         idRecyclingCenter: json['id_recyclingCenter'] ?? "",
         confirmedByTransporter: json['confirmedByTransporter'] ?? false);
->>>>>>> BestPractices
   }
 }
 
@@ -107,7 +97,8 @@ class _RecyclingCompanyReceivedOffersState
           final offer = receivedOffers[index];
 
           return Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0), // Adjust the vertical distance as needed
+            padding: EdgeInsets.symmetric(
+                vertical: 8.0), // Adjust the vertical distance as needed
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white10,
@@ -115,41 +106,56 @@ class _RecyclingCompanyReceivedOffersState
                   color: Colors.grey, // Choose the desired border color here.
                   width: 1.0, // Adjust the border width as needed.
                 ),
-                borderRadius: BorderRadius.circular(8.0), // Adjust the border radius as needed.
+                borderRadius: BorderRadius.circular(
+                    8.0), // Adjust the border radius as needed.
               ),
-<<<<<<< HEAD
               child: ListTile(
                 textColor: Colors.white,
                 leading: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.grey.shade600, // Choose the desired image border color here.
+                      color: Colors.grey
+                          .shade600, // Choose the desired image border color here.
                       width: 1.0, // Adjust the image border width as needed.
-=======
-              borderRadius: BorderRadius.circular(
-                  8.0), // Adjust the border radius as needed.
-            ),
-            child: ListTile(
-              textColor: Colors.white10,
-              leading: Image.asset(
-                offer.photo,
-                width: 50,
-                height: 50,
-              ),
-              title: Text(offer.address),
-              subtitle: Text(
-                  '${offer.type} | ${offer.estimatedDistance} km | ${offer.price} \$'),
-              trailing: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          BookingOfferPage(offer: offer, id: widget.id),
                     ),
-                  );
-                },
-                child: const Text('Book Offer'),
+                    borderRadius: BorderRadius.circular(
+                        8.0), // Adjust the image border radius as needed.
+                  ),
+                  child: ClipRRect(
+                    // Use ClipRRect to apply borderRadius to the image
+                    borderRadius: BorderRadius.circular(
+                        6.0), // Adjust the image border radius as needed.
+                    child: Image.asset(
+                      offer.photo,
+                      width: 72,
+                      height: 90,
+                      fit: BoxFit
+                          .cover, // Use BoxFit.cover to scale and maintain aspect ratio
+                    ),
+                  ),
+                ),
+                title: Text(offer.address),
+                subtitle: Text(
+                  '${offer.type} | ${offer.estimatedDistance} km | ${offer.price} \$',
+                ),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            BookingOfferPage(offer: offer, id: widget.id),
+                      ),
+                    );
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.lightGreen), // Change the background color here
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                        Colors.white), // Change the text color here
+                  ),
+                  child: const Text('Book Offer'),
+                ),
               ),
             ),
           );
@@ -236,44 +242,13 @@ class _Recycling_center_confirmed_offer
                     context,
                     MaterialPageRoute(
                       builder: (context) => const Paiement(),
->>>>>>> BestPractices
                     ),
-                    borderRadius: BorderRadius.circular(8.0), // Adjust the image border radius as needed.
-                  ),
-                  child: ClipRRect( // Use ClipRRect to apply borderRadius to the image
-                    borderRadius: BorderRadius.circular(6.0), // Adjust the image border radius as needed.
-                    child: Image.asset(
-                      offer.photo,
-                      width: 72,
-                      height: 90,
-                      fit: BoxFit.cover, // Use BoxFit.cover to scale and maintain aspect ratio
-                    ),
-                  ),
-                ),
-                title: Text(offer.address),
-                subtitle: Text(
-                  '${offer.type} | ${offer.estimatedDistance} km | ${offer.price} \$',
-                ),
-                trailing: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BookingOfferPage(offer: offer),
-                      ),
-
-                    );
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.lightGreen), // Change the background color here
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Change the text color here
-                  ),
-                  child: const Text('Book Offer'),
-                ),
+                  );
+                },
+                child: const Text('Book Offer'),
               ),
             ),
           );
-
         },
       ),
     );

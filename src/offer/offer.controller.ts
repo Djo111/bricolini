@@ -47,11 +47,11 @@ export class OfferController {
     
     return "success";
   }*/
-  @Get()
+  @Get("/V")
   findAllV() {
     return this.offerService.findAllVerifiedOffers();
   }
-  @Get()
+  @Get("/NV")
   findAllNV() {
     return this.offerService.findAllNotVerifiedOffers();
   }
@@ -64,7 +64,7 @@ export class OfferController {
   @Post()
   @UseInterceptors(FileInterceptor('file', storage))
 
-  async uploadFile(@UploadedFile() file, @Request() req): Observable<object> {
+  async uploadFile(@UploadedFile() file, @Request() req): Promise<Observable<object>> {
     const user: User = req.user.user;
     console.log(req.user);
     console.log(file);
@@ -81,16 +81,7 @@ export class OfferController {
     return this.offerService.remove(id);
   }
 
-  @Get("/verify/:imageUrl")
-  verifyingImgC(
-    @Param("imageUrl")
-    imageUrl : String
-
-  ){
-    return this.offerService.verifyFile(imageUrl);
-  }
-
-
+ 
   /*@UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('file', storage))

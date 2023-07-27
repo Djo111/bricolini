@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 
-=======
 import 'package:bricoloni_v2/scenes/paiement.dart';
 import 'package:bricoloni_v2/scenes/recycling_company_home_screen.dart';
 import 'package:bricoloni_v2/scenes/recycling_company_received_offers.dart';
->>>>>>> BestPractices
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -172,9 +169,7 @@ class _FindTransState extends State<FindTrans> {
                   margin: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
-<<<<<<< HEAD
 
-=======
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -184,7 +179,6 @@ class _FindTransState extends State<FindTrans> {
                       );
                       updateOffer(
                           widget.offer.offerId, transporter.idTransporter);
->>>>>>> BestPractices
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(

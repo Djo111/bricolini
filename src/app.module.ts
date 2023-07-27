@@ -11,11 +11,8 @@ import { TransporterModule } from './transporter/transporter.module';
 import { OfferModule } from './offer/offer.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
-<<<<<<< HEAD
 import { AddsModule } from './adds/adds.module';
 
-=======
->>>>>>> BestPractices
 import { StripeModule } from './stripe_sdk/stripe.module'; 
 
 
@@ -36,11 +33,7 @@ import { StripeModule } from './stripe_sdk/stripe.module';
     TransporterModule,
     OfferModule,
     AddsModule,
-    AdminModule,
-<<<<<<< HEAD
-  
-=======
->>>>>>> BestPractices
+    AdminModule, 
     StripeModule
   ],
   controllers: [AppController],
