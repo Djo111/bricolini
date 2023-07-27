@@ -1,4 +1,3 @@
-// auth.service.ts
 /* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -8,7 +7,6 @@ import * as bcrypt from 'bcryptjs'
 import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signup.dto';
 import { LogInDto } from './dto/login.dto';
-
 @Injectable()
 export class AuthService {
   constructor(

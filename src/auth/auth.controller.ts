@@ -24,14 +24,21 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-  @Get('/user/:id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(id);
-  }
-
   @Get()
   findAll() {
     return this.authService.findAll();
+    }
+  @Get('category/:catg')
+  findCateg( @Param("catg")
+    catg: categ) {
+   
+    return this.authService.findByCategory(catg)
+    }
+   
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.authService.findOne(id);
   }
 
   @Patch(':id')
@@ -43,8 +50,13 @@ export class AuthController {
   remove(@Param('id') id: string) {
     return this.authService.remove(id);
   }
+<<<<<<< HEAD
   @Get('/usersbycategory/:category')
   findAllUsersByCategory(@Param('category') category: categ) {
     return this.authService.findByCategory(category);
   }
+=======
+
+  
+>>>>>>> wissem
 }

@@ -12,8 +12,7 @@ import { OfferModule } from './offer/offer.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { AddsModule } from './adds/adds.module';
-
-import { StripeModule } from './stripe_sdk/stripe.module'; 
+import { StripeModule } from './stripe_sdk/stripe.module';
 
 
 
