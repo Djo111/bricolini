@@ -4,10 +4,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
-import { Offer } from './schemas/offer.schema';
-
-
 import { spawn } from 'child_process';
+import { json } from 'express';
+import { Offer } from './schemas/offer.schema';
 @Injectable()
 export class OfferService {
   constructor(
@@ -40,6 +39,10 @@ export class OfferService {
     return this.offerrModel.findById(id).exec();
   }
 
+  async findOfferByImgUrl(url: string) {
+    return this.offerrModel.findById({img:url}).exec();
+  }
+  
   async update(id: string, offerDto): Promise<Offer> {
     return this.offerrModel.findByIdAndUpdate(id, offerDto, { new: true }).exec();
   }
@@ -47,4 +50,32 @@ export class OfferService {
   async remove(id: string): Promise<void> {
     await this.offerrModel.findByIdAndRemove(id).exec();
   }
+
+  async verifyFile(imageUrl : string){
+    const pythonProcess = spawn('python3', ['IA_MODEL\main.py', imageUrl]);
+    pythonProcess.stdout.on('data', async (data) => {
+      const probaDistribution = JSON.parse(data)["probability distribution"];
+      const garageType = JSON.parse(data)["Garbage type"];
+
+      if (Math.max(probaDistribution) >= 0.6) {
+        const offer = await this.findOfferByImgUrl(imageUrl);
+        offer.status=1;
+        await offer.save();
+
+      } else {
+        const offer =await this.findOfferByImgUrl(imageUrl);
+        offer.status=0;
+        await offer.save();
+      }
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(data.toString());
+      return { error: 'Verification process failed' };
+    });
+    return { processing: true };
+}
+
+
+
 }

@@ -28,7 +28,7 @@
     "@nestjs/mongoose": "^10.0.0",
     "@nestjs/passport": "^10.0.0",
     "@nestjs/platform-express": "^10.0.5",
-    "@truffle/contract": "^4.6.27",
+    "@truffle/contract": "^4.3.19",
     "@types/passport": "^1.0.12",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
@@ -44,7 +44,7 @@
     "rxjs": "^7.8.1",
     "stripe": "^12.14.0",
     "uuid": "^9.0.0",
-    "web3": "^1.10.0"
+    "web3": "^4.0.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
