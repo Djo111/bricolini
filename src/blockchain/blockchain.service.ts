@@ -5,8 +5,8 @@ import {Transaction} from 'src/blockchain/interfaces/transaction.interface';
 import Web3 from 'web3'; 
 @Injectable()
 export class BlockchainService {
-  private MyContractJson = require('C:/Users/yousf/Bureau/SummerCamp/bricolini/blockchain/build/contracts/TransactionManagement.json');
-  private contractAddress = '0x3A51644EF4c44644F6Ae39E66e165e1Ab6F7945e'; // The deployed contract address
+  private MyContractJson = require('C:/Users/ridha/AndroidStudioProjects/bricolini/blockchain/build/contracts/TransactionManagement.json');
+  private contractAddress = '0x116334d68e1e01CF8F8163d1491Fb4CEa54f50B9'; // The deployed contract address
   private contractAbi = this.MyContractJson.abi;
   private web3: Web3;
  private contractInstance; 

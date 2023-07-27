@@ -10,4 +10,7 @@ async function bootstrap() {
   app.enableCors();
   await app.listen(3000);
 }
+process.on('uncaughtException', (err) => {
+  console.log(err);
+})
 bootstrap();
