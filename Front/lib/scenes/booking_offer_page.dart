@@ -24,6 +24,7 @@ class _BookingOfferPageState extends State<BookingOfferPage> {
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Offer updated successfully');
     } else {
+      print(response.statusCode);
       print('Failed to update the offer');
     }
   }

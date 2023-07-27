@@ -149,8 +149,8 @@ class Recycling_center_confirmed_offer extends StatefulWidget {
 class _Recycling_center_confirmed_offer
     extends State<Recycling_center_confirmed_offer> {
   Future<List<Offer>> fetchAllOffers() async {
-    final response = await http
-        .get(Uri.parse('http://localhost:3000/recycling-centre/offers'));
+    final response = await http.get(Uri.parse(
+        'http://localhost:3000/recycling-centre/offers/pending/${widget.id}'));
 
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -170,9 +170,8 @@ class _Recycling_center_confirmed_offer
     super.initState();
     fetchAllOffers().then((offers) {
       setState(() {
-        receivedOffers.addAll(offers.where((offer) =>
-            (offer.idRecyclingCenter == widget.id &&
-                offer.confirmedByTransporter == true)));
+        receivedOffers.addAll(
+            offers.where((offer) => offer.confirmedByTransporter == true));
       });
       print(receivedOffers.length);
     });
@@ -215,7 +214,7 @@ class _Recycling_center_confirmed_offer
                     ),
                   );
                 },
-                child: const Text('Book Offer'),
+                child: const Text('Pay'),
               ),
             ),
           );

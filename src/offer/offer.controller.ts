@@ -17,17 +17,7 @@ import { User } from 'src/auth/schemas/user.schema';
 import { AuthGuard } from '@nestjs/passport';
 
 
-export const storage = {
-  storage : diskStorage({
-    destination : "./uploads",
-    filename : (req , file , cb) => {
-      const filename : string = path.parse(file.originalname).name.replace(/\s/g,'') + uuidv4();
-      const extension : string = path.parse(file.originalname).ext;
-      cb(null , `${file.originalname}${extension}`)
-    }
-  })
 
-}
 
 
 @Controller('offer')
@@ -59,18 +49,6 @@ export class OfferController {
   findOne(@Param('id') id: string) {
     return this.offerService.findOne(id);
   }
-
-  @UseGuards(AuthGuard('JWT'))
-  @Post()
-  @UseInterceptors(FileInterceptor('file', storage))
-
-  async uploadFile(@UploadedFile() file, @Request() req): Observable<object> {
-    const user: User = req.user.user;
-    console.log(req.user);
-    console.log(file);
-    return of({imagePath: file.filename});
-}
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOfferDto: UpdateOfferDto) {
     return this.offerService.update(id, updateOfferDto);
@@ -81,14 +59,7 @@ export class OfferController {
     return this.offerService.remove(id);
   }
 
-  @Get("/verify/:imageUrl")
-  verifyingImgC(
-    @Param("imageUrl")
-    imageUrl : String
-
-  ){
-    return this.offerService.verifyFile(imageUrl);
-  }
+ 
 
 
   /*@UseGuards(JwtAuthGuard)

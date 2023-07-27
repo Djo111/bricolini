@@ -64,7 +64,8 @@ class _FindTransState extends State<FindTrans> {
   Future<void> updateOffer(String id, String s) async {
     var url = Uri.parse(
         'http://localhost:3000/offer/$id'); // update with your endpoint url
-    var response = await http.patch(url, body: {"id_transporter": s});
+    var response = await http
+        .patch(url, body: {"id_transporter": s, "confirmedByTransporter": "0"});
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Offer updated successfully');

@@ -2,6 +2,8 @@ import 'package:bricoloni_v2/scenes/transporter_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:jwt_decode/jwt_decode.dart';
 
 class Transporter_Sign_Up extends StatefulWidget {
   final String email;
@@ -27,9 +29,11 @@ class _Transporter_Sign_UpState extends State<Transporter_Sign_Up> {
   double _numTrucksType2 = 0.0;
   double _numTrucksType3 = 0.0;
 
-  Future<void> createTransporter(String s1, String s2, String s3, String s4,
+  Future<String> createTransporter(String s1, String s2, String s3, String s4,
       String s5, String s6, String s7, String s8, String s9) async {
-    await http.post(Uri.parse("http://localhost:3000/auth/signup"), body: {
+    String id = '';
+    final response =
+        await http.post(Uri.parse("http://localhost:3000/auth/signup"), body: {
       "email": s1,
       "username": s2,
       "password": s3,
@@ -40,6 +44,13 @@ class _Transporter_Sign_UpState extends State<Transporter_Sign_Up> {
       "number_of_medium_trucks": s8,
       "number_of_big_trucks": s9,
     });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final body = jsonDecode(response.body);
+      final token = body['token'];
+      Map<String, dynamic> payload = Jwt.parseJwt(token);
+      id = payload['id'];
+    }
+    return id;
   }
 
   @override
@@ -197,15 +208,7 @@ class _Transporter_Sign_UpState extends State<Transporter_Sign_Up> {
                 int numSmallTrucks = _numTrucksType1.toInt();
                 int numMedianTrucks = _numTrucksType2.toInt();
                 int numBigTrucks = _numTrucksType3.toInt();
-
-                // ignore: use_build_context_synchronously
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Transporter_HomeScreen(),
-                  ),
-                );
-                await createTransporter(
+                String id = await createTransporter(
                     widget.email,
                     widget.fullName,
                     widget.password,
@@ -215,6 +218,13 @@ class _Transporter_Sign_UpState extends State<Transporter_Sign_Up> {
                     numSmallTrucks.toString(),
                     numMedianTrucks.toString(),
                     numBigTrucks.toString());
+                // ignore: use_build_context_synchronously
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Transporter_HomeScreen(id: id),
+                  ),
+                );
               },
               child: const Text(
                 'Sign Up',

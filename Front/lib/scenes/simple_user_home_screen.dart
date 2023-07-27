@@ -67,7 +67,7 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
             _selectedIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',

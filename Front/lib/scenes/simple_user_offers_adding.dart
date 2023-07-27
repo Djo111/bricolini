@@ -2,7 +2,6 @@ import 'package:bricoloni_v2/scenes/upload_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -27,20 +26,6 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
   void initState() {
     super.initState();
     _determinePosition();
-  }
-
-  Future<String> getRegionName(LatLng position) async {
-    try {
-      final List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-      if (placemarks.isNotEmpty) {
-        return placemarks[0].administrativeArea ?? '';
-      }
-      return 'Unknown';
-    } catch (e) {
-      print(e);
-      return 'Error';
-    }
   }
 
   @override
@@ -115,7 +100,6 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                         interactiveFlags: InteractiveFlag
                             .all, // enables all interaction options
                         onTap: (tapPosition, latLngPosition) async {
-                          region = await getRegionName(latLngPosition);
                           print('Region: $region');
                           setState(() {
                             currentLocation = latLngPosition;
@@ -162,14 +146,9 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                 border: OutlineInputBorder(),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    List<Location> locations =
-                        await locationFromAddress(_controller.text);
-                    setState(() {
-                      currentLocation = LatLng(
-                          locations.first.latitude, locations.first.longitude);
-                    });
+                    region = _controller.text;
                   },
-                  icon: Icon(Icons.search),
+                  icon: Icon(Icons.edit_note_rounded),
                 ),
               ),
             ),

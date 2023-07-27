@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { UpdateOfferDto } from './dto/update-offer.dto';
 import { Offer } from './schemas/offer.schema';
-import json;
+
 
 import { spawn } from 'child_process';
 @Injectable()
@@ -47,34 +47,4 @@ export class OfferService {
   async remove(id: string): Promise<void> {
     await this.offerrModel.findByIdAndRemove(id).exec();
   }
-  async verifyFile(imageUrl : String){
-
-    const pythonProcess = spawn('python3', ['IA_MODEL\main.py', imageUrl]);
-
-    pythonProcess.stdout.on('data', (data) => {
-      const probaDistribution = json.loads(data)["probability distribution"];
-      const garageType = json.loads(data)["Garbage type"];
-
-      if (Math.max(probaDistribution) >= 0.6) {
-        const offer =await this.offerrModel.findOfferByImgUrl(imageUrl);
-        offer.status=1;
-        await offer.save();
-
-      } else {
-        const offer =await this.offerrModel.findOfferByImgUrl(imageUrl);
-        offer.status=0;
-        await offer.save();
-      }
-    });
-
-    pythonProcess.stderr.on('data', (data) => {
-      console.error(data.toString());
-      return { error: 'Verification process failed' };
-    });
-    return { processing: true };
-}
-async findOfferByImgUrl(imageUrl : String) : Promise<Offer>{
-  return this.offerrModel.find({img:imageUrl}).exec();
-
-}
 }

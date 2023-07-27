@@ -12,4 +12,5 @@ export class UpdateOfferDto extends PartialType(CreateOfferDto) {
     readonly id_recyclingCenter: string
     readonly id_transporter: string
     readonly selected : boolean
+    readonly confirmedByTransporter :boolean
 }

@@ -30,5 +30,7 @@ export class Offer {
     id_offerProvider: string
     @Prop()
     selected : boolean
+    @Prop()
+    confirmedByTransporter :boolean
 }
 export const OfferSchema=SchemaFactory.createForClass(Offer)    

@@ -7,7 +7,8 @@ import 'package:bricoloni_v2/scenes/transporter_received_offers.dart';
 import 'package:flutter/material.dart';
 
 class Transporter_HomeScreen extends StatefulWidget {
-  const Transporter_HomeScreen({super.key});
+  final String id;
+  const Transporter_HomeScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   Transporter_HomeScreenState createState() => Transporter_HomeScreenState();
@@ -15,13 +16,14 @@ class Transporter_HomeScreen extends StatefulWidget {
 
 class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
   int _selectedIndex = 0;
-  final List<Widget> _pages = [
-    const HomePage(),
-    const MarketplacePage(),
-    const StatsPage(),
-    const TransporterReceivedOffers(),
-    const Profile(title: ''),
-  ];
+
+  List<Widget> get _pages => [
+        const HomePage(),
+        const MarketplacePage(),
+        const StatsPage(),
+        TransporterReceivedOffers(id: widget.id),
+        const Profile(title: ''),
+      ];
 
   void _goToAboutUsPage() {
     Navigator.push(
@@ -54,11 +56,12 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
         selectedItemColor: Colors.blue, // Change this to your desired color
         currentIndex: _selectedIndex,
         onTap: (index) {
+          print(widget.id);
           setState(() {
             _selectedIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -76,7 +79,7 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
             label: 'Received Offers',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_2),
+            icon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],
