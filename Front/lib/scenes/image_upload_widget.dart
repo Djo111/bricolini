@@ -3,9 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+// ignore: must_be_immutable
 class ImageUploadWidget extends StatefulWidget {
   String? _image;
+
+  ImageUploadWidget({super.key});
   @override
+  // ignore: library_private_types_in_public_api
   _ImageUploadWidgetState createState() => _ImageUploadWidgetState();
 
   String? getImagePath() {
@@ -26,6 +30,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
       }
     });
   }
+
   String? getImagePath() {
     return _image;
   }

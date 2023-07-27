@@ -1,3 +1,4 @@
+import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:bricoloni_v2/scenes/home_page.dart';
 import 'package:bricoloni_v2/scenes/marketplace_page.dart';
 import 'package:bricoloni_v2/scenes/simple_user_offers.dart';
@@ -42,6 +43,13 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
     });
   }
 
+  void _goToAboutUsPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => About_Us()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -59,8 +67,21 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
             icon: Icon(_navigationRailVisible ? Icons.menu_open : Icons.menu),
             onPressed: _toggleNavigationBar,
           ),
-          title: const Text('Simple User HomeScreen', style: TextStyle(color: Colors.lightGreen, fontSize: 20),),
+          title: const Text(
+            'Simple User HomeScreen',
+            style: TextStyle(color: Colors.lightGreen, fontSize: 20),
+          ),
           backgroundColor: Colors.black,
+          actions: [
+            GestureDetector(
+              onTap: _goToAboutUsPage,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Image.asset('lib/images/Logo_Arcturus.png',
+                    width: 40, height: 40),
+              ),
+            ),
+          ],
         ),
         body: Row(
           children: [

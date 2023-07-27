@@ -1,3 +1,4 @@
+import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:bricoloni_v2/scenes/home_page.dart';
 import 'package:bricoloni_v2/scenes/marketplace_page.dart';
 import 'package:bricoloni_v2/scenes/recycling_company_received_offers.dart';
@@ -6,7 +7,8 @@ import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
 class Recycling_Company_HomeScreen extends StatefulWidget {
-  const Recycling_Company_HomeScreen({super.key});
+  final String wasteType;
+  const Recycling_Company_HomeScreen({super.key, required this.wasteType});
 
   @override
   _Recycling_Company_HomeScreenState createState() =>
@@ -24,22 +26,27 @@ class _Recycling_Company_HomeScreenState
     });
   }
 
-  final List<Widget> _pages = [
-    const HomePage(),
-    const MarketplacePage(),
-    const StatsPage(),
-    const RecyclingCompanyReceivedOffers(),
-  ];
-
   final List<IconData> _iconList = [
     Icons.home,
     Icons.shopping_cart,
     Icons.stacked_line_chart,
     Icons.call_received,
   ];
+  void _goToAboutUsPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => About_Us()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final _pages = [
+      const HomePage(),
+      const MarketplacePage(),
+      const StatsPage(),
+      RecyclingCompanyReceivedOffers(wasteType: widget.wasteType),
+    ];
     return WillPopScope(
       onWillPop: () async {
         if (!_navigationRailVisible) {
@@ -56,6 +63,16 @@ class _Recycling_Company_HomeScreenState
             onPressed: _toggleNavigationBar,
           ),
           title: const Text('Recycling Company HomeScreen'),
+          actions: [
+            GestureDetector(
+              onTap: _goToAboutUsPage,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Image.asset('lib/images/Logo_Arcturus.png',
+                    width: 40, height: 40),
+              ),
+            ),
+          ],
         ),
         body: Row(
           children: [
@@ -69,6 +86,7 @@ class _Recycling_Company_HomeScreenState
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
+                        print("waste :${widget.wasteType}");
                         setState(() {
                           _selectedIndex = index;
                         });

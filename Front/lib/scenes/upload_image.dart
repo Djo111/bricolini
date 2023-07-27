@@ -1,4 +1,3 @@
-import 'package:bricoloni_v2/scenes/simple_user_offers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,7 +5,6 @@ import 'package:http/http.dart' as http;
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'dart:io';
-import 'image_upload_widget.dart';
 import 'image_verification.dart';
 
 class ImageUploadWidget extends StatefulWidget {

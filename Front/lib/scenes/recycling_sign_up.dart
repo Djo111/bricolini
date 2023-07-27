@@ -95,7 +95,7 @@ class _Recycling_Sign_UpState extends State<Recycling_Sign_Up> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          const Recycling_Company_HomeScreen()),
+                          Recycling_Company_HomeScreen(wasteType: Type_Waste)),
                 );
                 await createRecyclingCenter(
                     widget.email,
