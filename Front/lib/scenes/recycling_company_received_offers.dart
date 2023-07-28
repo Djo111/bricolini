@@ -80,8 +80,7 @@ class _RecyclingCompanyReceivedOffersState
     super.initState();
     fetchAllOffers().then((offers) {
       setState(() {
-        receivedOffers.addAll(offers.where((offer) =>
-            (offer.type == widget.wasteType && offer.selected == false)));
+        receivedOffers.addAll(offers);
       });
       print(receivedOffers.length);
     });
@@ -90,7 +89,7 @@ class _RecyclingCompanyReceivedOffersState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: ListView.builder(
         itemCount: receivedOffers.length,
         itemBuilder: (context, index) {
@@ -99,62 +98,66 @@ class _RecyclingCompanyReceivedOffersState
           return Padding(
             padding: EdgeInsets.symmetric(
                 vertical: 8.0), // Adjust the vertical distance as needed
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white10,
-                border: Border.all(
-                  color: Colors.grey, // Choose the desired border color here.
-                  width: 1.0, // Adjust the border width as needed.
-                ),
-                borderRadius: BorderRadius.circular(
-                    8.0), // Adjust the border radius as needed.
-              ),
-              child: ListTile(
-                textColor: Colors.white,
-                leading: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey
-                          .shade600, // Choose the desired image border color here.
-                      width: 1.0, // Adjust the image border width as needed.
-                    ),
-                    borderRadius: BorderRadius.circular(
-                        8.0), // Adjust the image border radius as needed.
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 16.0), // Add horizontal padding here
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white10,
+                  border: Border.all(
+                    color: Colors.grey, // Choose the desired border color here.
+                    width: 1.0, // Adjust the border width as needed.
                   ),
-                  child: ClipRRect(
-                    // Use ClipRRect to apply borderRadius to the image
-                    borderRadius: BorderRadius.circular(
-                        6.0), // Adjust the image border radius as needed.
-                    child: Image.asset(
-                      offer.photo,
-                      width: 72,
-                      height: 90,
-                      fit: BoxFit
-                          .cover, // Use BoxFit.cover to scale and maintain aspect ratio
-                    ),
-                  ),
+                  borderRadius: BorderRadius.circular(
+                      8.0), // Adjust the border radius as needed.
                 ),
-                title: Text(offer.address),
-                subtitle: Text(
-                  '${offer.type} | ${offer.estimatedDistance} km | ${offer.price} \$',
-                ),
-                trailing: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            BookingOfferPage(offer: offer, id: widget.id),
+                child: ListTile(
+                  textColor: Colors.black,
+                  leading: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey
+                            .shade600, // Choose the desired image border color here.
+                        width: 1.0, // Adjust the image border width as needed.
                       ),
-                    );
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.lightGreen), // Change the background color here
-                    foregroundColor: MaterialStateProperty.all<Color>(
-                        Colors.white), // Change the text color here
+                      borderRadius: BorderRadius.circular(
+                          8.0), // Adjust the image border radius as needed.
+                    ),
+                    child: ClipRRect(
+                      // Use ClipRRect to apply borderRadius to the image
+                      borderRadius: BorderRadius.circular(
+                          6.0), // Adjust the image border radius as needed.
+                      child: Image.asset(
+                        offer.photo,
+                        width: 72,
+                        height: 90,
+                        fit: BoxFit
+                            .cover, // Use BoxFit.cover to scale and maintain aspect ratio
+                      ),
+                    ),
                   ),
-                  child: const Text('Book Offer'),
+                  title: Text(offer.address),
+                  subtitle: Text(
+                    '${offer.type} | ${offer.estimatedDistance} km | ${offer.price} \$',
+                  ),
+                  trailing: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BookingOfferPage(offer: offer, id: widget.id),
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors
+                          .lightGreen), // Change the background color here
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Colors.white), // Change the text color here
+                    ),
+                    child: const Text('Book Offer'),
+                  ),
                 ),
               ),
             ),
@@ -210,7 +213,7 @@ class _Recycling_center_confirmed_offer
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF171918),
+      backgroundColor: Colors.white,
       body: ListView.builder(
         itemCount: receivedOffers.length,
         itemBuilder: (context, index) {
@@ -226,7 +229,7 @@ class _Recycling_center_confirmed_offer
                   8.0), // Adjust the border radius as needed.
             ),
             child: ListTile(
-              textColor: Colors.white10,
+              textColor: Colors.black,
               leading: Image.asset(
                 offer.photo,
                 width: 50,
@@ -241,11 +244,17 @@ class _Recycling_center_confirmed_offer
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          Paiement(waste: offer.type, price: offer.price),
+                          BookingOfferPage(offer: offer, id: widget.id),
                     ),
                   );
                 },
-                child: const Text('Pay'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.lightGreen), // Change the background color here
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      Colors.white), // Change the text color here
+                ),
+                child: const Text('Book Offer'),
               ),
             ),
           );

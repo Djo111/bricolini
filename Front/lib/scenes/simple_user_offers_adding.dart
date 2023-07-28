@@ -32,7 +32,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black45,
+        backgroundColor: Colors.blue,
         title: Text(widget.title),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -46,13 +46,13 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
         children: <Widget>[
           Expanded(
             child: Container(
-              color: Colors.black,
+              color: Colors.white,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     'Submit your offer!',
-                    style: TextStyle(color: Colors.white, fontSize: 40),
+                    style: TextStyle(color: Colors.black, fontSize: 40),
                   ),
                   const SizedBox(height: 20),
                   DropdownButton<String>(
@@ -60,27 +60,27 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                     items: const [
                       DropdownMenuItem(
                         value: "garbage type",
-                        child: Text("garbage type"),
+                        child: Text("garbage type", textAlign: TextAlign.center),
                       ),
                       DropdownMenuItem(
                         value: "iron waste",
-                        child: Text("Metal"),
+                        child: Text("Metal", textAlign: TextAlign.center),
                       ),
                       DropdownMenuItem(
                         value: "wood waste",
-                        child: Text("Wood"),
+                        child: Text("Wood", textAlign: TextAlign.center),
                       ),
                       DropdownMenuItem(
                         value: "construction waste",
-                        child: Text("Construction waste"),
+                        child: Text("Construction waste", textAlign: TextAlign.center),
                       ),
                       DropdownMenuItem(
                         value: "others",
-                        child: Text("Other"),
+                        child: Text("Other", textAlign: TextAlign.center),
                       )
                     ],
-                    style: const TextStyle(color: Colors.white, fontSize: 20),
-                    dropdownColor: Colors.black,
+                    style: const TextStyle(color: Colors.black, fontSize: 20),
+                    dropdownColor: Colors.white,
                     onChanged: (value) {
                       setState(() {
                         garbageType = value as String;
@@ -161,7 +161,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                backgroundColor: Colors.lightGreen, // Set the background color
+                backgroundColor: Colors.blue, // Set the background color
                 padding: const EdgeInsets.symmetric(
                     horizontal: 40.0, vertical: 15.0), // Set the padding
               ),
@@ -181,7 +181,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
               },
               child: const Text(
                 'Continue',
-                style: TextStyle(color: Colors.black, fontSize: 20),
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
           ),

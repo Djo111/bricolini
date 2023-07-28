@@ -19,7 +19,7 @@ class _BookingOfferPageState extends State<BookingOfferPage> {
     var url = Uri.parse(
         'http://localhost:3000/offer/$id'); // update with your endpoint url
     var response =
-        await http.patch(url, body: {"id_recyclingCenter": s, "selected": "1"});
+    await http.patch(url, body: {"id_recyclingCenter": s, "selected": "1"});
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Offer updated successfully');
@@ -32,10 +32,10 @@ class _BookingOfferPageState extends State<BookingOfferPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF171918),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Booking Offer'),
-        backgroundColor: const Color(0xFF171918),
+        backgroundColor: Colors.blue,
       ),
       body: Center(
         child: Column(
