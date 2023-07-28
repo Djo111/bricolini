@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'dart:io';
 import 'image_verification.dart';
+import 'dart:convert';
 
 class ImageUploadWidget extends StatefulWidget {
   final Function(String) onImageSelect;
@@ -131,6 +132,21 @@ class _UploadImageState extends State<UploadImage> {
     });
   }
 
+  Future<String> offerverify(String path) async {
+    final response = await http.post(
+      Uri.parse('http://localhost:3000/verify/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "imageUrl": path,
+      }),
+    );
+    String s = response.body;
+    print(s);
+    return s;
+  }
+
   Future<void> createOffer(
       String s1, String s2, String s3, String s4, String s5) async {
     try {
@@ -213,6 +229,7 @@ class _UploadImageState extends State<UploadImage> {
                 print(widget.id);
                 createOffer(widget.id, widget.region, path, widget.location,
                     widget.garbageType);
+                offerverify(path);
               },
               child: const Text(
                 'Verify',

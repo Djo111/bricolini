@@ -4,8 +4,8 @@ import 'dart:async';
 
 class Profile extends StatefulWidget {
   final String title;
-
-  const Profile({super.key, required this.title});
+  final String? badge;
+  const Profile({super.key, required this.title, this.badge});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -85,7 +85,7 @@ class _ProfileState extends State<Profile> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              headerChild(fetchBadge()),
+                              headerChild(widget.badge as Future<String>),
                             ],
                           ),
                         ),
@@ -190,9 +190,5 @@ class _ProfileState extends State<Profile> {
       context,
       MaterialPageRoute(builder: (context) => FirstScreen()),
     );
-  }
-
-  Future<String> fetchBadge() async {
-    return 'https://example.com/path/to/badge.png';
   }
 }

@@ -240,7 +240,8 @@ class _Recycling_center_confirmed_offer
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Paiement(),
+                      builder: (context) =>
+                          Paiement(waste: offer.type, price: offer.price),
                     ),
                   );
                 },

@@ -9,10 +9,12 @@ import 'package:flutter/material.dart';
 class Recycling_Company_HomeScreen extends StatefulWidget {
   final String wasteType;
   final String id;
+  final String? badge;
   const Recycling_Company_HomeScreen({
     Key? key,
     required this.wasteType,
     required this.id,
+    this.badge,
   }) : super(key: key);
 
   @override
@@ -42,7 +44,7 @@ class _Recycling_Company_HomeScreenState
         id: widget.id,
       ),
       Recycling_center_confirmed_offer(id: widget.id),
-      const Profile(title: "title")
+      Profile(title: "title", badge: widget.badge)
     ];
     return Scaffold(
       backgroundColor: const Color(0xFF171918),

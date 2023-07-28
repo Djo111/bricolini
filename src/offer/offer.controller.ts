@@ -77,14 +77,11 @@
      console.log(file);
      return of({imagePath: file.filename});
  }
-   @Get("/verify/:imageUrl")
-   verifyingImgC(
-     @Param("imageUrl")
-     imageUrl : string
- 
-   ){
-     return this.offerService.verifyFile(imageUrl);
-   }
+ @Post("/verify")
+ verifyingImgC(@Body() body: { imageUrl: string }) {
+   const { imageUrl } = body;
+   return this.offerService.verifyFile(imageUrl);
+ }
  
  
    /*@UseGuards(JwtAuthGuard)
