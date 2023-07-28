@@ -31,7 +31,7 @@
               <td mat-cell *matCellDef="let offer">
                 <button type="button " class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="acceptOffer(offer._id)">Accept</button>
                 <br>
-                <button type="button" class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#exampleModal1"(click)="declineOffer(offer)">Decline</button>
+                <button type="button" class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#exampleModal1"(click)="declineOffer(offer._id,offer)">Decline</button>
 
               </td>
 

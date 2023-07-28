@@ -20,7 +20,7 @@ export class OffersService {
     const body = { status: '1' }; // The data to be sent in the request body
     return this.http.post<offer>(`${this.apiUrl}admin/offers/${offerId}/accept`, body);
   }
-  declineOfferById(offerId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}admin/offers/${offerId}`);
+  declineOfferById(offerId: string): Observable<offer> {
+    return this.http.delete<offer>(`${this.apiUrl}admin/offers/${offerId}`);
   }
 }

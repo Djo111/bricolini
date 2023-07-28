@@ -40,8 +40,8 @@ console.log(this.offers)
       });
     }
 
-  declineOffer(offer: any): void {
-    this.OffersService.declineOfferById(offer.id).subscribe(
+  declineOffer(offerId: string , offer: any): void {
+    this.OffersService.declineOfferById(offerId).subscribe(
       (response) => {
         // Handle the successful decline of the offer
         console.log('Offer declined:', response);
