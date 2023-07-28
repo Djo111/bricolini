@@ -134,7 +134,7 @@ class _UploadImageState extends State<UploadImage> {
 
   Future<String> offerverify(String path) async {
     final response = await http.post(
-      Uri.parse('http://10.217.8.78:3000/verify'),
+      Uri.parse('http://localhost:3000/verify/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -151,7 +151,7 @@ class _UploadImageState extends State<UploadImage> {
       String s1, String s2, String s3, String s4, String s5) async {
     try {
       final response = await http
-          .post(Uri.parse('http://10.217.8.78:3000/simple-user/offers'), body: {
+          .post(Uri.parse('http://localhost:3000/simple-user/offers'), body: {
         "id_offerProvider": s1,
         "location": s2,
         "img": s3,

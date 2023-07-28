@@ -80,7 +80,8 @@ class _RecyclingCompanyReceivedOffersState
     super.initState();
     fetchAllOffers().then((offers) {
       setState(() {
-        receivedOffers.addAll(offers);
+        receivedOffers.addAll(offers.where((offer) =>
+            offer.type == widget.wasteType && offer.selected == false));
       });
       print(receivedOffers.length);
     });
@@ -244,17 +245,11 @@ class _Recycling_center_confirmed_offer
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          BookingOfferPage(offer: offer, id: widget.id),
+                          Paiement(waste: offer.type, price: offer.price),
                     ),
                   );
                 },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.lightGreen), // Change the background color here
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                      Colors.white), // Change the text color here
-                ),
-                child: const Text('Book Offer'),
+                child: const Text('Pay'),
               ),
             ),
           );
