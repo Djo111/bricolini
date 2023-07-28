@@ -47,7 +47,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.lightGreen,
         title: Text(widget.title),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -61,13 +61,13 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
         children: <Widget>[
           Expanded(
             child: Container(
-              color: Colors.white,
+              color: Colors.black,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     'Submit your offer!',
-                    style: TextStyle(color: Colors.black, fontSize: 40),
+                    style: TextStyle(color: Colors.lightGreen, fontSize: 30),
                   ),
                   const SizedBox(height: 20),
                   DropdownButton<String>(
@@ -94,8 +94,8 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                         child: Text("Other", textAlign: TextAlign.center),
                       )
                     ],
-                    style: const TextStyle(color: Colors.black, fontSize: 20),
-                    dropdownColor: Colors.white,
+                    style: const TextStyle(color: Colors.white, fontSize: 20),
+                    dropdownColor: Colors.white10,
                     onChanged: (value) {
                       setState(() {
                         garbageType = value as String;
@@ -156,10 +156,20 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextField(
+
+              style: const TextStyle(
+                color: Colors.white,
+              ),
               controller: _controller,
               decoration: InputDecoration(
                 labelText: 'Enter address',
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: Colors.white),
+                hintStyle: TextStyle(color: Colors.white),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.lightGreen,
+                  ), // Set the color of the border when the field is focused
+                ),
                 suffixIcon: IconButton(
                   onPressed: () async {
                     List<Location> locations =
@@ -170,6 +180,11 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                     });
                   },
                   icon: Icon(Icons.search),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  ), // Set the color of the border when the field is not focused
                 ),
               ),
             ),
@@ -182,7 +197,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                backgroundColor: Colors.blue, // Set the background color
+                backgroundColor: Colors.lightGreen, // Set the background color
                 padding: const EdgeInsets.symmetric(
                     horizontal: 40.0, vertical: 15.0), // Set the padding
               ),
@@ -208,6 +223,7 @@ class _SimpleUserOffersAdding extends State<SimpleUserOffersAdding> {
           ),
         ],
       ),
+      backgroundColor: Colors.black,
     );
   }
 

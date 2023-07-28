@@ -140,7 +140,7 @@ void initState() {
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.black,
     body: ListView.builder(
       itemCount: allAdds.length,
       itemBuilder: (context, index) {
@@ -153,14 +153,17 @@ Widget build(BuildContext context) {
 
 Widget _buildPostContainer(Add post) {
   return Container(
+    padding: EdgeInsets.symmetric(horizontal: 16.0), // Add horizontal padding to the left and right sides
     decoration: BoxDecoration(
+      //color: , // White with 10% opacity
       border: Border.all(
-        color: Colors.grey, // Choose the desired border color here.
+       // color: Colors.grey, // Choose the desired border color here.
         width: 1.0, // Adjust the border width as needed.
       ),
       borderRadius: BorderRadius.circular(8.0), // Adjust the border radius as needed.
     ),
     child: Card(
+      color: Colors.white10, // Make the Card transparent
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0), // Adjust the border radius to match the Container.
         // You can also add additional border customization here if needed.
@@ -168,23 +171,33 @@ Widget _buildPostContainer(Add post) {
       margin: EdgeInsets.zero, // Remove any margin from the Card.
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min, // Set the mainAxisSize to min to allow the Card to wrap its content
         children: [
           ListTile(
             leading: CircleAvatar(
               // You can use a NetworkImage or AssetImage based on your data.
               backgroundImage: NetworkImage(post.img),
             ),
-            title: Text(post.username),
+            title: Text(
+              post.username,
+              style: TextStyle(color: Colors.white), // Set the text color to white
+            ),
           ),
           Image.network(post.img),
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text(post.description),
+            child: Text(
+              post.description,
+              style: TextStyle(color: Colors.white), // Set the text color to white
+            ),
           ),
         ],
       ),
     ),
   );
+
+
+
 }
 }
 

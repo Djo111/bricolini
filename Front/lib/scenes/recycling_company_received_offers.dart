@@ -89,7 +89,7 @@ class _RecyclingCompanyReceivedOffersState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: ListView.builder(
         itemCount: receivedOffers.length,
         itemBuilder: (context, index) {
@@ -109,7 +109,7 @@ class _RecyclingCompanyReceivedOffersState
                   borderRadius: BorderRadius.circular(8.0), // Adjust the border radius as needed.
                 ),
                 child: ListTile(
-                  textColor: Colors.black,
+                  textColor: Colors.white,
                   leading: Container(
                     decoration: BoxDecoration(
                       border: Border.all(

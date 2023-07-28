@@ -72,7 +72,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                   ),
                   backgroundColor: Colors.lightGreen,
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 15.0),
+                      horizontal: 20.0, vertical: 15.0),
                 ),
                 onPressed: () {
                   getImage(ImageSource.gallery);
@@ -89,7 +89,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                   ),
                   backgroundColor: Colors.lightGreen,
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 15.0),
+                      horizontal: 20.0, vertical: 15.0),
                 ),
                 onPressed: () {
                   getImage(ImageSource.camera);

@@ -109,9 +109,9 @@ class _FindTransState extends State<FindTrans> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.lightGreen,
         title: const Text(
           'Find a transporter',
           style: TextStyle(color: Colors.white, fontSize: 20),
@@ -123,10 +123,12 @@ class _FindTransState extends State<FindTrans> {
           final transporter = historyList[index];
 
           return Container(
+
             margin: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
+              color: Colors.white10,
               border: Border.all(
-                color: Colors.grey,
+                color: Colors.white10,
                 width: 1.0,
               ),
               borderRadius: BorderRadius.circular(8.0),
@@ -147,12 +149,17 @@ class _FindTransState extends State<FindTrans> {
                       Text(
                         transporter.tName,
                         style: const TextStyle(
+                          color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
+
                         '${transporter.vehicule} | ${transporter.location} | ${transporter.pricePerKm}\$ PerKM',
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),

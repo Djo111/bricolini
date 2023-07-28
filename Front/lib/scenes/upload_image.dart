@@ -163,7 +163,7 @@ class _UploadImageState extends State<UploadImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.lightGreen,
         title: const Text("Submit your Offer!"),
       ),
       body: Column(
