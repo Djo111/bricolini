@@ -14,7 +14,7 @@ from PIL import Image
 import sys
 import numpy as np
 
-BASEPATH = "" 
+BASEPATH = "\uploads" 
 
 def image_save(image, name):
     image = image.convert("RGB")
