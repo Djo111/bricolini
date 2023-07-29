@@ -56,8 +56,8 @@ class TransporterReceivedOffers extends StatefulWidget {
 class _Recycling_center_confirmed_offerState
     extends State<TransporterReceivedOffers> {
   Future<List<Offer>> fetchAllOffers() async {
-    final response = await http.get(
-        Uri.parse('http://localhost:3000/transporters/offers/${widget.id}'));
+    final response = await http.get(Uri.parse(
+        'http://192.168.43.101:3000/transporters/offers/${widget.id}'));
 
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.

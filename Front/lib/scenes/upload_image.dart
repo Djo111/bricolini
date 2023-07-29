@@ -150,14 +150,15 @@ class _UploadImageState extends State<UploadImage> {
   Future<void> createOffer(
       String s1, String s2, String s3, String s4, String s5) async {
     try {
-      final response = await http
-          .post(Uri.parse('http://localhost:3000/simple-user/offers'), body: {
-        "id_offerProvider": s1,
-        "location": s2,
-        "img": s3,
-        "cordonnes": s4,
-        "waste_type": s5
-      });
+      final response = await http.post(
+          Uri.parse('http://192.168.43.101:3000/simple-user/offers'),
+          body: {
+            "id_offerProvider": s1,
+            "location": s2,
+            "img": s3,
+            "cordonnes": s4,
+            "waste_type": s5
+          });
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (kDebugMode) {
@@ -179,7 +180,7 @@ class _UploadImageState extends State<UploadImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.lightGreen,
         title: const Text("Submit your Offer!"),
       ),
       body: Column(

@@ -7,7 +7,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87, // Set the background color
+      backgroundColor: Colors.black, // Set the background color
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +45,7 @@ class WelcomeScreen extends StatelessWidget {
                 width: 150, // Set the width of the button
                 height: 40, // Set the height of the button
                 decoration: BoxDecoration(
-                  color: Colors.brown, // Set the button background color
+                  color: Colors.lightGreen, // Set the button background color
                   borderRadius:
                       BorderRadius.circular(30), // Set rounded corners
                   boxShadow: [
@@ -62,7 +62,7 @@ class WelcomeScreen extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.lightGreen),
+                        color: Colors.white),
                   ),
                 ),
               ),
@@ -96,7 +96,7 @@ class _FirstScreenState extends State<FirstScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87, // Set the background color
+      backgroundColor: Colors.black, // Set the background color
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

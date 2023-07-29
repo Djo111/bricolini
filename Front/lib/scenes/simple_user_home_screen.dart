@@ -44,6 +44,7 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.lightGreen,
         title: const Text('Simple User HomeScreen'),
         actions: [
           GestureDetector(
@@ -57,34 +58,40 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
         ],
       ),
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.blue, // Change this to your desired color
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Marketplace',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.stacked_line_chart),
-            label: 'Stats',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_task),
-            label: 'Offers',
-          ),
-        ],
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Colors.black87, // Set the desired background color here
+        ),
+        child: BottomNavigationBar(
+          // backgroundColor: Colors.white,
+          unselectedItemColor: Colors.white,
+          selectedItemColor:
+              Colors.lightGreen, // Change this to your desired color
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              label: 'Marketplace',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.stacked_line_chart),
+              label: 'Stats',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add_task),
+              label: 'Offers',
+            ),
+          ],
+        ),
       ),
     );
   }

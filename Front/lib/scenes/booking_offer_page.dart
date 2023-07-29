@@ -32,10 +32,10 @@ class _BookingOfferPageState extends State<BookingOfferPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text('Booking Offer'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.lightGreen,
       ),
       body: Center(
         child: Column(
@@ -49,19 +49,19 @@ class _BookingOfferPageState extends State<BookingOfferPage> {
             const SizedBox(height: 20),
             Text(
               'Address: ${widget.offer.address}',
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18, color: Colors.white),
             ),
             Text(
               'Type: ${widget.offer.type}',
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18, color: Colors.white),
             ),
             Text(
               'Estimated Distance: ${widget.offer.estimatedDistance} km',
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18, color: Colors.white),
             ),
             Text(
               'Demanded Price: ${widget.offer.price} \$',
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18, color: Colors.white),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -69,16 +69,22 @@ class _BookingOfferPageState extends State<BookingOfferPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => FindTrans(
-                          location: widget.offer.address,
-                          offer: widget.offer,
-                          id: widget.id,
-                          waste: widget.offer.type)),
+                    builder: (context) => FindTrans(
+                      location: widget.offer.address,
+                      offer: widget.offer,
+                      id: widget.id,
+                      waste: widget.offer.type,
+                    ),
+                  ),
                 );
                 updateOffer(widget.offer.offerId, widget.id);
               },
-              child: const Text('Choosing Transporter'),
-            ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.lightGreen, // Set the desired background color here
+              ),
+              child: const Text('Select Transporter'),
+            )
+
           ],
         ),
       ),

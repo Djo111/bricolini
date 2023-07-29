@@ -105,9 +105,9 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.lightGreen,
         title: const Text(
           'Sign In / Sign Up',
           style: TextStyle(
@@ -135,22 +135,22 @@ class _SignInPageState extends State<SignInPage> {
             TextField(
               controller: _emailController, // Use the email controller
               style: const TextStyle(
-                color: Colors.black,
+                color: Colors.white,
               ),
               decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
                 hintText: "Enter Your Mail",
-                hintStyle: TextStyle(color: Colors.black),
-                labelStyle: TextStyle(color: Colors.black),
+                hintStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: Colors.white),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Colors.blue,
+                    color: Colors.lightGreen,
                   ), // Set the color of the border when the field is focused
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Colors.black,
+                    color: Colors.white,
                   ), // Set the color of the border when the field is not focused
                 ),
               ),
@@ -165,16 +165,16 @@ class _SignInPageState extends State<SignInPage> {
                   borderSide: BorderSide(color: Colors.red),
                 ),
                 hintText: "Enter Your Password",
-                hintStyle: TextStyle(color: Colors.black),
-                labelStyle: TextStyle(color: Colors.black),
+                hintStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: Colors.white),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
+                  borderSide: BorderSide(color: Colors.lightGreen),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
+                  borderSide: BorderSide(color: Colors.white),
                 ),
               ),
-              style: const TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.white),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -228,7 +228,7 @@ class _SignInPageState extends State<SignInPage> {
               child: const Text('Sign In'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.lightGreen,
-                foregroundColor: Colors.black,
+                foregroundColor: Colors.white,
               ),
             ),
             const SizedBox(height: 8),
@@ -241,7 +241,7 @@ class _SignInPageState extends State<SignInPage> {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.normal,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ),

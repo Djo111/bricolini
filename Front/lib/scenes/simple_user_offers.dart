@@ -17,6 +17,7 @@ class _SimpleUserOffersState extends State<SimpleUserOffers> {
       backgroundColor: Colors.black45,
       body: Center(
         child: FloatingActionButton(
+          backgroundColor: Colors.lightGreen,
           child: const Icon(Icons.add),
           onPressed: () {
             print("simpleoffers:${widget.id}");

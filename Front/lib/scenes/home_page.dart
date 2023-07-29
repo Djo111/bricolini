@@ -14,40 +14,40 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      shape: CircularNotchedRectangle(),
+      shape: const CircularNotchedRectangle(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           IconButton(
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
             onPressed: () {
               onTabTapped(0);
             },
             color: currentIndex == 0 ? Colors.blue : Colors.grey,
           ),
           IconButton(
-            icon: Icon(Icons.history),
+            icon: const Icon(Icons.history),
             onPressed: () {
               onTabTapped(1);
             },
             color: currentIndex == 1 ? Colors.blue : Colors.grey,
           ),
           IconButton(
-            icon: Icon(Icons.local_offer),
+            icon: const Icon(Icons.local_offer),
             onPressed: () {
               onTabTapped(2);
             },
             color: currentIndex == 2 ? Colors.blue : Colors.grey,
           ),
           IconButton(
-            icon: Icon(Icons.bar_chart),
+            icon: const Icon(Icons.bar_chart),
             onPressed: () {
               onTabTapped(3);
             },
             color: currentIndex == 3 ? Colors.blue : Colors.grey,
           ),
           IconButton(
-            icon: Icon(Icons.store),
+            icon: const Icon(Icons.store),
             onPressed: () {
               onTabTapped(4);
             },
@@ -127,7 +127,7 @@ class _AddsState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: ListView.builder(
         itemCount: allAdds.length,
         itemBuilder: (context, index) {
@@ -139,15 +139,20 @@ class _AddsState extends State<HomePage> {
 
   Widget _buildPostContainer(Add post) {
     return Container(
+      padding: const EdgeInsets.symmetric(
+          horizontal:
+              16.0), // Add horizontal padding to the left and right sides
       decoration: BoxDecoration(
+        //color: , // White with 10% opacity
         border: Border.all(
-          color: Colors.grey, // Choose the desired border color here.
+          // color: Colors.grey, // Choose the desired border color here.
           width: 1.0, // Adjust the border width as needed.
         ),
         borderRadius:
             BorderRadius.circular(8.0), // Adjust the border radius as needed.
       ),
       child: Card(
+        color: Colors.white10, // Make the Card transparent
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
               8.0), // Adjust the border radius to match the Container.
@@ -156,18 +161,28 @@ class _AddsState extends State<HomePage> {
         margin: EdgeInsets.zero, // Remove any margin from the Card.
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize
+              .min, // Set the mainAxisSize to min to allow the Card to wrap its content
           children: [
             ListTile(
               leading: CircleAvatar(
                 // You can use a NetworkImage or AssetImage based on your data.
-                backgroundImage: NetworkImage(post.img),
+                backgroundImage: AssetImage(post.img),
               ),
-              title: Text(post.username),
+              title: Text(
+                post.username,
+                style: const TextStyle(
+                    color: Colors.white), // Set the text color to white
+              ),
             ),
             Image.asset(post.img),
             Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(post.description),
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                post.description,
+                style: const TextStyle(
+                    color: Colors.white), // Set the text color to white
+              ),
             ),
           ],
         ),

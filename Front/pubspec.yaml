@@ -44,5 +44,6 @@ flutter:
   assets :
     - lib/images/
     - assets/classifier.tflite
-    
+    - lib/images/construct.jpg
+    - C:/Users/ridha/AndroidStudioProjects/bricolini/Front/lib/images/construct.jpg
 

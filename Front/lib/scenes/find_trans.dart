@@ -1,4 +1,3 @@
-
 import 'package:bricoloni_v2/scenes/paiement.dart';
 import 'package:bricoloni_v2/scenes/recycling_company_home_screen.dart';
 import 'package:bricoloni_v2/scenes/recycling_company_received_offers.dart';
@@ -101,7 +100,8 @@ class _FindTransState extends State<FindTrans> {
     super.initState();
     fetchAllTransporters().then((transporters) {
       setState(() {
-        historyList.addAll(transporters);
+        historyList.addAll(transporters.where(
+            (transporter) => transporter.location == widget.offer.address));
       });
       print(historyList.length);
     });
@@ -110,9 +110,9 @@ class _FindTransState extends State<FindTrans> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.lightGreen,
         title: const Text(
           'Find a transporter',
           style: TextStyle(color: Colors.white, fontSize: 20),
@@ -126,8 +126,9 @@ class _FindTransState extends State<FindTrans> {
           return Container(
             margin: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
+              color: Colors.white10,
               border: Border.all(
-                color: Colors.grey,
+                color: Colors.white10,
                 width: 1.0,
               ),
               borderRadius: BorderRadius.circular(8.0),
@@ -137,7 +138,8 @@ class _FindTransState extends State<FindTrans> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CircleAvatar(
-                    radius: 25, // Adjust the radius to control the size of the circular image
+                    radius:
+                        25, // Adjust the radius to control the size of the circular image
                     backgroundImage: AssetImage(transporter.photo),
                   ),
                 ),
@@ -148,12 +150,16 @@ class _FindTransState extends State<FindTrans> {
                       Text(
                         transporter.tName,
                         style: const TextStyle(
+                          color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         '${transporter.vehicule} | ${transporter.location} | ${transporter.pricePerKm}\$ PerKM',
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
@@ -171,10 +177,12 @@ class _FindTransState extends State<FindTrans> {
                           ),
                         ),
                       );
-                      updateOffer(widget.offer.offerId, transporter.idTransporter);
+                      updateOffer(
+                          widget.offer.offerId, transporter.idTransporter);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.lightGreen, // Change the background color here
+                      backgroundColor:
+                          Colors.lightGreen, // Change the background color here
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -186,7 +194,6 @@ class _FindTransState extends State<FindTrans> {
               ],
             ),
           );
-
         },
       ),
     );
