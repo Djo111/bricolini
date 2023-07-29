@@ -31,6 +31,8 @@ dependencies:
   url_launcher: any
   image: ^3.0.2
   stripe_sdk: any
+  flutter_charts: ^0.5.1
+  fl_chart: ^0.63.0
 
 
 
