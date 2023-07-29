@@ -53,7 +53,7 @@ export class OfferService {
   }
 
   async verifyFile(imageUrl : string){
-    const pythonProcess = spawn('python3', ['IA_MODEL\main.py', imageUrl]);
+    const pythonProcess = spawn('python3', ['IA_MODEL/main.py', imageUrl]);
     pythonProcess.stdout.on('data', async (data) => {
       const probaDistribution = JSON.parse(data)["probability distribution"];
       const garageType = JSON.parse(data)["Garbage type"];

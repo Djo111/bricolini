@@ -7,14 +7,25 @@ import 'package:http/http.dart' as http;
 class Paiement extends StatelessWidget {
   final int price;
   final String waste;
-  const Paiement({super.key, required this.price, required this.waste});
+  const Paiement({Key? key, required this.price, required this.waste})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.green,
+        hintColor: Colors.black,
+      ),
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.lightGreen,
           title: const Text('Stripe Payment'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         body: Center(
           child: PaymentForm(),
@@ -66,9 +77,12 @@ class _PaymentFormState extends State<PaymentForm> {
             actions: [
               TextButton(
                 child: const Text('OK'),
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Recycling_Company_HomeScreen(
-                        wasteType: '', id: ""))),
+                onPressed: () {
+                  Navigator.of(context).pop(); // This will close the dialog
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const Recycling_Company_HomeScreen(
+                          wasteType: '', id: "")));
+                },
               ),
             ],
           ),
@@ -83,45 +97,64 @@ class _PaymentFormState extends State<PaymentForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          TextFormField(
-            controller: _cardNumberController,
-            decoration: const InputDecoration(labelText: 'Card number'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter card number';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: _expiryDateController,
-            decoration: const InputDecoration(labelText: 'Expiry date'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter expiry date';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: _cvvController,
-            decoration: const InputDecoration(labelText: 'CVV'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter CVV';
-              }
-              return null;
-            },
-          ),
-          ElevatedButton(
-            onPressed: createPaymentIntent,
-            child: const Text('Pay'),
-          ),
-        ],
+    return Center(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextFormField(
+              controller: _cardNumberController,
+              decoration: const InputDecoration(
+                labelText: 'Card number',
+                labelStyle: TextStyle(color: Colors.white),
+                border: OutlineInputBorder(),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter card number';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _expiryDateController,
+              decoration: const InputDecoration(
+                labelText: 'Expiry date',
+                labelStyle: TextStyle(color: Colors.white),
+                border: OutlineInputBorder(),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter expiry date';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _cvvController,
+              decoration: const InputDecoration(
+                labelText: 'CVV',
+                labelStyle: TextStyle(color: Colors.white),
+                border: OutlineInputBorder(),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter CVV';
+                }
+                return null;
+              },
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.lightGreen),
+              ),
+              onPressed: createPaymentIntent,
+              child: const Text('Pay'),
+            ),
+          ],
+        ),
       ),
     );
   }

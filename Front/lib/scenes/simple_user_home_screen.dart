@@ -1,6 +1,6 @@
 import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:bricoloni_v2/scenes/home_page.dart';
-import 'package:bricoloni_v2/scenes/marketplace_page.dart';
+import 'package:bricoloni_v2/scenes/VR.dart';
 import 'package:bricoloni_v2/scenes/simple_user_offers.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class _Simple_User_HomeScreenState extends State<Simple_User_HomeScreen> {
   Widget build(BuildContext context) {
     final _pages = [
       const HomePage(),
-      const MarketplacePage(),
+      const MarketplaceVRPage(),
       const StatsPage(),
       SimpleUserOffers(id: widget.id),
     ];

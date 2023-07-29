@@ -5,15 +5,16 @@ import 'package:http/http.dart' as http;
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'dart:io';
-import 'image_verification.dart';
 import 'dart:convert';
 
 class ImageUploadWidget extends StatefulWidget {
   final Function(String) onImageSelect;
 
-  ImageUploadWidget({Key? key, required this.onImageSelect}) : super(key: key);
+  const ImageUploadWidget({Key? key, required this.onImageSelect})
+      : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _ImageUploadWidgetState createState() => _ImageUploadWidgetState();
 }
 
@@ -63,39 +64,42 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                 ),
         ),
         const SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  backgroundColor: Colors.grey, // Set the background color
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 40.0, vertical: 15.0), // Set the padding
                 ),
-                backgroundColor: Colors.grey, // Set the background color
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 15.0), // Set the padding
+                onPressed: () {
+                  getImage(ImageSource.gallery);
+                },
+                child: const Text('Choose from Gallery'),
               ),
-              onPressed: () {
-                getImage(ImageSource.gallery);
-              },
-              child: const Text('Choose from Gallery'),
-            ),
-            const SizedBox(width: 16),
-            ElevatedButton(
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+              const SizedBox(width: 16),
+              ElevatedButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  backgroundColor: Colors.grey, // Set the background color
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 40.0, vertical: 15.0), // Set the padding
                 ),
-                backgroundColor: Colors.grey, // Set the background color
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 15.0), // Set the padding
+                onPressed: () {
+                  getImage(ImageSource.camera);
+                },
+                child: const Text('Take a Photo'),
               ),
-              onPressed: () {
-                getImage(ImageSource.camera);
-              },
-              child: const Text('Take a Photo'),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -185,61 +189,55 @@ class _UploadImageState extends State<UploadImage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Expanded(
+          const Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Upload a photo of your garbage!',
                   style: TextStyle(color: Colors.white, fontSize: 30),
                 ),
-                const SizedBox(height: 10), //saut de ligne
-                const Text(
-                  'Regulations require you to upload a photo of your garbage...',
-                  style: TextStyle(color: Colors.white, fontSize: 10),
+                SizedBox(height: 10), //saut de ligne
+                Text(
+                  'Regulations...',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
                 ),
-                const SizedBox(height: 40),
-                ImageUploadWidget(onImageSelect: onImageSelect),
               ],
             ),
           ),
-
-          const SizedBox(height: 10), //saut de ligne
-
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: TextButton(
-              style: TextButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+          Expanded(
+            child: ImageUploadWidget(
+              onImageSelect: onImageSelect,
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: ElevatedButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  backgroundColor: Colors.grey, // Set the background color
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 40.0, vertical: 15.0), // Set the padding
                 ),
-                backgroundColor: Colors.lightGreen, // Set the background color
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 15.0), // Set the padding
-              ),
-              onPressed: () {
-                if (kDebugMode) {
-                  print("offeverify : ${widget.id}");
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ImageVerificationPage()),
-                );
-                print(widget.id);
-                createOffer(widget.id, widget.region, path, widget.location,
-                    widget.garbageType);
-                offerverify(path);
-              },
-              child: const Text(
-                'Verify',
-                style: TextStyle(color: Colors.black, fontSize: 20),
+                onPressed: () async {
+                  if (path.isNotEmpty) {
+                    await createOffer(widget.id, widget.location, path,
+                        widget.region, widget.garbageType);
+                  } else {
+                    print('Please select an image');
+                  }
+                },
+                child: const Text('Submit Offer'),
               ),
             ),
           ),
         ],
       ),
-      backgroundColor: Colors.black,
     );
   }
 }

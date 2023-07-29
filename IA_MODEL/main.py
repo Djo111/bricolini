@@ -4,17 +4,13 @@ import string
 import sys
 from Type_detector import Detector
 #sys.path.append('/home/ubuntu/.local/lib/python3.10/site-packages/')
-from PIL import Image, ImageOps
 import json
 import json
-from PIL import Image
 import sys
 import json
-from PIL import Image
 import sys
-import numpy as np
 
-BASEPATH = "\uploads" 
+BASEPATH = "/uploads" 
 
 def image_save(image, name):
     image = image.convert("RGB")

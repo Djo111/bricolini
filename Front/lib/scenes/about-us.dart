@@ -3,95 +3,111 @@ import 'package:flutter/material.dart';
 class About_Us extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = ThemeData(
+      primaryColor: Colors.black,
+      hintColor: Colors.grey,
+      textTheme: const TextTheme(
+        bodyText1: TextStyle(color: Colors.lightGreen, fontSize: 14),
+        headline1: TextStyle(color: Colors.lightGreen, fontSize: 24),
+        headline2: TextStyle(color: Colors.white, fontSize: 20),
+      ),
+    );
+
     return MaterialApp(
+      theme: theme,
       home: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
+          preferredSize: const Size.fromHeight(100),
           child: AppBar(
-            backgroundColor: Colors.black87,
+            backgroundColor: theme.primaryColor,
             leadingWidth: 100,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  'lib/images/Logo_Arcturus.png',
-                  width: 45, // Replace with your logo image path
-                  height: 45,
-                  // You can adjust the height of the logo as needed
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return DetailScreen();
+                    }));
+                  },
+                  child: Hero(
+                    tag: 'logoHero',
+                    child: Image.asset(
+                      'lib/images/Logo_Arcturus.png',
+                      width: 45,
+                      height: 45,
+                    ),
+                  ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
                   'Bricolini',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.lightGreen,
-                  ),
+                  style: theme.textTheme.headline1,
                 ),
               ],
             ),
           ),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _buildRoundedContainer(
                 'Bricolini - Revolutionizing Construction Waste Management',
                 24,
+                theme.textTheme.headline1!.color,
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               _buildRoundedContainer(
-                'At Bricolini, we are passionate about sustainability and committed to transforming the way construction waste is handled. We specialize in collecting construction garbage from building sites and facilitating its efficient recycling and repurposing. Our mission is to minimize the environmental impact of construction projects while maximizing the value of discarded materials.',
+                'At Bricolini, we are passionate about sustainability and committed to transforming the way construction waste is handled. We specialize in collecting construction garbage from building sites and facilitating its efficient recycling and repurposing...',
                 14,
+                theme.textTheme.bodyText1!.color,
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               _buildRoundedContainer(
-                'Join us at Bricolini as we lead the way in revolutionizing construction waste management. Together, we can create a greener, more sustainable future while unlocking the hidden value in discarded construction materials. Contact us today to explore how we can tailor our waste management solutions to meet your specific needs and contribute to a more circular economy.',
+                'Join us at Bricolini as we lead the way in revolutionizing construction waste management. Together, we can create a greener, more sustainable future while unlocking the hidden value in discarded construction materials...',
                 14,
+                theme.textTheme.bodyText1!.color,
               ),
-              SizedBox(height: 32.0),
+              const SizedBox(height: 32.0),
               Text(
                 'Statistics',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                style: theme.textTheme.headline2,
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _buildStatisticCard(
                       '+30 000', 'cubic meters of landfill space'),
                   _buildStatisticCard(
-                      '85%', 'recycling rate for construction waste '),
+                      '85%', 'recycling rate for construction waste'),
                   _buildStatisticCard('1M \$', 'Revenue'),
                 ],
               ),
             ],
           ),
         ),
-        backgroundColor: Colors.black87,
+        backgroundColor: theme.primaryColor,
       ),
     );
   }
 
-  Widget _buildRoundedContainer(String text, double fontSize) {
+  Widget _buildRoundedContainer(String text, double fontSize, Color? color) {
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.black, // Set the border color here
+          color: Colors.grey, // Set the border color here
           width: 2, // Set the border width here
         ),
-        color: Colors.brown,
+        color: Colors.black,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Text(
         text,
-        style: TextStyle(fontSize: fontSize, color: Colors.white),
+        style: TextStyle(fontSize: fontSize, color: color),
         textAlign: TextAlign.center,
       ),
     );
@@ -99,10 +115,10 @@ class About_Us extends StatelessWidget {
 
   Widget _buildStatisticCard(String title, String value) {
     return Container(
-      padding: EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.brown, // Set the border color here
+          color: Colors.grey, // Set the border color here
           width: 2, // Set the border width here
         ),
         color: Colors.white,
@@ -113,17 +129,39 @@ class About_Us extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.black87),
           ),
-          SizedBox(height: 2.0),
+          const SizedBox(height: 2.0),
           Text(
             value,
-            style: TextStyle(fontSize: 10, color: Colors.black),
+            style: const TextStyle(fontSize: 10, color: Colors.black),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class DetailScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Center(
+          child: Hero(
+            tag: 'logoHero',
+            child: Image.asset(
+              'lib/images/Logo_Arcturus.png',
+              width: 300.0,
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -1,11 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:bricoloni_v2/scenes/welcomePage.dart';
-import 'dart:async';
 
 class Profile extends StatefulWidget {
   final String title;
   final String? badge;
-  const Profile({super.key, required this.title, this.badge});
+  const Profile({Key? key, required this.title, this.badge}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -21,10 +21,10 @@ class _ProfileState extends State<Profile> {
     return Stack(
       children: <Widget>[
         Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
-              Color(0xFF26CBE6),
-              Color(0xFF26CBC0),
+              Colors.black,
+              Colors.grey[850]!,
             ], begin: Alignment.topCenter, end: Alignment.center),
           ),
         ),
@@ -46,13 +46,13 @@ class _ProfileState extends State<Profile> {
                           radius: height / 10,
                         ),
                         SizedBox(
-                          height: height / 30,
+                          height: height / 15, // Increased space here
                         ),
                         const Text(
-                          'Sadiq Mehdi',
+                          'Recycling Company',
                           style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
+                              fontSize: 20.0,
+                              color: Colors.lightGreenAccent,
                               fontWeight: FontWeight.bold),
                         )
                       ],
@@ -70,22 +70,17 @@ class _ProfileState extends State<Profile> {
                       top: height / 2.6, left: width / 20, right: width / 20),
                   child: Column(
                     children: <Widget>[
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black45,
-                                blurRadius: 2.0,
-                                offset: Offset(0.0, 2.0)),
-                          ],
+                      Card(
+                        color: Colors.grey[800],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(width / 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              headerChild(widget.badge as Future<String>),
+                              headerChild(),
                             ],
                           ),
                         ),
@@ -94,9 +89,9 @@ class _ProfileState extends State<Profile> {
                         padding: EdgeInsets.only(top: height / 20),
                         child: Column(
                           children: <Widget>[
-                            infoChild(
-                                width, Icons.email, 'zulfiqar108@gmail.com'),
-                            infoChild(width, Icons.call, '+12-1234567890'),
+                            infoCard(width, Icons.email,
+                                'recyclingcompany@gmail.com'),
+                            infoCard(width, Icons.call, '+12-1234567890'),
                             Padding(
                               padding: EdgeInsets.only(top: height / 30),
                               child: ElevatedButton(
@@ -105,7 +100,7 @@ class _ProfileState extends State<Profile> {
                                   _logout(context);
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF26CBE6),
+                                  backgroundColor: Colors.lightGreen,
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.circular(height / 40),
@@ -117,7 +112,7 @@ class _ProfileState extends State<Profile> {
                                   child: Text(
                                     'Logout',
                                     style: TextStyle(
-                                      fontSize: 12.0,
+                                      fontSize: 14.0,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -139,51 +134,49 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget headerChild(Future<String> future) => Expanded(
-        child: FutureBuilder<String>(
-          future: future,
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            if (snapshot.hasData) {
-              return AnimatedContainer(
-                width: MediaQuery.of(context).size.width / 2,
-                height: MediaQuery.of(context).size.height / 2,
-                duration: const Duration(seconds: 2),
-                curve: Curves.easeInOut,
-                child: Image.network(snapshot.data!, fit: BoxFit.cover),
-              );
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
-        ),
-      );
-
-  Widget infoChild(double width, IconData icon, data) => Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: InkWell(
-          child: Row(
-            children: <Widget>[
-              SizedBox(
-                width: width / 10,
+  Widget headerChild() => Expanded(
+        child: AnimatedContainer(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          duration: const Duration(seconds: 2),
+          curve: Curves.easeInOut,
+          child: Container(
+            width: 50.0, // Set the width you want
+            height: 50.0, // Set the height you want
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('lib/images/bronzeAsset 2.png'),
+                fit: BoxFit.cover,
               ),
-              Icon(
-                icon,
-                color: const Color(0xFF26CBE6),
-                size: 36.0,
-              ),
-              SizedBox(
-                width: width / 20,
-              ),
-              Text(data),
-            ],
+            ),
           ),
-          onTap: () {
-            print('Info Object selected');
-          },
         ),
       );
+  Widget infoCard(double width, IconData icon, String data) {
+    return Card(
+      color: Colors.grey[800],
+      margin: const EdgeInsets.only(top: 10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: ListTile(
+        leading: Icon(
+          icon,
+          color: Colors.lightGreen,
+          size: 30,
+        ),
+        title: Text(
+          data,
+          style: const TextStyle(color: Colors.white, fontSize: 16),
+        ),
+        onTap: () {
+          if (kDebugMode) {
+            print('$data selected');
+          }
+        },
+      ),
+    );
+  }
 
   void _logout(BuildContext context) {
     Navigator.push(

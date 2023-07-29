@@ -37,12 +37,16 @@ class _StatsPageState extends State<StatsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+          Colors.grey[850], // Add this line to set the background color
       body: ListView(
         padding: const EdgeInsets.all(8),
         children: <Widget>[
           Text(
             "Daily Transactions",
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Colors
+                    .white), // Change the text color to white to make it visible
           ),
           SizedBox(
             height: 200,
@@ -62,7 +66,7 @@ class _StatsPageState extends State<StatsPage> {
                       return FlSpot(e.key.toDouble(), e.value);
                     }).toList(),
                     isCurved: true,
-                    color: Colors.green[300], // Change the color here
+                    color: Colors.green[300],
                     barWidth: 3,
                     belowBarData: BarAreaData(show: true),
                   ),
@@ -73,7 +77,9 @@ class _StatsPageState extends State<StatsPage> {
           const SizedBox(height: 20),
           Text(
             "Garbage Categories",
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.headline6?.copyWith(
+                color: Colors
+                    .white), // Change the text color to white to make it visible
           ),
           Container(
             height: 200,

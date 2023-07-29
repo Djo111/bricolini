@@ -1,7 +1,7 @@
 import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:bricoloni_v2/scenes/history_page.dart';
 import 'package:bricoloni_v2/scenes/home_page.dart';
-import 'package:bricoloni_v2/scenes/marketplace_page.dart';
+import 'package:bricoloni_v2/scenes/VR.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
 import 'package:bricoloni_v2/scenes/paiement.dart';
 import 'package:bricoloni_v2/scenes/sign_in_page.dart';
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     const HomePage(),
     const HistoryPage(),
-    const MarketplacePage(),
+    const MarketplaceVRPage(),
     const StatsPage(),
     const SignInPage(),
   ];
