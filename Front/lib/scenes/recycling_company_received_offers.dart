@@ -60,7 +60,7 @@ class _RecyclingCompanyReceivedOffersState
     extends State<RecyclingCompanyReceivedOffers> {
   Future<List<Offer>> fetchAllOffers() async {
     final response = await http
-        .get(Uri.parse('http://localhost:3000/recycling-centre/offers'));
+        .get(Uri.parse('http://192.168.1.16:3000/recycling-centre/offers'));
 
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -184,7 +184,7 @@ class _Recycling_center_confirmed_offer
     extends State<Recycling_center_confirmed_offer> {
   Future<List<Offer>> fetchAllOffers() async {
     final response = await http.get(Uri.parse(
-        'http://localhost:3000/recycling-centre/offers/pending/${widget.id}'));
+        'http://192.168.1.16:3000/recycling-centre/offers/pending/${widget.id}'));
 
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.

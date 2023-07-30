@@ -63,7 +63,7 @@ class _FindTransState extends State<FindTrans> {
   List<Transporter> historyList = [];
   Future<void> updateOffer(String id, String s) async {
     var url = Uri.parse(
-        'http://localhost:3000/offer/$id'); // update with your endpoint url
+        'http://192.168.1.16:3000/offer/$id'); // update with your endpoint url
     var response = await http
         .patch(url, body: {"id_transporter": s, "confirmedByTransporter": "0"});
 
@@ -76,7 +76,7 @@ class _FindTransState extends State<FindTrans> {
 
   Future<List<Transporter>> fetchAllTransporters() async {
     final response = await http.get(
-      Uri.parse('http://localhost:3000/auth/usersbycategory/Transporter'),
+      Uri.parse('http://192.168.1.16:3000/auth/usersbycategory/Transporter'),
     );
 
     if (response.statusCode == 200) {

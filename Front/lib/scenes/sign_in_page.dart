@@ -29,7 +29,7 @@ class _SignInPageState extends State<SignInPage> {
     String wasteType = '';
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:3000/auth/user/login'),
+        Uri.parse('http://192.168.1.16:3000/auth/user/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

@@ -1,6 +1,7 @@
 import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:bricoloni_v2/scenes/home_page.dart';
 import 'package:bricoloni_v2/scenes/VR.dart';
+import 'package:bricoloni_v2/scenes/marketplace.dart';
 import 'package:bricoloni_v2/scenes/profile.dart';
 import 'package:bricoloni_v2/scenes/recycling_company_received_offers.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
@@ -37,7 +38,7 @@ class _Recycling_Company_HomeScreenState
   Widget build(BuildContext context) {
     final _pages = [
       const HomePage(),
-      const MarketplaceVRPage(),
+      MarketPlace(),
       const StatsPage(),
       RecyclingCompanyReceivedOffers(
         wasteType: widget.wasteType,

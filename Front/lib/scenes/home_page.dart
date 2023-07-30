@@ -98,7 +98,7 @@ class _AddsState extends State<HomePage> {
   int _currentIndex = 0;
   Future<List<Add>> fetchAllAdds() async {
     final response =
-        await http.get(Uri.parse('http://localhost:3000/adds/accepted'));
+        await http.get(Uri.parse('http://192.168.1.16:3000/adds/accepted'));
 
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -56,8 +57,8 @@ class TransporterReceivedOffers extends StatefulWidget {
 class _Recycling_center_confirmed_offerState
     extends State<TransporterReceivedOffers> {
   Future<List<Offer>> fetchAllOffers() async {
-    final response = await http.get(Uri.parse(
-        'http://192.168.43.101:3000/transporters/offers/${widget.id}'));
+    final response = await http.get(
+        Uri.parse('http://192.168.1.16:3000/transporters/offers/${widget.id}'));
 
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -73,11 +74,31 @@ class _Recycling_center_confirmed_offerState
 
   Future<void> updateOffer(String id) async {
     var url = Uri.parse(
-        'http://localhost:3000/offer/$id'); // update with your endpoint url
+        'http://192.168.1.16:3000/offer/$id'); // update with your endpoint url
     var response = await http.patch(url, body: {"confirmedByTransporter": "1"});
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Offer updated successfully');
+      if (kDebugMode) {
+        print('Offer updated successfully');
+      }
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Success'),
+            content: const Text('Offer Confirmed'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     } else {
       print('Failed to update the offer');
     }
@@ -125,6 +146,9 @@ class _Recycling_center_confirmed_offerState
               subtitle: Text(
                   '${offer.type} | ${offer.estimatedDistance} km | ${offer.price} \$'),
               trailing: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.lightGreen, // background color
+                ),
                 onPressed: () {
                   print(widget.id);
                   updateOffer(offer.offerId);

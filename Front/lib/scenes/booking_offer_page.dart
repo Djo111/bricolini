@@ -17,9 +17,9 @@ class BookingOfferPage extends StatefulWidget {
 class _BookingOfferPageState extends State<BookingOfferPage> {
   Future<void> updateOffer(String id, String s) async {
     var url = Uri.parse(
-        'http://localhost:3000/offer/$id'); // update with your endpoint url
+        'http://192.168.1.16:3000/offer/$id'); // update with your endpoint url
     var response =
-    await http.patch(url, body: {"id_recyclingCenter": s, "selected": "1"});
+        await http.patch(url, body: {"id_recyclingCenter": s, "selected": "1"});
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Offer updated successfully');
@@ -80,11 +80,11 @@ class _BookingOfferPageState extends State<BookingOfferPage> {
                 updateOffer(widget.offer.offerId, widget.id);
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.lightGreen, // Set the desired background color here
+                primary:
+                    Colors.lightGreen, // Set the desired background color here
               ),
               child: const Text('Select Transporter'),
             )
-
           ],
         ),
       ),

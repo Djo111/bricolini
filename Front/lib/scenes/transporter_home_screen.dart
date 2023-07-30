@@ -1,6 +1,7 @@
 import 'package:bricoloni_v2/scenes/about-us.dart';
 import 'package:bricoloni_v2/scenes/home_page.dart';
 import 'package:bricoloni_v2/scenes/VR.dart';
+import 'package:bricoloni_v2/scenes/marketplace.dart';
 import 'package:bricoloni_v2/scenes/profile.dart';
 import 'package:bricoloni_v2/scenes/stats_page.dart';
 import 'package:bricoloni_v2/scenes/transporter_received_offers.dart';
@@ -21,7 +22,7 @@ class Transporter_HomeScreenState extends State<Transporter_HomeScreen> {
 
   List<Widget> get _pages => [
         const HomePage(),
-        const MarketplaceVRPage(),
+        MarketPlace(),
         const StatsPage(),
         TransporterReceivedOffers(id: widget.id),
       ];

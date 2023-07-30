@@ -50,7 +50,7 @@ class _PaymentFormState extends State<PaymentForm> {
     if (_formKey.currentState!.validate()) {
       final response = await http.post(
         Uri.parse(
-            'http://localhost:3000/payment/create-payment-intent'), // replace with your server address
+            'http://192.168.1.16:3000/payment/create-payment-intent'), // replace with your server address
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {

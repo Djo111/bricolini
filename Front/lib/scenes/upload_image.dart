@@ -1,8 +1,8 @@
+import 'package:bricoloni_v2/scenes/image_verification.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -14,14 +14,14 @@ class ImageUploadWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _ImageUploadWidgetState createState() => _ImageUploadWidgetState();
 }
 
 class _ImageUploadWidgetState extends State<ImageUploadWidget> {
-  String? _image;
+  String _image = '';
   final picker = ImagePicker();
   String _newImagePath = '';
+
   Future<void> getImage(ImageSource source) async {
     final pickedFile = await picker.pickImage(source: source);
 
@@ -50,9 +50,9 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
             borderRadius: BorderRadius.circular(10),
           ),
           // ignore: unnecessary_null_comparison
-          child: _newImagePath != null
+          child: _image != null
               ? Image.file(
-                  File(_newImagePath),
+                  File(_image),
                   fit: BoxFit.cover,
                 )
               : const Center(
@@ -121,9 +121,8 @@ class UploadImage extends StatefulWidget {
     required this.id,
     required this.region,
   }) : super(key: key);
-  @override
 
-  // ignore: library_private_types_in_public_api
+  @override
   _UploadImageState createState() => _UploadImageState();
 }
 
@@ -138,7 +137,7 @@ class _UploadImageState extends State<UploadImage> {
 
   Future<String> offerverify(String path) async {
     final response = await http.post(
-      Uri.parse('http://localhost:3000/offer/verify/'),
+      Uri.parse('http://192.168.1.16:3000/offer/verify/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -154,14 +153,15 @@ class _UploadImageState extends State<UploadImage> {
   Future<void> createOffer(
       String s1, String s2, String s3, String s4, String s5) async {
     try {
-      final response = await http
-          .post(Uri.parse('http://localhost:3000/simple-user/offers'), body: {
-        "id_offerProvider": s1,
-        "location": s2,
-        "img": s3,
-        "cordonnes": s4,
-        "waste_type": s5
-      });
+      final response = await http.post(
+          Uri.parse('http://192.168.1.16:3000/simple-user/offers'),
+          body: {
+            "id_offerProvider": s1,
+            "location": s2,
+            "img": s3,
+            "cordonnes": s4,
+            "waste_type": s5
+          });
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (kDebugMode) {
@@ -186,54 +186,48 @@ class _UploadImageState extends State<UploadImage> {
         backgroundColor: Colors.lightGreen,
         title: const Text("Submit your Offer!"),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
         children: <Widget>[
-          const Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Upload a photo of your garbage!',
-                  style: TextStyle(color: Colors.white, fontSize: 30),
-                ),
-                SizedBox(height: 10), //saut de ligne
-                Text(
-                  'Regulations...',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ImageUploadWidget(
-              onImageSelect: onImageSelect,
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: ElevatedButton(
-                style: TextButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  backgroundColor: Colors.grey, // Set the background color
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 15.0), // Set the padding
-                ),
-                onPressed: () async {
-                  if (path.isNotEmpty) {
-                    await createOffer(widget.id, widget.location, path,
-                        widget.region, widget.garbageType);
-                  } else {
-                    print('Please select an image');
-                  }
-                },
-                child: const Text('Submit Offer'),
+          const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Upload a photo of your garbage!',
+                style: TextStyle(color: Colors.white, fontSize: 30),
               ),
+              SizedBox(height: 10), //saut de ligne
+              Text(
+                'Regulations...',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ],
+          ),
+          ImageUploadWidget(
+            onImageSelect: onImageSelect,
+          ),
+          Center(
+            child: ElevatedButton(
+              style: TextButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                backgroundColor: Colors.grey, // Set the background color
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 40.0, vertical: 15.0), // Set the padding
+              ),
+              onPressed: () async {
+                createOffer(widget.id, widget.location, path, widget.region,
+                    widget.garbageType);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ImageVerificationPage()),
+                );
+              },
+              child: const Text('Submit Offer'),
             ),
           ),
         ],
